@@ -1,4 +1,3 @@
-// src/pages/Home.tsx
 export const Page404 = () => {
   return (
     <div>

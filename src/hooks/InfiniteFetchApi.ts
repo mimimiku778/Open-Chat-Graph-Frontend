@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import { useInView } from 'react-intersection-observer'
 
@@ -7,7 +7,9 @@ async function fetchApi<T,>(url: string) {
 
   const data: T | ErrorResponse = await response.json()
   if (!response.ok) {
-    throw Error((data as ErrorResponse).error.message)
+    const errorMessage = (data as ErrorResponse).error.message
+    console.error(errorMessage)
+    return [] as T
   }
 
   return data as T
@@ -24,14 +26,24 @@ export const BASE_URL = 'http://192.168.11.10'
 
 export const LIMIT_ITEMS = 40
 
-export default function useInfiniteFetchApi<T,>() {
-  const getKey = (pageIndex: number) => `${BASE_URL}/oclist?page=${pageIndex}&limit=${LIMIT_ITEMS}`
+export default function useInfiniteFetchApi<T,>(query = '') {
+  const getKey = (pageIndex: number) => `${BASE_URL}/oclist?page=${pageIndex}&limit=${LIMIT_ITEMS}${query ? '&' + query : ''}`
 
   const { data, size, setSize, isValidating } = useSWRInfinite(
     getKey,
     fetchApi<T[]>,
     swrOptions
   )
+
+  const setSizeRef = useRef(true)
+
+  useEffect(() => {
+    if (setSizeRef.current) {
+      setSizeRef.current = false;
+      return;
+    }
+    setSize(1)
+  }, [setSize, query])
 
   const { ref: useInViewRef, inView: isScrollEnd } = useInView()
 

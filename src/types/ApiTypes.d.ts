@@ -18,3 +18,5 @@ interface OpenChat {
   percentageIncrease: '' | string
   isAlive: boolean
 }
+
+type Sort = 'asc' | 'desc'
