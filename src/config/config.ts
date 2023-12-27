@@ -25,3 +25,8 @@ export const OPEN_CHAT_CATEGORY: [string, number][] = [
   ['本', 29],
   ['映画・舞台', 30],
 ]
+
+export const OPEN_CHAT_CATEGORY_OBJ = ((obj) => {
+  OPEN_CHAT_CATEGORY.map((el) => obj[el[1]] = el[0])
+  return obj
+})({} as { [K: string]: string })

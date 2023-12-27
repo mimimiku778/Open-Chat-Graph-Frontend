@@ -1,0 +1,34 @@
+import React, { memo } from 'react'
+import { Chip, Stack } from '@mui/material'
+
+const toggleButtons: [ListParams['list'], string][] = [
+  ['daily', '前日比'],
+  ['weekly', '前周比'],
+  ['all', '全体'],
+]
+
+const ListToggleChips = memo(function ListToggleButton({
+  list,
+  setParams,
+}: {
+  list: ListParams['list']
+  setParams: SetListParamsValue
+}) {
+  const handleChange = (newList: ListParams['list']) => {
+    newList && setParams((params) => ({ ...params, list: newList, order: '', sort: '' }))
+  }
+
+  return (
+    <Stack direction="row" spacing={1}>
+      {toggleButtons.map((el, i) =>
+        list === el[0] ? (
+          <Chip key={i} label={el[1]} className="openchat-item-header-chip selected" sx={{ cursor: 'default' }} />
+        ) : (
+          <Chip key={i} label={el[1]} onClick={() => handleChange(el[0])} className="openchat-item-header-chip" />
+        )
+      )}
+    </Stack>
+  )
+})
+
+export default ListToggleChips
