@@ -29,7 +29,7 @@ export default function OCListSortMenu({
   sort: ListParams['sort']
   setParams: SetListParamsValue
 }) {
-  const under320 = useMediaQuery('(max-width:320px)')
+  const under359 = useMediaQuery('(max-width:359px)')
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -49,17 +49,17 @@ export default function OCListSortMenu({
   }
 
   return (
-    <Box sx={{ pl: '8px' }}>
+    <Box sx={{ pl: under359 ? undefined : '8px' }}>
       <Button
         id="sort-button"
         aria-controls={open ? 'sort-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClickListItem}
-        endIcon={under320 ? undefined : <KeyboardArrowDownIcon />}
-        sx={{ fontSize: under320 ? '13px' : '14px' }}
+        endIcon={under359 ? undefined : <KeyboardArrowDownIcon />}
+        sx={{ fontSize: under359 ? '13px' : '14px' }}
       >
-        {isSP() || under320 ? `${options[selectedIndex][0][1]}${under320 ? '▼' : ''}` : options[selectedIndex][0][0]}
+        {isSP() || under359 ? `${options[selectedIndex][0][1]}${under359 ? '▼' : ''}` : options[selectedIndex][0][0]}
       </Button>
       <Menu
         id="sort-menu"

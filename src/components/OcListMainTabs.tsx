@@ -1,6 +1,6 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
 import React, { useRef } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
