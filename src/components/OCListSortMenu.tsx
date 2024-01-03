@@ -1,19 +1,19 @@
 import { useMediaQuery, Button, Menu, MenuItem, Box } from '@mui/material'
 import React from 'react'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import ImportExportIcon from '@mui/icons-material/ImportExport'
 import { isSP } from '../utils/utils'
 
 export const rankingOptions2: SortOptions = [
   [['ランキング順', 'ランク順'], 'asc', 'rank'],
   [['増加数が多い順', '増加数多順'], 'desc', 'increase'],
-  [['増加数が少ない順', '増加数少順'], 'asc', 'increase'],
+  /* [['増加数が少ない順', '増加数少順'], 'asc', 'increase'], */
   [['増加率が高い順', '増加率高順'], 'desc', 'rate'],
-  [['増加率が低い順', '増加率低順'], 'asc', 'rate'],
+  /*  [['増加率が低い順', '増加率低順'], 'asc', 'rate'], */
 ]
 
 export const allOptions2: SortOptions = [
   [['メンバー数が多い順', '人数多順'], 'desc', 'member'],
-  [['メンバー数が少ない順', '人数少順'], 'asc', 'member'],
+  /* [['メンバー数が少ない順', '人数少順'], 'asc', 'member'], */
   [['作成日が新しい順', '新しい順'], 'desc', 'created_at'],
   [['作成日が古い順', '古い順'], 'asc', 'created_at'],
 ]
@@ -49,17 +49,18 @@ export default function OCListSortMenu({
   }
 
   return (
-    <Box sx={{ pl: under359 ? undefined : '8px' }}>
+    <Box sx={{ pl: under359 ? undefined : '8px', whiteSpace: 'nowrap' }}>
       <Button
         id="sort-button"
         aria-controls={open ? 'sort-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClickListItem}
-        endIcon={under359 ? undefined : <KeyboardArrowDownIcon />}
-        sx={{ fontSize: under359 ? '13px' : '14px' }}
+        sx={{ fontSize: under359 ? '12.5px' : '14px' }}
+        color="success"
       >
-        {isSP() || under359 ? `${options[selectedIndex][0][1]}${under359 ? '▼' : ''}` : options[selectedIndex][0][0]}
+        <ImportExportIcon sx={{ marginRight: under359 ? 0 : '4px', fontSize: '20px' }} />
+        {isSP() || under359 ? `${options[selectedIndex][0][1]}` : options[selectedIndex][0][0]}
       </Button>
       <Menu
         id="sort-menu"

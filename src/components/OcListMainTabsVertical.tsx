@@ -7,7 +7,8 @@ import { samePageLinkNavi, scrollToTop } from '../utils/utils'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
 import { CategoryListAppBar } from './CategoryListAppBar'
-import SiteHeaderVertical, { SiteHeaderVerticalSearch } from './SiteHeaderVertical'
+import SiteHeaderVertical from './SiteHeaderVertical'
+import SiteHeaderVerticalSearch from './SiteHeaderVerticalSearch'
 
 function TabPanel({ children, value, index }: TabPanelProps) {
   return <div hidden={value !== index}>{value === index && children}</div>
@@ -97,7 +98,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           <CategoryListAppBar />
           <SiteHeaderVerticalSearch />
         </Box>
-        <Box sx={{ p: '0 1.5rem' }}>
+        <Box sx={{ p: '1.5rem', pt: '1rem' }}>
           {OPEN_CHAT_CATEGORY.map((el, i) => (
             <TabPanel value={cateIndex} index={i} key={i}>
               <FetchOpenChatRankingList query={query} cateIndex={cateIndex} />

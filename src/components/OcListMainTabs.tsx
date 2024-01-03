@@ -1,24 +1,16 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
-import React, { useRef } from 'react'
+import React, { memo, useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import FetchOpenChatRankingList from './FetchOpenChatRankingList'
+import FetchOpenChatRankingList, { DummyOpenChatRankingList } from './FetchOpenChatRankingList'
 import { isSP, samePageLinkNavi, scrollToTop } from '../utils/utils'
 import { CategoryListAppBar } from './CategoryListAppBar'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
 import SiteHeader from './SiteHeader'
-
-function TabPanel({ children, value, index }: TabPanelProps) {
-  return (
-    <Box hidden={value !== index} sx={{ p: 2, pt: 0 }}>
-      {value === index && children}
-    </Box>
-  )
-}
 
 function LinkTab(props: { label?: string; href?: string }) {
   return (
@@ -34,36 +26,80 @@ function LinkTab(props: { label?: string; href?: string }) {
   )
 }
 
-export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
+const OpenChatRankingList = memo(FetchOpenChatRankingList)
+
+function OcListSwiper({
+  cateIndex,
+  swiperRef,
+}: {
+  cateIndex: number
+  swiperRef: React.MutableRefObject<SwiperCore | null>
+}) {
   const navigate = useNavigate()
   const [params, setParams] = useRecoilState(listParamsState)
-  const swiperRef = useRef<SwiperCore | null>(null)
+  const initialIndex = useRef(cateIndex)
+  const [tIndex, setTIndex] = useState<[number, string] | null>(null)
 
-  const onSwiper = (swiper: SwiperCore) => (swiperRef.current = swiper)
+  const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
-  const onSlideChange = (swiper: SwiperCore) => {
+  const onSlideChange = useCallback((swiper: SwiperCore) => {
     const newValue = swiper.activeIndex
-    if (newValue === cateIndex) return
 
     const category = OPEN_CHAT_CATEGORY[newValue][1]
-    const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
 
-    setParams({ ...params, sub_category: '' })
-    navigate(`/react-test${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+    setParams((params) => {
+      const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
+      navigate(`/react-test${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+      return { ...params, sub_category: '' }
+    })
+
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
-  }
+  }, [])
 
-  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+  const query = (i: number) =>
+    new URLSearchParams({
+      ...params,
+      sub_category: i === cateIndex ? params.sub_category : '',
+      category: OPEN_CHAT_CATEGORY[i][1].toString(),
+    }).toString()
+
+  return (
+    <Swiper
+      initialSlide={initialIndex.current}
+      simulateTouch={true}
+      onSlideChange={onSlideChange}
+      onSlideChangeTransitionStart={() => setTIndex([cateIndex, query(cateIndex)])}
+      onSlideChangeTransitionEnd={() => setTIndex(null)}
+      onSwiper={onSwiper}
+      speed={260}
+    >
+      {OPEN_CHAT_CATEGORY.map((el, i) => (
+        <SwiperSlide key={i}>
+          <div style={{ padding: '1rem', marginTop: '95px' }}>
+            {(() => {
+              if (i === cateIndex) {
+                return <OpenChatRankingList query={query(i)} cateIndex={i} />
+              } else if (tIndex && i === tIndex[0]) {
+                return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
+              } else if (i === cateIndex - 1 || i === cateIndex + 1) {
+                return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
+              }
+            })()}
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  )
+}
+
+export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
+  const swiperRef = useRef<SwiperCore | null>(null)
+
+  const handleChange = useCallback((e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
-
     swiperRef.current?.slideTo(newValue)
-  }
-
-  const query = new URLSearchParams({
-    category: OPEN_CHAT_CATEGORY[cateIndex][1].toString(),
-    ...params,
-  }).toString()
+  }, [])
 
   return (
     <Box>
@@ -84,17 +120,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
         </Tabs>
       </SiteHeader>
       <CategoryListAppBar />
-      <Box sx={{ mt: '96px' }}>
-        <Swiper initialSlide={cateIndex} simulateTouch={true} onSlideChange={onSlideChange} onSwiper={onSwiper}>
-          {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <SwiperSlide key={i} style={{ cursor: 'grab' }}>
-              <TabPanel value={cateIndex} index={i}>
-                <FetchOpenChatRankingList query={query} cateIndex={cateIndex} />
-              </TabPanel>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
+      <OcListSwiper cateIndex={cateIndex} swiperRef={swiperRef} />
     </Box>
   )
 }

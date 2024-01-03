@@ -3,7 +3,7 @@ import { Chip, Stack } from '@mui/material'
 
 const toggleButtons: [ListParams['list'], string][] = [
   ['daily', '前日比'],
-  ['weekly', '前周比'],
+  ['weekly', '前週比'],
   ['all', '全体'],
 ]
 
