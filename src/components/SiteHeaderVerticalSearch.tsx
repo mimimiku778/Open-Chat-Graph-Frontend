@@ -20,8 +20,10 @@ export default function SiteHeaderVerticalSearch() {
         {open && (
           <>
             <div className="backdrop" id="backdrop" role="button" aria-label="閉じる" onClick={closeSearch}></div>
-            <div
+            <form
               className="search-form"
+              method="GET"
+              action="https://openchat-review.me/search"
               style={{
                 background: '#fff',
                 padding: '0.5rem',
@@ -59,7 +61,7 @@ export default function SiteHeaderVerticalSearch() {
                   </IconButton>
                 )}
               </Box>
-            </div>
+            </form>
           </>
         )}
       </header>

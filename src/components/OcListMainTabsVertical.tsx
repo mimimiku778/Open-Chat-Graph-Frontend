@@ -39,7 +39,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
     const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
 
     setParams({ ...params, sub_category: '' })
-    navigate(`/react-test${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+    navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
   }
@@ -80,7 +80,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`/react-test${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab label={el[0]} href={`/ranking${el[1] ? '/' + el[1] : ''}`} key={i} />
           ))}
         </Tabs>
       </Box>

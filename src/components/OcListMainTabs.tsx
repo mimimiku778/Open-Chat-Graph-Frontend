@@ -49,7 +49,7 @@ function OcListSwiper({
 
     setParams((params) => {
       const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
-      navigate(`/react-test${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+      navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       return { ...params, sub_category: '' }
     })
 
@@ -82,7 +82,7 @@ function OcListSwiper({
                 return <OpenChatRankingList query={query(i)} cateIndex={i} />
               } else if (tIndex && i === tIndex[0]) {
                 return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
-              } else if (i === cateIndex - 1 || i === cateIndex + 1) {
+              } else if ((i === cateIndex - 1 || i === cateIndex + 1) && tIndex) {
                 return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
               }
             })()}
@@ -115,7 +115,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`/react-test${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab label={el[0]} href={`/ranking${el[1] ? '/' + el[1] : ''}`} key={i} />
           ))}
         </Tabs>
       </SiteHeader>

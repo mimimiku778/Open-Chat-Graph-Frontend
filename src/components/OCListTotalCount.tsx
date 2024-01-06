@@ -12,7 +12,6 @@ export default function OCListTotalCount({
   cateIndex: number
   subCategory: string
 }) {
-  console.log('TotalCount')
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Typography sx={{ fontSize: 13 }} color="text.secondary">

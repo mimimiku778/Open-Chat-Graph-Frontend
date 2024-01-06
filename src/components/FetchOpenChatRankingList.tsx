@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import useInfiniteFetchApi from '../hooks/InfiniteFetchApi'
 import { useRecoilValue } from 'recoil'
 import { listParamsState } from '../store/atom'
@@ -53,14 +53,6 @@ const ListContext = memo(function ListContext({
   sort: ListParams['sort']
   data: OpenChat[]
 }) {
-  useEffect(() => {
-    const height = (document.getElementsByClassName('ranking-list')[0]! as HTMLDivElement).offsetHeight
-    const dummy = document.getElementsByClassName('dummy-list') as HTMLCollectionOf<HTMLDivElement>
-    for (const el of dummy) {
-      el.style.height = `${height}px`
-    }
-  }, [data])
-
   return (
     <ol className="openchat-item-container">
       {data.map((el, i) => (
@@ -113,8 +105,11 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
   const { ref, inView } = useInView()
 
   return (
-    <div className="dummy-list" ref={ref} style={{ height: '300px' }}>
-      <div className="div-fetchOpenChatRankingList" style={{ paddingTop: `${window.scrollY}px` }}>
+    <div className="dummy-list" ref={ref} style={{ position: 'fixed', top: '0', bottom: '0', width: '100%' }}>
+      <div
+        className="div-fetchOpenChatRankingList"
+        style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
+      >
         <ListTitleDesc cateIndex={cateIndex} list={params.list} visibility={false} />
         {inView && <FetchDummyList cateIndex={cateIndex} query={query} />}
       </div>
@@ -126,7 +121,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   const { data, useInViewRef, isValidating, isLastPage, error } = useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
   const totalCount = data?.length === 0 ? '0' : data?.[0]?.totalCount?.toLocaleString()
-
+  console.log('fetch')
   return (
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">

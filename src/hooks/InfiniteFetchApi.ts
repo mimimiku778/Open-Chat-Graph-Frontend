@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import { useInView } from 'react-intersection-observer'
 import { isSP } from '../utils/utils'
