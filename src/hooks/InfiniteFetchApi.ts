@@ -1,18 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import { useInView } from 'react-intersection-observer'
 import { isSP } from '../utils/utils'
 
 async function fetchApi<T,>(url: string) {
   const response = await fetch(url)
-
   const data: T | ErrorResponse = await response.json()
   if (!response.ok) {
     const errorMessage = (data as ErrorResponse).error.message
     console.log(errorMessage)
     throw new Error(errorMessage)
   }
-
   return data as T
 }
 
@@ -28,9 +26,11 @@ export const BASE_URL = 'https://openchat-review.me'
 export const LIMIT_ITEMS = isSP() ? 10 : 20
 const ROOT_MARGIN = isSP() ? "100px" : "500px"
 
-export default function useInfiniteFetchApi<T,>(query: string) {
+export default function useInfiniteFetchApi<T,>(query = '') {
+  const queryRef = useRef(query)
+  const [page, setPage] = useState(1)
   const getKey = (i: number) => `${BASE_URL}/oclist?page=${i}&limit=${LIMIT_ITEMS}${query ? '&' + query : ''}`
-  const { data, setSize, size, isValidating, error } = useSWRInfinite(
+  const { data, setSize, isValidating, error } = useSWRInfinite(
     getKey,
     fetchApi<T[]>,
     swrOptions
@@ -46,9 +46,17 @@ export default function useInfiniteFetchApi<T,>(query: string) {
 
   useEffect(() => {
     if (isScrollEnd && !isValidating && !error && !isLastPage) {
-      setSize(size + 1)
+      setSize(page + 1)
+      setPage(page + 1)
     }
   }, [isScrollEnd])
 
-  return { data: data?.flat(), useInViewRef, isValidating, isLastPage, error }
+  useEffect(() => {
+    if (queryRef.current !== query) {
+      queryRef.current = query
+      setPage(1)
+    }
+  }, [query])
+
+  return { data: data?.slice(0, queryRef.current !== query ? 1 : page).flat(), useInViewRef, isValidating, isLastPage, error }
 }

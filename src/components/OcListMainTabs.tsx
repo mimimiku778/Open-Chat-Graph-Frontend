@@ -11,6 +11,7 @@ import { CategoryListAppBar } from './CategoryListAppBar'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
 import SiteHeader from './SiteHeader'
+import { useInView } from 'react-intersection-observer'
 
 function LinkTab(props: { label?: string; href?: string }) {
   return (
@@ -39,6 +40,8 @@ function OcListSwiper({
   const [params, setParams] = useRecoilState(listParamsState)
   const initialIndex = useRef(cateIndex)
   const [tIndex, setTIndex] = useState<[number, string] | null>(null)
+  const { ref: prevRef, inView: prevInView } = useInView()
+  const { ref: nextRef, inView: nextInView } = useInView()
 
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
@@ -76,16 +79,24 @@ function OcListSwiper({
     >
       {OPEN_CHAT_CATEGORY.map((el, i) => (
         <SwiperSlide key={i}>
-          <div style={{ padding: '1rem', marginTop: '95px' }}>
+          <div style={{ padding: '1rem', marginTop: '95px', position: 'relative' }}>
             {(() => {
               if (i === cateIndex) {
                 return <OpenChatRankingList query={query(i)} cateIndex={i} />
               } else if (tIndex && i === tIndex[0]) {
                 return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
-              } else if ((i === cateIndex - 1 || i === cateIndex + 1) && tIndex) {
+              } else if (i === cateIndex - 1 && prevInView) {
+                return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
+              } else if (i === cateIndex + 1 && nextInView) {
                 return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
               }
             })()}
+            {i === cateIndex && (
+              <div style={{ position: 'absolute', top: 0, left: '-2px', width: '1px', height: '100%' }} ref={prevRef} />
+            )}
+            {i === cateIndex && (
+              <div style={{ position: 'absolute', top: 0, right: '-2px', width: '1px', height: '100%' }} ref={nextRef} />
+            )}
           </div>
         </SwiperSlide>
       ))}

@@ -102,16 +102,15 @@ const ListTitleDesc = memo(OCListTitleDesc)
 
 export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; cateIndex: number }) {
   const params = useRecoilValue(listParamsState)
-  const { ref, inView } = useInView()
 
   return (
-    <div className="dummy-list" ref={ref} style={{ position: 'fixed', top: '0', bottom: '0', width: '100%' }}>
+    <div className="dummy-list" style={{ position: 'relative' }}>
       <div
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
         <ListTitleDesc cateIndex={cateIndex} list={params.list} visibility={false} />
-        {inView && <FetchDummyList cateIndex={cateIndex} query={query} />}
+        <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
     </div>
   )
