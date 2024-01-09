@@ -1,7 +1,8 @@
 import { useMediaQuery, Button, Menu, MenuItem, Box } from '@mui/material'
-import React from 'react'
+import React, { memo } from 'react'
 import ImportExportIcon from '@mui/icons-material/ImportExport'
 import { isSP } from '../utils/utils'
+import { useSetListParams } from '../hooks/ListParamsHooks'
 
 export const rankingOptions2: SortOptions = [
   [['ランキング順', 'ランク順'], 'asc', 'rank'],
@@ -18,17 +19,16 @@ export const allOptions2: SortOptions = [
   [['作成日が古い順', '古い順'], 'asc', 'created_at'],
 ]
 
-export default function OCListSortMenu({
+export const OCListSortMenu = memo(function OCListSortMenu({
   options,
   order,
   sort,
-  setParams,
 }: {
   options: SortOptions
   order: ListParams['order']
   sort: ListParams['sort']
-  setParams: SetListParamsValue
 }) {
+  const setParams = useSetListParams()
   const under359 = useMediaQuery('(max-width:359px)')
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -79,4 +79,4 @@ export default function OCListSortMenu({
       </Menu>
     </Box>
   )
-}
+})

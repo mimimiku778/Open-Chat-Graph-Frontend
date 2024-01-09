@@ -13,13 +13,11 @@ export function useIsRightScrollable(useEffectTrigerValue: any): [boolean, React
   }
 
   useEffect(() => {
-    checkScrollButtons() // 初回レンダリング時にチェック
-    // スクロールイベントリスナの追加
+    checkScrollButtons()
     const currentRef = ref.current
     currentRef?.addEventListener('scroll', checkScrollButtons)
 
     return () => {
-      // イベントリスナのクリーンアップ
       currentRef?.removeEventListener('scroll', checkScrollButtons)
     }
   }, [useEffectTrigerValue])
@@ -42,13 +40,11 @@ export function useIsLeftRightScrollable(useEffectTrigerValue: any): [boolean, b
   }
 
   useEffect(() => {
-    checkScrollButtons() // 初回レンダリング時にチェック
-    // スクロールイベントリスナの追加
+    checkScrollButtons()
     const currentRef = ref.current
     currentRef?.addEventListener('scroll', checkScrollButtons)
 
     return () => {
-      // イベントリスナのクリーンアップ
       currentRef?.removeEventListener('scroll', checkScrollButtons)
     }
   }, [useEffectTrigerValue])

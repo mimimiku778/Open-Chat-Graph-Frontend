@@ -30,10 +30,19 @@ export function SiteTitleBtn() {
   )
 }
 
-export default function SiteHeader({ children, height }: { children?: React.ReactNode; height: string }) {
+export default function SiteHeader({
+  children,
+  height,
+  siperSlideTo,
+}: {
+  children?: React.ReactNode
+  height: string
+  siperSlideTo: (index: number) => void
+}) {
   return (
     <div className="site_header_box" style={{ height }}>
       <SiteHeaderSearch
+        siperSlideTo={siperSlideTo}
         headerInnerStyle={{
           padding: '0 1rem',
           display: 'flex',

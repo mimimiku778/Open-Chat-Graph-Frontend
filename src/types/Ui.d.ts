@@ -10,5 +10,8 @@ type ClickEvent = React.MouseEvent<HTMLElement>
 
 type SubCategoryChipsProps = {
   sub_category: ListParams['sub_category']
-  setParams: SetListParamsValue
+}
+
+type KeywordChipProps = {
+  keyword: ListParams['keyword']
 }

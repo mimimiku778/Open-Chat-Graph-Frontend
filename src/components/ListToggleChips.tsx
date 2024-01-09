@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Chip, Stack } from '@mui/material'
+import { useSetListParams } from '../hooks/ListParamsHooks'
 
 const toggleButtons: [ListParams['list'], string][] = [
   ['daily', '前日比'],
@@ -7,13 +8,8 @@ const toggleButtons: [ListParams['list'], string][] = [
   ['all', '全体'],
 ]
 
-const ListToggleChips = memo(function ListToggleButton({
-  list,
-  setParams,
-}: {
-  list: ListParams['list']
-  setParams: SetListParamsValue
-}) {
+const ListToggleChips = memo(function ListToggleButton({ list }: { list: ListParams['list'] }) {
+  const setParams = useSetListParams()
   const handleChange = (newList: ListParams['list']) => {
     newList && setParams((params) => ({ ...params, list: newList, order: '', sort: '' }))
   }

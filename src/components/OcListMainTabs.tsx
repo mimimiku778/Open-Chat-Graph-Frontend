@@ -6,7 +6,7 @@ import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import FetchOpenChatRankingList, { DummyOpenChatRankingList } from './FetchOpenChatRankingList'
-import { isSP, samePageLinkNavi, scrollToTop } from '../utils/utils'
+import { isSP, samePageLinkNavi, scrollToTop, updateURLSearchParams } from '../utils/utils'
 import { CategoryListAppBar } from './CategoryListAppBar'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
@@ -51,7 +51,8 @@ function OcListSwiper({
     const category = OPEN_CHAT_CATEGORY[newValue][1]
 
     setParams((params) => {
-      const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
+      const url = updateURLSearchParams({ ...params, sub_category: '' })
+      const q = url.searchParams.toString()
       navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       return { ...params, sub_category: '' }
     })
@@ -79,15 +80,15 @@ function OcListSwiper({
     >
       {OPEN_CHAT_CATEGORY.map((el, i) => (
         <SwiperSlide key={i}>
-          <div style={{ padding: '1rem', marginTop: '95px', position: 'relative' }}>
+          <div style={{ padding: '1rem', marginTop: '95px', position: 'relative', minHeight: 'calc(100svh - 191px)' }}>
             {(() => {
               if (i === cateIndex) {
                 return <OpenChatRankingList query={query(i)} cateIndex={i} />
               } else if (tIndex && i === tIndex[0]) {
                 return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
-              } else if (i === cateIndex - 1 && prevInView) {
+              } else if (i === cateIndex - 1 && prevInView && !tIndex) {
                 return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
-              } else if (i === cateIndex + 1 && nextInView) {
+              } else if (i === cateIndex + 1 && nextInView && !tIndex) {
                 return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
               }
             })()}
@@ -95,7 +96,10 @@ function OcListSwiper({
               <div style={{ position: 'absolute', top: 0, left: '-2px', width: '1px', height: '100%' }} ref={prevRef} />
             )}
             {i === cateIndex && (
-              <div style={{ position: 'absolute', top: 0, right: '-2px', width: '1px', height: '100%' }} ref={nextRef} />
+              <div
+                style={{ position: 'absolute', top: 0, right: '-2px', width: '1px', height: '100%' }}
+                ref={nextRef}
+              />
             )}
           </div>
         </SwiperSlide>
@@ -112,9 +116,13 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
     swiperRef.current?.slideTo(newValue)
   }, [])
 
+  const siperSlideTo = (index: number): void => {
+    swiperRef.current?.slideTo(index)
+  }
+
   return (
     <Box>
-      <SiteHeader height="96px">
+      <SiteHeader siperSlideTo={siperSlideTo} height="96px">
         <Tabs
           className="fix-min-width"
           value={cateIndex}

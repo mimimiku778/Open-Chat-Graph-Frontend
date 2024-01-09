@@ -31,3 +31,18 @@ export function isSP() {
   const ua = navigator.userAgent
   return ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Mobile') > 0
 }
+
+export function updateURLSearchParams(params: { [key: string]: string }): URL {
+  const url = new URL(window.location.href);
+  for (let k in params) {
+    params[k] ? url.searchParams.set(k, params[k]) : url.searchParams.delete(k)
+  }
+
+  return url
+}
+
+export function validateStringNotEmpty(str: string) {
+  const normalizedStr = str.normalize('NFKC')
+  const string = normalizedStr.replace(/[\u200B-\u200D\uFEFF]/g, '')
+  return string.trim() !== ''
+}

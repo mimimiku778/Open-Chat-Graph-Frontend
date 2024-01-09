@@ -22,10 +22,11 @@ interface OpenChat {
 }
 
 type ListParams = {
+  sub_category: string
+  keyword: string
   order: 'asc' | 'desc' | '',
   sort: 'rank' | 'member' | 'increase' | 'rate' | 'created_at' | '',
   list: 'daily' | 'weekly' | 'all',
-  sub_category: string
 }
 
 type ListParamsKey = keyof ListParams

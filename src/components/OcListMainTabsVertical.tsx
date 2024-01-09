@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import FetchOpenChatRankingList from './FetchOpenChatRankingList'
-import { samePageLinkNavi, scrollToTop } from '../utils/utils'
+import { samePageLinkNavi, scrollToTop, updateURLSearchParams } from '../utils/utils'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
 import { CategoryListAppBar } from './CategoryListAppBar'
@@ -36,8 +36,9 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
 
     const category = OPEN_CHAT_CATEGORY[newValue][1]
-    const q = new URLSearchParams({ ...params, sub_category: '' }).toString()
-
+    const url = updateURLSearchParams({ ...params, sub_category: '' })
+    const q = url.searchParams.toString()
+    
     setParams({ ...params, sub_category: '' })
     navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
     scrollToTop()

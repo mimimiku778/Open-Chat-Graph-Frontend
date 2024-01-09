@@ -1,10 +1,12 @@
 import React, { memo } from 'react'
-import { useListParams } from '../hooks/ListParamsHooks'
 import { Box, Slide, Toolbar, useMediaQuery, useScrollTrigger } from '@mui/material'
-import OCListSortMenu, { allOptions2, rankingOptions2 } from './OCListSortMenu'
+import { OCListSortMenu, allOptions2, rankingOptions2 } from './OCListSortMenu'
 import ListToggleChips from './ListToggleChips'
 import { useParams } from 'react-router-dom'
 import SubCategoryChips from './SubCategoryChips'
+import { useRecoilValue } from 'recoil'
+import { listParamsState } from '../store/atom'
+import KeywordChip from './KeywordChip'
 
 function HideOnScroll({ children, matches }: { children: React.ReactElement; matches: boolean }) {
   const trigger = useScrollTrigger()
@@ -21,11 +23,11 @@ function HideOnScroll({ children, matches }: { children: React.ReactElement; mat
 export const CategoryListAppBar = memo(function HideListAppBar() {
   const height = 48
   const { category } = useParams()
-  const [params, setParams] = useListParams()
+  const params = useRecoilValue(listParamsState)
   const matches = useMediaQuery('(min-width:600px)') // 599px以下で false
 
   return (
-    <Box sx={{ height: category ? height * 2 : height }}>
+    <Box sx={{ height: category || params.keyword ? height * 2 : height }}>
       <HideOnScroll matches={matches}>
         <Box
           color="inherit"
@@ -42,15 +44,15 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
           }}
         >
           <Toolbar style={{ minHeight: height, paddingRight: 0 }}>
-            <ListToggleChips list={params.list} setParams={setParams} />
+            <ListToggleChips list={params.list} />
             <OCListSortMenu
               options={params.list === 'all' ? allOptions2 : rankingOptions2}
               sort={params.sort}
               order={params.order}
-              setParams={setParams}
             />
           </Toolbar>
-          {category && <SubCategoryChips sub_category={params.sub_category} setParams={setParams} />}
+          {params.keyword && <KeywordChip keyword={params.keyword} />}
+          {category && !params.keyword && <SubCategoryChips sub_category={params.sub_category} />}
         </Box>
       </HideOnScroll>
     </Box>

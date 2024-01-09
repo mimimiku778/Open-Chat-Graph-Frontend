@@ -21,12 +21,13 @@ const swrOptions = {
   revalidateFirstPage: false,
 }
 
-//export const BASE_URL = 'http://192.168.11.10'
-export const BASE_URL = 'https://openchat-review.me'
+export const BASE_URL = 'http://192.168.11.10'
+//export const BASE_URL = 'https://openchat-review.me'
 export const LIMIT_ITEMS = isSP() ? 10 : 20
 const ROOT_MARGIN = isSP() ? "100px" : "500px"
 
 export default function useInfiniteFetchApi<T,>(query = '') {
+  const dataRef = useRef<[number, string, T[] | undefined]>([0, '', undefined])
   const queryRef = useRef(query)
   const [page, setPage] = useState(1)
   const getKey = (i: number) => `${BASE_URL}/oclist?page=${i}&limit=${LIMIT_ITEMS}${query ? '&' + query : ''}`
@@ -42,7 +43,7 @@ export default function useInfiniteFetchApi<T,>(query = '') {
     threshold: 0.0
   })
 
-  const isLastPage = !data || !data[data?.length - 1]?.length
+  const isLastPage = !data || !data[page - 1]?.length
 
   useEffect(() => {
     if (isScrollEnd && !isValidating && !error && !isLastPage) {
@@ -58,5 +59,11 @@ export default function useInfiniteFetchApi<T,>(query = '') {
     }
   }, [query])
 
-  return { data: data?.slice(0, queryRef.current !== query ? 1 : page).flat(), useInViewRef, isValidating, isLastPage, error }
+  if (!dataRef.current[2] || dataRef.current[0] !== page || dataRef.current[1] !== query) {
+    dataRef.current[0] = page
+    dataRef.current[1] = query
+    dataRef.current[2] = data?.slice(0, queryRef.current !== query ? 1 : page).flat()
+  }
+
+  return { data: dataRef.current[2], useInViewRef, isValidating, isLastPage, error }
 }

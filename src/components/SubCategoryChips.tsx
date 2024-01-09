@@ -5,11 +5,13 @@ import { useDraggable } from 'react-use-draggable-scroll'
 import { isSP } from '../utils/utils'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { useIsLeftRightScrollable, useIsRightScrollable } from '../hooks/ScrollableHooks'
+import { useSetListParams } from '../hooks/ListParamsHooks'
 
 const subCategories = (window as any).subCategories as SubCategories
 
-const Chips = memo(function SubCategoryChips({ sub_category, setParams }: SubCategoryChipsProps) {
+const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
   const { category } = useParams()
+  const setParams = useSetListParams()
   const existsProp = category && Object.hasOwn(subCategories, category)
 
   const handleChange = (newValue: ListParams['sub_category']) => {
@@ -40,7 +42,7 @@ const chevronBradientBoxSx = (gradientDeg: number) => ({
 const buttonSx = { minWidth: 40, minHeight: 48 }
 const chevronSx = { fontSize: '1.25rem' }
 
-export const SubCategoryChipsPC = memo(function SubCategoryChipsPC(props: SubCategoryChipsProps) {
+function SubCategoryChipsPC(props: SubCategoryChipsProps) {
   const { category } = useParams()
   const [isLeftScrollable, isRightScrollable, ref] = useIsLeftRightScrollable(category)
 
@@ -77,7 +79,7 @@ export const SubCategoryChipsPC = memo(function SubCategoryChipsPC(props: SubCat
       )}
     </div>
   )
-})
+}
 
 const gradientBoxSx = {
   position: 'absolute',
@@ -89,7 +91,7 @@ const gradientBoxSx = {
   background: 'linear-gradient(270deg, rgba(255,255,255,0.93) 50%, rgba(0,0,0,0) 100%)',
 }
 
-export const SubCategoryChipsSP2 = memo(function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
+function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
   const { category } = useParams()
   const [isRightVisible, ref] = useIsRightScrollable(category)
 
@@ -101,8 +103,10 @@ export const SubCategoryChipsSP2 = memo(function SubCategoryChipsSP2(props: SubC
       {isRightVisible && <Box sx={{ ...gradientBoxSx }} />}
     </div>
   )
+}
+
+const SubCategoryChips = memo(function SubCategoryChips(props: SubCategoryChipsProps) {
+  return isSP() ? <SubCategoryChipsSP2 {...props} /> : <SubCategoryChipsPC {...props} />
 })
 
-export default function SubCategoryChips(props: SubCategoryChipsProps) {
-  return isSP() ? <SubCategoryChipsSP2 {...props} /> : <SubCategoryChipsPC {...props} />
-}
+export default SubCategoryChips

@@ -1,11 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo, useRef } from 'react'
 import useInfiniteFetchApi from '../hooks/InfiniteFetchApi'
 import { useRecoilValue } from 'recoil'
 import { listParamsState } from '../store/atom'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
-import { useInView } from 'react-intersection-observer'
 import OCListTotalCount from './OCListTotalCount'
 
 const dummyListElem = <DummyOpenChatListItem />
@@ -47,32 +46,48 @@ const ListContext = memo(function ListContext({
   list,
   sort,
   data,
+  query,
 }: {
   cateIndex: number
   list: ListParams['list']
   sort: ListParams['sort']
   data: OpenChat[]
+  query: string
 }) {
-  return (
-    <ol className="openchat-item-container">
-      {data.map((el, i) => (
-        <li key={i} className="OpenChatListItem-outer">
-          {(i + 1) % 10 === 0 && (
-            <div className="record-count middle">
-              <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
-              <span>{(i + 1).toLocaleString()} 件目</span>
-            </div>
-          )}
-          <ListItem
-            listParam={list}
-            {...el}
-            cateIndex={cateIndex}
-            showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
-          />
-        </li>
-      ))}
-    </ol>
-  )
+  const items = useRef<[String, React.JSX.Element[]]>(['', []])
+
+  if (items.current[0] === query && items.current[1].length === data.length) {
+    return <ol className="openchat-item-container">{items.current[1]}</ol>
+  }
+
+  if (items.current[0] !== query) {
+    items.current[0] = query
+    items.current[1] = []
+  }
+
+  const curLen = items.current[1].length
+  const dataLen = data.length
+
+  for (let i = curLen; i < dataLen; i++) {
+    items.current[1][i] = (
+      <li key={`${cateIndex}/${i}`} className="OpenChatListItem-outer">
+        {(i + 1) % 10 === 0 && (
+          <div className="record-count middle">
+            <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
+            <span>{(i + 1).toLocaleString()} 件目</span>
+          </div>
+        )}
+        <ListItem
+          listParam={list}
+          {...data[i]}
+          cateIndex={cateIndex}
+          showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
+        />
+      </li>
+    )
+  }
+
+  return <ol className="openchat-item-container">{items.current[1]}</ol>
 })
 
 const TotalCount = memo(OCListTotalCount)
@@ -84,7 +99,12 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
 
   return (
     <>
-      <OCListTotalCount totalCount={totalCount ? `${totalCount}件` : ''} cateIndex={cateIndex} subCategory={''} />
+      <OCListTotalCount
+        totalCount={totalCount ? `${totalCount}件` : ''}
+        cateIndex={cateIndex}
+        keyword={params.keyword}
+        subCategory=""
+      />
       <div className="OpenChatListItem-outer">
         <ol className="openchat-item-container">
           {data
@@ -120,7 +140,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   const { data, useInViewRef, isValidating, isLastPage, error } = useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
   const totalCount = data?.length === 0 ? '0' : data?.[0]?.totalCount?.toLocaleString()
-  console.log('fetch')
+
   return (
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">
@@ -129,8 +149,9 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           totalCount={totalCount ? `${totalCount}件` : ''}
           cateIndex={cateIndex}
           subCategory={params.sub_category}
+          keyword={params.keyword}
         />
-        {data && <ListContext cateIndex={cateIndex} data={data} list={params.list} sort={params.sort} />}
+        {data && <ListContext cateIndex={cateIndex} data={data} list={params.list} sort={params.sort} query={query} />}
         <DummyList
           data={!!data}
           error={error}

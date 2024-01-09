@@ -7,10 +7,12 @@ export default function SiteHeaderSearch({
   children,
   headerInnerStyle,
   searchFormStyle,
+  siperSlideTo,
 }: {
   children?: React.ReactNode
   headerInnerStyle?: React.CSSProperties
   searchFormStyle?: React.CSSProperties
+  siperSlideTo: (index: number) => void
 }) {
   const {
     openSearch,
@@ -24,7 +26,7 @@ export default function SiteHeaderSearch({
     hiddenRef,
     buttonRef,
     open,
-  } = useSiteHeaderSearch()
+  } = useSiteHeaderSearch(siperSlideTo)
 
   return (
     <header className="site_header_outer" id="site_header">
