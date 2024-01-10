@@ -43,7 +43,7 @@ export default function useInfiniteFetchApi<T,>(query = '') {
     threshold: 0.0
   })
 
-  const isLastPage = !data || !data[page - 1]?.length
+  const isLastPage = !data || !data[page - 1]?.length || data[page - 1].length < LIMIT_ITEMS
 
   useEffect(() => {
     if (isScrollEnd && !isValidating && !error && !isLastPage) {

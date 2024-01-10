@@ -84,7 +84,12 @@ export default function OpenChatListItem({
         </div>
         <div className="item-lower-category">
           {cateIndex === 0 && category >= 0 && (
-            <Chip sx={{ height: 'fit-content', fontSize: 11 }} label={OPEN_CHAT_CATEGORY_OBJ[category]} size="small" />
+            <Chip
+              sx={{ height: 'fit-content', fontSize: 11 }}
+              label={OPEN_CHAT_CATEGORY_OBJ[category]}
+              variant="outlined"
+              size="small"
+            />
           )}
         </div>
       </footer>
