@@ -21,8 +21,8 @@ const swrOptions = {
   revalidateFirstPage: false,
 }
 
-//export const BASE_URL = 'http://192.168.11.10'
-export const BASE_URL = 'https://openchat-review.me'
+export const BASE_URL = 'http://192.168.11.10'
+//export const BASE_URL = 'https://openchat-review.me'
 export const LIMIT_ITEMS = isSP() ? 10 : 20
 const ROOT_MARGIN = isSP() ? "100px" : "500px"
 

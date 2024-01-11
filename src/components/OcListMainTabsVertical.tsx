@@ -38,7 +38,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
     const category = OPEN_CHAT_CATEGORY[newValue][1]
     const url = updateURLSearchParams({ ...params, sub_category: '' })
     const q = url.searchParams.toString()
-    
+
     setParams({ ...params, sub_category: '' })
     navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
     scrollToTop()
@@ -55,7 +55,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
   const siteHeaderHeight = '72px'
 
   return (
-    <Box sx={{ maxWidth, display: 'flex', justifyContent: 'center', margin: '0 auto' }}>
+    <Box sx={{ maxWidth, display: 'flex', justifyContent: 'center', margin: '0 auto', overflowX: 'clip' }}>
       <Box sx={{ minWidth: tabsWidth }}>
         <Box
           sx={{
@@ -85,7 +85,15 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           ))}
         </Tabs>
       </Box>
-      <Box sx={{ width: `calc(100% - ${tabsWidth}px)`, borderLeft: 1, borderRight: 1, borderColor: 'divider' }}>
+      <Box
+        sx={{
+          width: `calc(100% - ${tabsWidth}px)`,
+          borderLeft: 1,
+          borderRight: 1,
+          borderColor: 'divider',
+          minHeight: '100vh',
+        }}
+      >
         <Box
           sx={{
             position: 'sticky',
