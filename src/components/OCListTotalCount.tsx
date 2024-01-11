@@ -16,19 +16,24 @@ export default function OCListTotalCount({
 }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Typography sx={{ fontSize: 13 }} color="text.secondary">
-        {OPEN_CHAT_CATEGORY[cateIndex][0]}
-      </Typography>
-      <ChevronRightIcon sx={{ fontSize: '19px' }} color="action" />
-      {(subCategory || keyword) && (
-        <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }} color="text.secondary">
-          {subCategory}
-          {keyword}
-          <ChevronRightIcon sx={{ fontSize: '19px' }} color="action" />
-        </Typography>
+      <Typography sx={{ fontSize: 13 }}>{OPEN_CHAT_CATEGORY[cateIndex][0]}</Typography>
+
+      {subCategory && (
+        <>
+          <ChevronRightIcon sx={{ fontSize: '17px' }} />
+          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>{subCategory}</Typography>
+        </>
+      )}
+      {keyword && (
+        <>
+          <ChevronRightIcon sx={{ fontSize: '17px' }} />
+          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>「{keyword}」</Typography>
+          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>の検索結果</Typography>
+        </>
       )}
       {totalCount && (
-        <Typography sx={{ fontSize: 13 }} color="text.secondary">
+        <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>
+          <ChevronRightIcon sx={{ fontSize: '17px' }} />
           {totalCount}
         </Typography>
       )}

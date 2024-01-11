@@ -55,18 +55,19 @@ const ListContext = memo(function ListContext({
   query: string
 }) {
   const items = useRef<[String, React.JSX.Element[]]>(['', []])
+  
+  const dataLen = data.length
+  let curLen = items.current[1].length
 
-  if (items.current[0] === query && items.current[1].length === data.length) {
+  if (items.current[0] === query && curLen === dataLen) {
     return <ol className="openchat-item-container">{items.current[1]}</ol>
   }
 
   if (items.current[0] !== query) {
     items.current[0] = query
     items.current[1] = []
+    curLen = 0
   }
-
-  const curLen = items.current[1].length
-  const dataLen = data.length
 
   for (let i = curLen; i < dataLen; i++) {
     items.current[1][i] = (

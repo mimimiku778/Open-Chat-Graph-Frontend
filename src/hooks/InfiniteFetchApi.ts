@@ -60,8 +60,11 @@ export default function useInfiniteFetchApi<T,>(query = '') {
   }, [query])
 
   if (!dataRef.current[2] || dataRef.current[0] !== page || dataRef.current[1] !== query) {
-    dataRef.current[0] = page
-    dataRef.current[1] = query
+    if (data?.[page - 1]) {
+      dataRef.current[0] = page
+      dataRef.current[1] = query
+    }
+
     dataRef.current[2] = data?.slice(0, queryRef.current !== query ? 1 : page).flat()
   }
 
