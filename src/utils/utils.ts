@@ -34,9 +34,13 @@ export function isSP() {
 
 export function updateURLSearchParams(params: { [key: string]: string }): URL {
   const url = new URL(window.location.href);
+  url.search = ''
+
   for (let k in params) {
-    params[k] ? url.searchParams.set(k, params[k]) : url.searchParams.delete(k)
+    params[k] && url.searchParams.set(k, params[k])
   }
+
+  url.searchParams.sort()
 
   return url
 }
