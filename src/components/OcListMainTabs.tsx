@@ -39,14 +39,18 @@ function OcListSwiper({
   const navigate = useNavigate()
   const [params, setParams] = useRecoilState(listParamsState)
   const initialIndex = useRef(cateIndex)
+  const currentIndex = useRef(cateIndex)
   const [tIndex, setTIndex] = useState<[number, string] | null>(null)
   const { ref: prevRef, inView: prevInView } = useInView()
   const { ref: nextRef, inView: nextInView } = useInView()
 
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
+  currentIndex.current = cateIndex
+  
   const onSlideChange = useCallback((swiper: SwiperCore) => {
     const newValue = swiper.activeIndex
+    if (currentIndex.current === newValue) return
 
     const category = OPEN_CHAT_CATEGORY[newValue][1]
 
