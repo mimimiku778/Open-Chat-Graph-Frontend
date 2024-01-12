@@ -70,7 +70,7 @@ export default function OpenChatListItem({
           {emblem !== 0 && <EmblemIcon emblem={emblem} />}
           {name}
         </a>
-        {showNorth && <NorthIcon className="show-north" sx={{ fontSize: '14px', color: '#00a849' }} />}
+        {showNorth && <NorthIcon className="show-north" sx={{ fontSize: '14px', color: '#07B53B' }} />}
       </h3>
       <p className="item-desc">{desc}</p>
       <footer className="item-lower">
@@ -87,7 +87,6 @@ export default function OpenChatListItem({
             <Chip
               sx={{ height: 'fit-content', fontSize: 13, display: 'flex', width: 'fit-content', mt: '2px' }}
               label={OPEN_CHAT_CATEGORY_OBJ[category]}
-       
               size="small"
             />
           )}
