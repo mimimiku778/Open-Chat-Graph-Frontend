@@ -47,7 +47,7 @@ function OcListSwiper({
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
   currentIndex.current = cateIndex
-  
+
   const onSlideChange = useCallback((swiper: SwiperCore) => {
     const newValue = swiper.activeIndex
     if (currentIndex.current === newValue) return
@@ -65,12 +65,15 @@ function OcListSwiper({
     scrollToTop('.hide-scrollbar-x')
   }, [])
 
-  const query = (i: number) =>
-    new URLSearchParams({
-      ...params,
-      sub_category: i === cateIndex ? params.sub_category : '',
-      category: OPEN_CHAT_CATEGORY[i][1].toString(),
-    }).toString()
+  const query = useCallback(
+    (i: number) =>
+      new URLSearchParams({
+        ...params,
+        sub_category: i === currentIndex.current ? params.sub_category : '',
+        category: OPEN_CHAT_CATEGORY[i][1].toString(),
+      }).toString(),
+    []
+  )
 
   return (
     <Swiper

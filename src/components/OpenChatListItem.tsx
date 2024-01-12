@@ -57,13 +57,13 @@ export default function OpenChatListItem({
         <span className="visually-hidden">{name}</span>
       </a>
       <div className="item-img-outer">
+        <Skeleton variant="circular" width="100%" height="100%" />
         <img
           className="item-img"
           src={`${BASE_URL}/oc-img/${img}/preview`}
           alt={`オープンチャット「${name}」のアイコン`}
           loading="lazy"
         ></img>
-        <Skeleton variant="circular" width="100%" height="100%" />
       </div>
       <h3>
         <a className="item-title-link" href={ocUrl}>
