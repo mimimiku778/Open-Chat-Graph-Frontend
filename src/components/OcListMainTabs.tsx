@@ -1,5 +1,5 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
-import React, { memo, useCallback, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
@@ -46,6 +46,11 @@ function OcListSwiper({
 
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
+  useEffect(() => {
+    scrollToTop()
+    scrollToTop('.hide-scrollbar-x')
+  }, [currentIndex.current !== cateIndex])
+
   currentIndex.current = cateIndex
 
   const onSlideChange = useCallback((swiper: SwiperCore) => {
@@ -60,9 +65,6 @@ function OcListSwiper({
       navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       return { ...params, sub_category: '' }
     })
-
-    scrollToTop()
-    scrollToTop('.hide-scrollbar-x')
   }, [])
 
   const query = useCallback(
@@ -72,7 +74,7 @@ function OcListSwiper({
         sub_category: i === currentIndex.current ? params.sub_category : '',
         category: OPEN_CHAT_CATEGORY[i][1].toString(),
       }).toString(),
-    []
+    [params]
   )
 
   return (
