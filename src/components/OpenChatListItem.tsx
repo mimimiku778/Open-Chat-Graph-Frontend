@@ -79,7 +79,7 @@ export default function OpenChatListItem({
           <span className={`stats-wrapper ${listParam} ${symbolIncrease ?? ''}`}>
             {increasedMember && <span>{increasedMember}</span>}
             {percentageIncrease && <span> ({percentageIncrease})</span>}
-            {createdAt && <span className="api-created-at">作成 {createdAt}</span>}
+            {createdAt && <span className="api-created-at">{createdAt} 作成</span>}
           </span>
         </div>
         <div className="item-lower-category">
