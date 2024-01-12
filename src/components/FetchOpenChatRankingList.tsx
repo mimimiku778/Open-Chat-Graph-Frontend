@@ -44,18 +44,20 @@ const ListItem = memo(OpenChatListItem)
 const ListContext = memo(function ListContext({
   cateIndex,
   list,
+  totalCount,
   sort,
   data,
   query,
 }: {
   cateIndex: number
   list: ListParams['list']
+  totalCount: string
   sort: ListParams['sort']
   data: OpenChat[]
   query: string
 }) {
   const items = useRef<[String, React.JSX.Element[]]>(['', []])
-  
+
   const dataLen = data.length
   let curLen = items.current[1].length
 
@@ -75,7 +77,9 @@ const ListContext = memo(function ListContext({
         {(i + 1) % 10 === 0 && (
           <div className="record-count middle">
             <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
-            <span>{(i + 1).toLocaleString()} 件目</span>
+            <span>
+              {totalCount}中 {(i + 1).toLocaleString()} 件目
+            </span>
           </div>
         )}
         <ListItem
@@ -96,16 +100,11 @@ const TotalCount = memo(OCListTotalCount)
 function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number }) {
   const { data } = useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
-  const totalCount = data?.length === 0 ? '0' : data?.[0]?.totalCount?.toLocaleString()
+  const totalCount = data?.length === 0 ? '0 件' : data ? data[0].totalCount!.toLocaleString() + ' 件' : ''
 
   return (
-    <>
-      <OCListTotalCount
-        totalCount={totalCount ? `${totalCount}件` : ''}
-        cateIndex={cateIndex}
-        keyword={params.keyword}
-        subCategory=""
-      />
+    <div>
+      <OCListTotalCount totalCount={totalCount} cateIndex={cateIndex} keyword={params.keyword} subCategory="" />
       <div className="OpenChatListItem-outer">
         <ol className="openchat-item-container">
           {data
@@ -115,7 +114,7 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
             : dummyListElem}
         </ol>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -140,19 +139,29 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
 export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; cateIndex: number }) {
   const { data, useInViewRef, isValidating, isLastPage, error } = useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
-  const totalCount = data?.length === 0 ? '0' : data?.[0]?.totalCount?.toLocaleString()
+
+  const totalCount = data?.length === 0 ? '0 件' : data ? data[0].totalCount!.toLocaleString() + ' 件' : ''
 
   return (
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} list={params.list} />
         <TotalCount
-          totalCount={totalCount ? `${totalCount}件` : ''}
+          totalCount={totalCount}
           cateIndex={cateIndex}
           subCategory={params.sub_category}
           keyword={params.keyword}
         />
-        {data && <ListContext cateIndex={cateIndex} data={data} list={params.list} sort={params.sort} query={query} />}
+        {data && (
+          <ListContext
+            cateIndex={cateIndex}
+            totalCount={totalCount}
+            data={data}
+            list={params.list}
+            sort={params.sort}
+            query={query}
+          />
+        )}
         <DummyList
           data={!!data}
           error={error}
