@@ -1,5 +1,5 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
+import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
@@ -29,6 +29,13 @@ function LinkTab(props: { label?: string; href?: string }) {
 
 const OpenChatRankingList = memo(FetchOpenChatRankingList)
 
+const getQuery = (i: number, cateIndex: number, params: ListParams) =>
+  new URLSearchParams({
+    ...params,
+    sub_category: i === cateIndex ? params.sub_category : '',
+    category: OPEN_CHAT_CATEGORY[i][1].toString(),
+  }).toString()
+
 function OcListSwiper({
   cateIndex,
   swiperRef,
@@ -40,16 +47,12 @@ function OcListSwiper({
   const [params, setParams] = useRecoilState(listParamsState)
   const initialIndex = useRef(cateIndex)
   const currentIndex = useRef(cateIndex)
+  const scrollY = useRef(0)
   const [tIndex, setTIndex] = useState<[number, string] | null>(null)
   const { ref: prevRef, inView: prevInView } = useInView()
   const { ref: nextRef, inView: nextInView } = useInView()
 
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
-
-  useEffect(() => {
-    scrollToTop()
-    scrollToTop('.hide-scrollbar-x')
-  }, [currentIndex.current !== cateIndex])
 
   currentIndex.current = cateIndex
 
@@ -57,48 +60,64 @@ function OcListSwiper({
     const newValue = swiper.activeIndex
     if (currentIndex.current === newValue) return
 
-    const category = OPEN_CHAT_CATEGORY[newValue][1]
-
     setParams((params) => {
+      const category = OPEN_CHAT_CATEGORY[newValue][1]
       const url = updateURLSearchParams({ ...params, sub_category: '' })
       const q = url.searchParams.toString()
       navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       return { ...params, sub_category: '' }
     })
+
+    scrollToTop('.hide-scrollbar-x')
   }, [])
 
-  const query = useCallback(
-    (i: number) =>
-      new URLSearchParams({
-        ...params,
-        sub_category: i === currentIndex.current ? params.sub_category : '',
-        category: OPEN_CHAT_CATEGORY[i][1].toString(),
-      }).toString(),
-    [params]
-  )
+  if (tIndex && !scrollY.current) {
+    scrollY.current = window.scrollY
+  }
+
+  if (!tIndex && scrollY.current) {
+    scrollY.current = 0
+  }
+
+  useLayoutEffect(() => {
+    if (tIndex && scrollY.current) {
+      scrollToTop()
+    }
+  }, [tIndex])
 
   return (
     <Swiper
       initialSlide={initialIndex.current}
       simulateTouch={true}
       onSlideChange={onSlideChange}
-      onSlideChangeTransitionStart={() => setTIndex([cateIndex, query(cateIndex)])}
+      onSlideChangeTransitionStart={() => setTIndex([cateIndex, getQuery(cateIndex, cateIndex, params)])}
       onSlideChangeTransitionEnd={() => setTIndex(null)}
       onSwiper={onSwiper}
       speed={260}
     >
       {OPEN_CHAT_CATEGORY.map((el, i) => (
         <SwiperSlide key={i}>
-          <div style={{ padding: '1rem', marginTop: '95px', position: 'relative', minHeight: 'calc(100svh - 191px)' }}>
+          <div
+            style={{
+              padding: '1rem',
+              marginTop: '95px',
+              minHeight: 'calc(100svh - 191px)',
+              width: '100%',
+              position: 'relative',
+              ...(tIndex && i === tIndex[0]
+                ? { position: 'absolute', top: `${-(scrollY.current + (i ? 0 : 48))}px` }
+                : {}),
+            }}
+          >
             {(() => {
               if (i === cateIndex) {
-                return <OpenChatRankingList query={query(i)} cateIndex={i} />
+                return <OpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
               } else if (tIndex && i === tIndex[0]) {
                 return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
-              } else if (i === cateIndex - 1 && prevInView && !tIndex) {
-                return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
-              } else if (i === cateIndex + 1 && nextInView && !tIndex) {
-                return <DummyOpenChatRankingList query={query(i)} cateIndex={i} />
+              } else if (!tIndex && prevInView && i === cateIndex - 1) {
+                return <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
+              } else if (!tIndex && nextInView && i === cateIndex + 1) {
+                return <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
               }
             })()}
             {i === cateIndex && (
