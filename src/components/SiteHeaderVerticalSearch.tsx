@@ -43,8 +43,8 @@ export default function SiteHeaderVerticalSearch() {
               borderRadius: '4px',
               position: 'absolute',
               width: '300px',
-              left: '-287px',
-              top: '33px',
+              left: '-296px',
+              top: '13px',
             }}
             onSubmit={onSubmit}
           >
