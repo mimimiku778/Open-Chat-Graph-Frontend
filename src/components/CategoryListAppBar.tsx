@@ -36,7 +36,7 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
             zIndex: 1000,
             top: matches ? 'auto' : '95px',
             borderBottom: 1,
-            borderColor: 'divider',
+            borderColor: '#efefef',
             position: matches ? 'static' : 'fixed',
             background: 'rgba(255,255,255,1)',
             width: '100%',

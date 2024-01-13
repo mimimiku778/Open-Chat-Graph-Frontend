@@ -91,7 +91,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           width: `calc(100% - ${tabsWidth}px)`,
           borderLeft: 1,
           borderRight: 1,
-          borderColor: 'divider',
+          borderColor: '#efefef',
           minHeight: '100vh',
         }}
       >
