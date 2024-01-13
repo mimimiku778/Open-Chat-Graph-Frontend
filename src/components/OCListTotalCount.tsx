@@ -15,7 +15,7 @@ export default function OCListTotalCount({
   keyword: string
 }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', marginBottom: '-7px' }}>
       <Typography sx={{ fontSize: 13 }}>{OPEN_CHAT_CATEGORY[cateIndex][0]}</Typography>
 
       {subCategory && (

@@ -66,6 +66,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           <SiteHeaderVertical height={siteHeaderHeight} />
         </Box>
         <Tabs
+          className="category-tab-pc"
           value={cateIndex}
           onChange={handleChange}
           variant="scrollable"
@@ -100,8 +101,6 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
             top: 0,
             width: '100%',
             zIndex: 1150,
-            borderBottom: 1,
-            borderColor: 'divider',
           }}
         >
           <CategoryListAppBar />

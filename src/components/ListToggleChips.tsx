@@ -20,7 +20,12 @@ const ListToggleChips = memo(function ListToggleButton({ list }: { list: ListPar
         list === el[0] ? (
           <Chip key={i} label={el[1]} className="openchat-item-header-chip selected" sx={{ cursor: 'default' }} />
         ) : (
-          <Chip key={i} label={el[1]} onClick={() => handleChange(el[0])} className="openchat-item-header-chip" />
+          <Chip
+            key={i}
+            label={el[1]}
+            onClick={() => handleChange(el[0])}
+            className="openchat-item-header-chip"
+          />
         )
       )}
     </Stack>

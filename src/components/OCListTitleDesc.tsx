@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import { Typography, useMediaQuery } from '@mui/material'
 import OCListDescPopover, { HelpIcon } from './OCListDescPopover'
 
 function ListDesc({ list, isAll }: { list: ListParams['list']; isAll: boolean }) {
@@ -72,10 +72,11 @@ export default function OCListTitleDesc({
   cateIndex: number
   visibility?: boolean
 }) {
+  const matches = useMediaQuery('(min-width:600px)') // 599px以下で false
   const divCss: React.CSSProperties = { display: 'flex', flexWrap: 'wrap' }
   const outer: React.CSSProperties = { ...divCss, marginBottom: '.5rem' }
   const inner: React.CSSProperties = { ...divCss, gap: '4px' }
-  const p = { fontWeight: 'bold' }
+  const p = { fontWeight: 700, fontSize: matches ? '17px' : '15px' }
 
   switch (list) {
     case 'daily':

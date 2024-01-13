@@ -23,9 +23,14 @@ const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
       {existsProp &&
         subCategories[category as SubCategoryKey].map((el, i) =>
           sub_category === el ? (
-            <Chip key={i} label={el} className="openchat-item-header-chip selected" onClick={() => handleChange('')} />
+            <Chip key={i} label={el} className="openchat-item-header-chip category selected" onClick={() => handleChange('')} />
           ) : (
-            <Chip key={i} label={el} className="openchat-item-header-chip" onClick={() => handleChange(el)} />
+            <Chip
+              key={i}
+              label={el}
+              className="openchat-item-header-chip category"
+              onClick={() => handleChange(el)}
+            />
           )
         )}
     </Stack>
@@ -86,7 +91,7 @@ const gradientBoxSx = {
   zIndex: 1155,
   top: 0,
   minWidth: 52,
-  minHeight: 48,
+  minHeight: 50,
   right: 0,
   background: 'linear-gradient(270deg, rgba(255,255,255,0.93) 50%, rgba(0,0,0,0) 100%)',
 }
@@ -97,7 +102,7 @@ function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <Toolbar className="hide-scrollbar-x" ref={ref} style={{ minHeight: 48 }}>
+      <Toolbar className="hide-scrollbar-x" ref={ref} style={{ minHeight: 50 }}>
         <Chips {...props} />
       </Toolbar>
       {isRightVisible && <Box sx={{ ...gradientBoxSx }} />}

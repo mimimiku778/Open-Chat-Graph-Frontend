@@ -152,7 +152,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
     <Box>
       <SiteHeader siperSlideTo={siperSlideTo} height="96px">
         <Tabs
-          className="fix-min-width"
+          className="fix-min-width category-tab"
           value={cateIndex}
           onChange={handleChange}
           variant="scrollable"

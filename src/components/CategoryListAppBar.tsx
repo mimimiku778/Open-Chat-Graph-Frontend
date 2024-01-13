@@ -21,7 +21,7 @@ function HideOnScroll({ children, matches }: { children: React.ReactElement; mat
 }
 
 export const CategoryListAppBar = memo(function HideListAppBar() {
-  const height = 48
+  const height = 52
   const { category } = useParams()
   const params = useRecoilValue(listParamsState)
   const matches = useMediaQuery('(min-width:600px)') // 599px以下で false

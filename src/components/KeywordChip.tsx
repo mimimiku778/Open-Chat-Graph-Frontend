@@ -14,7 +14,7 @@ function Chips({ keyword }: KeywordChipProps) {
     <Chip
       icon={<SearchIcon sx={{ fontSize: '18px' }} />}
       color="primary"
-      className="openchat-item-header-chip selected"
+      className="openchat-item-header-chip category selected"
       label={keyword}
       onDelete={handleDelete}
     />
