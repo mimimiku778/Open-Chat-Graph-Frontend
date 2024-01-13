@@ -65,11 +65,12 @@ export default function SiteHeaderVerticalSearch() {
                 sx={{ width: '100%' }}
                 onCompositionStart={handleCompositionStart}
                 onCompositionEnd={handleCompositionEnd}
+                className="search-input"
               />
               <input type="hidden" name="q" ref={hiddenRef} />
               {!inputEmpty && (
                 <IconButton sx={{ position: 'absolute', right: '5px', top: '0px', zIndex: 2004 }} onClick={deleteInput}>
-                  <HighlightOffIcon color="action" sx={{ fontSize: '22px' }} />
+                  <HighlightOffIcon sx={{ fontSize: '22px', color: '#777' }} />
                 </IconButton>
               )}
             </Box>
