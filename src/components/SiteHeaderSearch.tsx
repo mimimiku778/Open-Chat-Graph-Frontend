@@ -26,6 +26,8 @@ export default function SiteHeaderSearch({
     hiddenRef,
     buttonRef,
     open,
+    handleCompositionStart,
+    handleCompositionEnd,
   } = useSiteHeaderSearch(siperSlideTo)
 
   return (
@@ -62,6 +64,8 @@ export default function SiteHeaderSearch({
                 onChange: onChange,
               }}
               sx={{ width: '100%' }}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}
             />
             <input type="hidden" name="q" ref={hiddenRef} />
             {!inputEmpty && (

@@ -1,5 +1,5 @@
-import { MutableSnapshot, useRecoilCallback } from 'recoil'
-import { listParamsState } from '../store/atom'
+import { MutableSnapshot, useRecoilCallback, useSetRecoilState } from 'recoil'
+import { keywordState, listParamsState } from '../store/atom'
 import { scrollToTop, updateURLSearchParams } from '../utils/utils';
 
 const getValidParam = <T extends ListParamsKey>(
@@ -34,11 +34,15 @@ const getValidListParams = (params: URLSearchParams): ListParams => {
 
 export const getInitListParamsState = (
   (params: ListParams) =>
-    ({ set }: MutableSnapshot) =>
+    ({ set }: MutableSnapshot) => {
       set(listParamsState, params)
+      set(keywordState, params.keyword)
+    }
 )(getValidListParams(new URLSearchParams(window.location.search)))
 
 export function useSetListParams(): SetListParamsValue {
+  const setKeyword = useSetRecoilState(keywordState)
+
   return useRecoilCallback(
     ({ snapshot, set }) =>
       async (getNewParams: (currentParams: ListParams) => ListParams) => {
@@ -47,6 +51,7 @@ export function useSetListParams(): SetListParamsValue {
 
         window.history.replaceState(null, '', updateURLSearchParams(newParams))
         set(listParamsState, newParams)
+        setKeyword(newParams.keyword)
         scrollToTop()
       },
     [window.location.pathname]

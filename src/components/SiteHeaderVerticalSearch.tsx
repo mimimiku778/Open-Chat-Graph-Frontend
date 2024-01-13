@@ -16,6 +16,8 @@ export default function SiteHeaderVerticalSearch() {
     hiddenRef,
     buttonRef,
     open,
+    handleCompositionStart,
+    handleCompositionEnd,
   } = useSiteHeaderSearch()
 
   return (
@@ -61,6 +63,8 @@ export default function SiteHeaderVerticalSearch() {
                   onChange: onChange,
                 }}
                 sx={{ width: '100%' }}
+                onCompositionStart={handleCompositionStart}
+                onCompositionEnd={handleCompositionEnd}
               />
               <input type="hidden" name="q" ref={hiddenRef} />
               {!inputEmpty && (

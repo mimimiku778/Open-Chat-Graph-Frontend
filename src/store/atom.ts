@@ -10,3 +10,8 @@ export const listParamsState = atom<ListParams>({
     list: 'daily',
   },
 });
+
+export const keywordState = atom<string>({
+  key: 'keyword',
+  default: '',
+});

@@ -2,21 +2,43 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { scrollToTop, validateStringNotEmpty } from '../utils/utils'
 import { useSetListParams } from './ListParamsHooks'
+import { useRecoilValue } from 'recoil'
+import { keywordState } from '../store/atom'
 
 export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => void) | undefined) {
   const [open, setOpen] = useState(false)
   const setParams = useSetListParams()
+  const keyword = useRecoilValue(keywordState)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const hiddenRef = useRef<HTMLInputElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
+  const isCompositionStart = useRef<boolean>(false);
   const [inputEmpty, setInputEmpty] = useState(true)
   const navigate = useNavigate()
 
-  const openSearch = useCallback(() => {
-    setOpen(true)
+  const handleCompositionStart = useCallback(() => {
+    setInputEmpty(true)
+    isCompositionStart.current = true
   }, [])
 
+  const handleCompositionEnd = useCallback(() => {
+    setInputEmpty(false)
+    isCompositionStart.current = false
+  }, [])
+
+  const openSearch = useCallback(() => {
+    if (keyword) {
+      inputRef.current!.value = keyword
+      setInputEmpty(false)
+    }
+
+    setOpen(true)
+  }, [keyword])
+
   const closeSearch = useCallback(() => {
+    inputRef.current && (inputRef.current.value = '')
+    inputRef.current?.blur()
+    setInputEmpty(true)
     setOpen(false)
   }, [])
 
@@ -29,10 +51,8 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
 
   const onChange = useCallback((e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     hiddenRef.current && (hiddenRef.current.value = e.currentTarget.value)
-    setInputEmpty(!e.currentTarget.value)
+    !isCompositionStart.current && setInputEmpty(!e.currentTarget.value)
   }, [])
-
-
 
   const deleteInput = useCallback(() => {
     inputRef.current && (inputRef.current.value = '')
@@ -47,6 +67,8 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
     if (!validateStringNotEmpty(keyword)) {
       return
     }
+
+    closeSearch()
 
     const maxLength = 40;
     // 文字数がmaxLength以内ならそのまま、超えていれば切り詰める
@@ -68,9 +90,6 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
       scrollToTop()
       scrollToTop('.hide-scrollbar-x')
     }
-
-    deleteInput()
-    closeSearch()
   }, [siperSlideTo])
 
   useEffect(() => {
@@ -79,5 +98,19 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
     }
   }, [open])
 
-  return { openSearch, closeSearch, onKeyDown, onChange, onSubmit, deleteInput, inputEmpty, inputRef, hiddenRef, buttonRef, open }
+  return {
+    openSearch,
+    closeSearch,
+    onKeyDown,
+    onChange,
+    onSubmit,
+    deleteInput,
+    inputEmpty,
+    inputRef,
+    hiddenRef,
+    buttonRef,
+    open,
+    handleCompositionStart,
+    handleCompositionEnd
+  }
 }
