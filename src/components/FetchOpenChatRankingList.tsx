@@ -7,7 +7,7 @@ import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 
-const dummyListElem = <DummyOpenChatListItem />
+const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
 const DummyList = memo(function DummyList({
   data,
@@ -25,12 +25,12 @@ const DummyList = memo(function DummyList({
   return (
     <>
       {((!data && !error) || isValidating) && (
-        <ol className="openchat-item-container">
+        <ol className="openchat-item-container" style={dummyContainerStyle}>
           <DummyOpenChatListItem />
         </ol>
       )}
       {!(isValidating || isLastPage || error) && data && (
-        <ol className="openchat-item-container" ref={useInViewRef}>
+        <ol className="openchat-item-container" style={dummyContainerStyle} ref={useInViewRef}>
           <DummyOpenChatListItem />
         </ol>
       )}
@@ -106,12 +106,14 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
     <div>
       <OCListTotalCount totalCount={totalCount} cateIndex={cateIndex} keyword={params.keyword} subCategory="" />
       <div className="OpenChatListItem-outer">
-        <ol className="openchat-item-container">
-          {data
-            ? data.map((oc, i) => (
-                <OpenChatListItem key={i} listParam={params.list} {...oc} cateIndex={cateIndex} showNorth={false} />
-              ))
-            : dummyListElem}
+        <ol className="openchat-item-container" style={data ? undefined : dummyContainerStyle}>
+          {data ? (
+            data.map((oc, i) => (
+              <OpenChatListItem key={i} listParam={params.list} {...oc} cateIndex={cateIndex} showNorth={false} />
+            ))
+          ) : (
+            <DummyOpenChatListItem />
+          )}
         </ol>
       </div>
     </div>

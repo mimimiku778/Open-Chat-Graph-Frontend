@@ -57,7 +57,9 @@ export default function OpenChatListItem({
         <span className="visually-hidden">{name}</span>
       </a>
       <div className="item-img-outer">
-        <Skeleton variant="circular" width="100%" height="100%" />
+        <div style={{ opacity: 0.55, width: '100%', height: '100%' }}>
+          <Skeleton variant="circular" width="100%" height="100%" />
+        </div>
         <img
           className="item-img"
           src={`${BASE_URL}/oc-img/${img}/preview`}
