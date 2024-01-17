@@ -70,7 +70,7 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
 
     closeSearch()
 
-    const maxLength = 40;
+    const maxLength = 1000;
     // 文字数がmaxLength以内ならそのまま、超えていれば切り詰める
     if (keyword.length > maxLength) {
       keyword = keyword.substring(0, maxLength);
