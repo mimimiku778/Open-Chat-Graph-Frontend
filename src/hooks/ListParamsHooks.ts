@@ -26,10 +26,10 @@ const getValidListParams = (params: URLSearchParams): ListParams => {
 
   const sort = sortParam('rank', paramsSortRanking)
   if (sort === 'rank') {
-    return { sub_category, keyword, list, sort: sort, order: 'asc' }
+    return { sub_category, keyword, list, sort: sort, order: orderParam('asc') }
   }
 
-  return { sub_category, keyword, list, sort: sortParam('rank', paramsSortRanking), order: orderParam('asc') }
+  return { sub_category, keyword, list, sort: sort, order: orderParam('asc') }
 }
 
 export const getInitListParamsState = (

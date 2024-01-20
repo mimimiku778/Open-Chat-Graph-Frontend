@@ -33,7 +33,10 @@ export const OCListSortMenu = memo(function OCListSortMenu({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
-  const selectedIndex = options.findIndex((el) => order === el[1] && sort === el[2])
+  let selectedIndex = options.findIndex((el) => order === el[1] && sort === el[2])
+  if (selectedIndex === -1) {
+    selectedIndex = 0
+  }
 
   const handleClickListItem = (e: ClickEvent) => {
     setAnchorEl(e.currentTarget)
