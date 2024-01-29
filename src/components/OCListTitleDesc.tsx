@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, useMediaQuery } from '@mui/material'
 import OCListDescPopover, { HelpIcon } from './OCListDescPopover'
 
-function ListDesc({ list, isAll }: { list: ListParams['list']; isAll: boolean }) {
+function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: boolean; isSearch: boolean }) {
   const p = { sx: { fontSize: 14 }, color: 'text.secondary' }
 
   switch (list) {
@@ -11,12 +11,12 @@ function ListDesc({ list, isAll }: { list: ListParams['list']; isAll: boolean })
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象は、メンバー数が10人以上でオプチャ公式ランキングに掲載歴のあるルームです。
+              表示対象は、メンバー数が10人以上でオプチャ公式サイトに掲載中のルームです。ランキング未掲載の場合を除きます。
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象は、メンバー数が10人以上の全てのルームです。
+              表示対象は、メンバー数が10人以上でオプチャ公式サイトに掲載中のルームです。
             </Typography>
           )}
           <Typography {...p}>１週間以上メンバー数に変動がないルームは除外されます。</Typography>
@@ -27,12 +27,12 @@ function ListDesc({ list, isAll }: { list: ListParams['list']; isAll: boolean })
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象は、メンバー数が10人以上でオプチャ公式ランキングに掲載歴のあるルームです。
+              表示対象は、メンバー数が10人以上でオプチャ公式サイトに掲載中のルームです。ランキング未掲載の場合を除きます。
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象は、メンバー数が10人以上の全てのルームです。
+              表示対象は、メンバー数が10人以上でオプチャ公式サイトに掲載中のルームです。
             </Typography>
           )}
           <Typography {...p}>直近１週間の統計がない・１週間以上メンバー数に変動がないルームは除外されます。</Typography>
@@ -41,24 +41,26 @@ function ListDesc({ list, isAll }: { list: ListParams['list']; isAll: boolean })
     case 'all':
       return (
         <div>
-          <Typography gutterBottom {...p}>
-            オプチャグラフによる現存確認済みのルームリストです。
-          </Typography>
-          {!isAll && <Typography {...p}>表示対象は、オプチャ公式ランキングに掲載歴のある全てのルームです。</Typography>}
-          {isAll && (
-            <Typography {...p}>
-              表示対象は、LINE公式ランキングから自動登録されたルームと、オプチャグラフのフォームから登録された全てのルームです。
+          {!isSearch ? (
+            <Typography gutterBottom {...p}>
+              表示対象は、オプチャ公式サイトに掲載中の全てのルームです。
+            </Typography>
+          ) : (
+            <Typography gutterBottom {...p}>
+              表示対象は、オプチャ公式サイトに掲載中の全てのルームです。
             </Typography>
           )}
+          {!isAll && <Typography {...p}>ランキング未掲載の場合を除きます。</Typography>}
+          {isAll && <Typography {...p}></Typography>}
         </div>
       )
   }
 }
 
-function HelpButton({ list, cateIndex }: { list: ListParams['list']; cateIndex: number }) {
+function HelpButton({ list, cateIndex, isSearch }: { list: ListParams['list']; cateIndex: number; isSearch: boolean }) {
   return (
     <OCListDescPopover>
-      <ListDesc list={list} isAll={cateIndex === 0} />
+      <ListDesc list={list} isAll={cateIndex === 0} isSearch={isSearch} />
     </OCListDescPopover>
   )
 }
@@ -66,10 +68,12 @@ function HelpButton({ list, cateIndex }: { list: ListParams['list']; cateIndex: 
 export default function OCListTitleDesc({
   list,
   cateIndex,
+  isSearch,
   visibility = true,
 }: {
   list: ListParams['list']
   cateIndex: number
+  isSearch: boolean
   visibility?: boolean
 }) {
   const matches = useMediaQuery('(min-width:600px)') // 599px以下で false
@@ -85,7 +89,7 @@ export default function OCListTitleDesc({
           <Typography children="昨日〜今日の" sx={p} />
           <div style={inner}>
             <Typography children="メンバー増加ランキング" sx={p} />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} /> : <HelpIcon />}
+            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
       )
@@ -95,7 +99,7 @@ export default function OCListTitleDesc({
           <Typography children="１週間前〜今日の" sx={p} />
           <div style={inner}>
             <Typography children="メンバー増加ランキング" sx={p} />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} /> : <HelpIcon />}
+            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
       )
@@ -103,8 +107,12 @@ export default function OCListTitleDesc({
       return (
         <div style={outer}>
           <div style={inner}>
-            <Typography children="現存確認済みのオープンチャット" sx={p} />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} /> : <HelpIcon />}
+            {!isSearch ? (
+              <Typography children="現存確認済みのオープンチャット" sx={p} />
+            ) : (
+              <Typography children="すべてのオープンチャット" sx={p} />
+            )}
+            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
       )

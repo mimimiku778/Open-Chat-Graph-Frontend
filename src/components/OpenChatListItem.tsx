@@ -38,6 +38,7 @@ export default function OpenChatListItem({
   increasedMember,
   percentageIncrease,
   createdAt,
+  isAlive,
   cateIndex,
   listParam,
   showNorth,
@@ -62,13 +63,22 @@ export default function OpenChatListItem({
         </div>
         <img
           className="item-img"
-          src={`${BASE_URL}/oc-img/${img}/preview`}
+          src={`https://obs.line-scdn.net/${img}/preview`}
           alt={`オープンチャット「${name}」のアイコン`}
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.src = `${BASE_URL}/assets/ogp.png`
+            e.currentTarget.removeAttribute('onerror')
+            e.currentTarget.removeAttribute('onload')
+          }}
+          onLoad={(e) => {
+            e.currentTarget.removeAttribute('onerror')
+            e.currentTarget.removeAttribute('onload')
+          }}
         ></img>
       </div>
       <h3>
-        <a className="item-title-link" href={ocUrl}>
+        <a className="item-title-link" href={ocUrl} style={isAlive !== false ? undefined : { color: '#cf1c1c' }}>
           {emblem !== 0 && <EmblemIcon emblem={emblem} />}
           {name}
         </a>

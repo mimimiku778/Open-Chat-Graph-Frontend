@@ -131,7 +131,7 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <ListTitleDesc cateIndex={cateIndex} list={params.list} visibility={false} />
+        <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
     </div>
@@ -147,7 +147,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   return (
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">
-        <ListTitleDesc cateIndex={cateIndex} list={params.list} />
+        <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount
           totalCount={totalCount}
           cateIndex={cateIndex}
