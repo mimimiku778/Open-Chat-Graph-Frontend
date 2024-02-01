@@ -26,6 +26,19 @@ function EmblemIcon({ emblem }: { emblem: OpenChat['emblem'] }) {
   return <span className={`super-icon ${emblem === 1 ? 'sp' : 'official'}`}></span>
 }
 
+const imgOnError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  e.currentTarget.src = `${BASE_URL}/assets/ogp.png`
+  e.currentTarget.removeAttribute('onerror')
+  e.currentTarget.removeAttribute('onload')
+}
+
+const imgOnLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  e.currentTarget.removeAttribute('onerror')
+  e.currentTarget.removeAttribute('onload')
+}
+
+const formatMember = (n: number) => (n < 1000 ? n : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString())
+
 export default function OpenChatListItem({
   id,
   name,
@@ -49,8 +62,6 @@ export default function OpenChatListItem({
 }) {
   const ocUrl = `${BASE_URL}/oc/${id}`
   console.log('Item')
-  const formatMember = (n: number) =>
-    member < 1000 ? member : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString()
 
   return (
     <div className="openchat-item">
@@ -66,15 +77,8 @@ export default function OpenChatListItem({
           src={`https://obs.line-scdn.net/${img}/preview`}
           alt={`オープンチャット「${name}」のアイコン`}
           loading="lazy"
-          onError={(e) => {
-            e.currentTarget.src = `${BASE_URL}/assets/ogp.png`
-            e.currentTarget.removeAttribute('onerror')
-            e.currentTarget.removeAttribute('onload')
-          }}
-          onLoad={(e) => {
-            e.currentTarget.removeAttribute('onerror')
-            e.currentTarget.removeAttribute('onload')
-          }}
+          onError={imgOnError}
+          onLoad={imgOnLoad}
         ></img>
       </div>
       <h3>
