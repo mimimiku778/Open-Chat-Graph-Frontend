@@ -1,7 +1,7 @@
 import React from 'react'
-import { BASE_URL, LIMIT_ITEMS } from '../hooks/InfiniteFetchApi'
+import { LIMIT_ITEMS } from '../hooks/InfiniteFetchApi'
 import { Chip, Skeleton } from '@mui/material'
-import { OPEN_CHAT_CATEGORY_OBJ } from '../config/config'
+import { OPEN_CHAT_CATEGORY_OBJ, rankingArgDto } from '../config/config'
 import NorthIcon from '@mui/icons-material/North'
 
 export function DummyOpenChatListItem({ len = LIMIT_ITEMS }: { len?: number }) {
@@ -27,7 +27,7 @@ function EmblemIcon({ emblem }: { emblem: OpenChat['emblem'] }) {
 }
 
 const imgOnError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-  e.currentTarget.src = `${BASE_URL}/assets/ogp.png`
+  e.currentTarget.src = `${rankingArgDto.baseUrl}/assets/ogp.png`
   e.currentTarget.removeAttribute('onerror')
   e.currentTarget.removeAttribute('onload')
 }
@@ -60,7 +60,7 @@ export default function OpenChatListItem({
   listParam: ListParams['list']
   showNorth: boolean
 }) {
-  const ocUrl = `${BASE_URL}/oc/${id}`
+  const ocUrl = `${rankingArgDto.baseUrl}/oc/${id}`
   console.log('Item')
 
   return (

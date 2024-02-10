@@ -52,6 +52,7 @@ function OcListSwiper({
   const { ref: prevRef, inView: prevInView } = useInView()
   const { ref: nextRef, inView: nextInView } = useInView()
 
+  
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
   currentIndex.current = cateIndex

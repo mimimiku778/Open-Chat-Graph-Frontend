@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import { useInView } from 'react-intersection-observer'
 import { isSP } from '../utils/utils'
+import { rankingArgDto } from '../config/config'
 
 async function fetchApi<T,>(url: string) {
   const response = await fetch(url)
@@ -21,13 +22,11 @@ const swrOptions = {
   revalidateFirstPage: false,
 }
 
-export const BASE_URL = 'http://192.168.11.10'
-//export const BASE_URL = 'https://openchat-review.me'
 export const LIMIT_ITEMS = isSP() ? 10 : 20
 const ROOT_MARGIN = isSP() ? "100px" : "500px"
 
 export default function useInfiniteFetchApi<T,>(query: string) {
-  const getKey = (i: number) => `${BASE_URL}/oclist?page=${i}&limit=${LIMIT_ITEMS}${query ? '&' + query : ''}`
+  const getKey = (i: number) => `${rankingArgDto.baseUrl}/oclist?page=${i}&limit=${LIMIT_ITEMS}${query ? '&' + query : ''}`
   const { data, setSize, isValidating, error } = useSWRInfinite(
     getKey,
     fetchApi<T[]>,

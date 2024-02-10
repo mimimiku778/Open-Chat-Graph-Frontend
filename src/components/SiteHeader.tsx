@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Button, SvgIcon } from '@mui/material'
 import SiteHeaderSearch from './SiteHeaderSearch'
+import { rankingArgDto } from '../config/config'
 
 export function BetaIcon() {
   return (
@@ -61,7 +62,7 @@ export default function SiteHeader({
           <SiteTitleBtn />
           <div className="refresh-time">
             <div className="refresh-icon"></div>
-            <time>{(window as any).rankingUpdatedAt}</time>
+            <time>{rankingArgDto.rankingUpdatedAt}</time>
           </div>
         </Box>
       </SiteHeaderSearch>

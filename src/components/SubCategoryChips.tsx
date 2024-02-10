@@ -6,13 +6,12 @@ import { isSP } from '../utils/utils'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { useIsLeftRightScrollable, useIsRightScrollable } from '../hooks/ScrollableHooks'
 import { useSetListParams } from '../hooks/ListParamsHooks'
-
-const subCategories = (window as any).subCategories as SubCategories
+import { rankingArgDto } from '../config/config'
 
 const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
   const { category } = useParams()
   const setParams = useSetListParams()
-  const existsProp = category && Object.hasOwn(subCategories, category)
+  const existsProp = category && Object.hasOwn(rankingArgDto.subCategories, category)
 
   const handleChange = (newValue: ListParams['sub_category']) => {
     setParams((params) => ({ ...params, sub_category: newValue }))
@@ -21,16 +20,16 @@ const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
   return (
     <Stack direction="row" spacing={1}>
       {existsProp &&
-        subCategories[category as SubCategoryKey].map((el, i) =>
+        rankingArgDto.subCategories[category as SubCategoryKey].map((el, i) =>
           sub_category === el ? (
-            <Chip key={i} label={el} className="openchat-item-header-chip category selected" onClick={() => handleChange('')} />
-          ) : (
             <Chip
               key={i}
               label={el}
-              className="openchat-item-header-chip category"
-              onClick={() => handleChange(el)}
+              className="openchat-item-header-chip category selected"
+              onClick={() => handleChange('')}
             />
+          ) : (
+            <Chip key={i} label={el} className="openchat-item-header-chip category" onClick={() => handleChange(el)} />
           )
         )}
     </Stack>

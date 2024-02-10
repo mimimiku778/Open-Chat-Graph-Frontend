@@ -27,9 +27,8 @@ export function scrollToTop(selector: string = 'html') {
   document.querySelector(selector)?.scrollTo(0, 0)
 }
 
-export function isSP() {
-  const ua = navigator.userAgent
-  return ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0 || ua.indexOf('Mobile') > 0
+export function isSP(): boolean {
+  return !!('ontouchstart' in window || navigator.maxTouchPoints)
 }
 
 export function updateURLSearchParams(params: { [key: string]: string }): URL {
