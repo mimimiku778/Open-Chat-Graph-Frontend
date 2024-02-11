@@ -7,6 +7,22 @@ function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: 
   const p = { sx: { fontSize: 14 }, color: 'text.secondary' }
 
   switch (list) {
+    case 'hourly':
+      return (
+        <div>
+          {!isAll && (
+            <Typography gutterBottom {...p}>
+              表示対象はメンバー数が10人以上で公式ランキングに掲載されたルームです。
+            </Typography>
+          )}
+          {isAll && (
+            <Typography gutterBottom {...p}>
+              表示対象はメンバー数が10人以上のルームです。
+            </Typography>
+          )}
+          <Typography {...p}>１週間以上メンバー数に変動がないルームは除外されます。</Typography>
+        </div>
+      )
     case 'daily':
       return (
         <div>
@@ -57,6 +73,8 @@ function HelpButton({ list, cateIndex, isSearch }: { list: ListParams['list']; c
   )
 }
 
+const weekdays = ['日', '月', '火', '水', '木', '金', '土']
+
 export default function OCListTitleDesc({
   list,
   cateIndex,
@@ -78,7 +96,7 @@ export default function OCListTitleDesc({
   const past = new Date(rankingArgDto.modifiedUpdatedAtDate)
 
   switch (list) {
-    case 'daily':
+    case 'hourly':
       past.setDate(past.getDate() - 1)
       return (
         <div style={outer}>
@@ -94,6 +112,17 @@ export default function OCListTitleDesc({
           </div>
         </div>
       )
+    case 'daily':
+      past.setDate(past.getDate() - 1)
+      return (
+        <div style={outer}>
+          <Typography children="メンバー増加ランキング" sx={{ ...p, mr: 1 }} />
+          <div style={inner}>
+            <Typography children={`${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`} sx={p} />
+            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+          </div>
+        </div>
+      )
     case 'weekly':
       past.setDate(past.getDate() - 7)
       return (
@@ -101,9 +130,9 @@ export default function OCListTitleDesc({
           <Typography children="メンバー増加ランキング" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`${past.getMonth() + 1}月${past.getDate()}日〜${
+              children={`${past.getMonth() + 1}月${past.getDate()}日(${weekdays[past.getDay()]})〜${
                 updatedAt.getMonth() + 1
-              }月${updatedAt.getDate()}日`}
+              }月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`}
               sx={p}
             />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}

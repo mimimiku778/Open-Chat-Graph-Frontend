@@ -8,7 +8,7 @@ const getValidParam = <T extends ListParamsKey>(
   expectValues: ListParamsValue<T>[]
 ) => (expectValues.some((ex) => value === ex) ? (value as ListParamsValue<T>) : defaultValue)
 
-const paramsList: ListParams['list'][] = ['daily', 'weekly', 'all']
+const paramsList: ListParams['list'][] = ['hourly', 'daily', 'weekly', 'all']
 const paramsSortRanking: ListParams['sort'][] = ['rank', 'increase', 'rate']
 const paramsSortAll: ListParams['sort'][] = ['member', 'created_at']
 const paramsOrder: ListParams['order'][] = ['asc', 'desc']

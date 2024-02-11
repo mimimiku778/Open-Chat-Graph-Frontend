@@ -31,6 +31,7 @@ type RankingArgDto = {
   baseUrl: string,
   rankingUpdatedAt: string,
   modifiedUpdatedAtDate: string,
+  hourlyUpdatedAt: string,
   subCategories: SubCategories,
 }
 
@@ -62,7 +63,7 @@ type ListParams = {
   keyword: string
   order: 'asc' | 'desc' | '',
   sort: 'rank' | 'member' | 'increase' | 'rate' | 'created_at' | '',
-  list: 'daily' | 'weekly' | 'all',
+  list: 'hourly' | 'daily' | 'weekly' | 'all',
 }
 
 type ListParamsKey = keyof ListParams
