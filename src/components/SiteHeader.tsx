@@ -28,9 +28,9 @@ export function BetaIcon() {
 
 export function SiteTitleBtn() {
   return (
-    <Button href="https://openchat-review.me" sx={{ p: 0, display: 'flex' }}>
+    <Button href={rankingArgDto.baseUrl} sx={{ p: 0, display: 'flex' }}>
       <div className="header_site_title">
-        <img src="https://openchat-review.me/assets/icon-192x192.png" alt="" />
+        <img src={`${rankingArgDto.baseUrl}/assets/icon-192x192.png`} alt="" />
         <h1>オプチャグラフ</h1>
         <BetaIcon />
       </div>

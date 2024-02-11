@@ -2,6 +2,7 @@ import React from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { Box, IconButton, Input } from '@mui/material'
 import useSiteHeaderSearch from '../hooks/useSiteHeaderSearch'
+import { rankingArgDto } from '../config/config'
 
 export default function SiteHeaderSearch({
   children,
@@ -46,7 +47,7 @@ export default function SiteHeaderSearch({
           className="search-form site_header"
           style={searchFormStyle}
           method="GET"
-          action="https://openchat-review.me/search"
+          action={`${rankingArgDto.baseUrl}/search`}
           onSubmit={onSubmit}
         >
           <Box className="search-form-inner" sx={{ pt: '7px' }}>

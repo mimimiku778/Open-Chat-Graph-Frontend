@@ -2,6 +2,7 @@ import React from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { Box, IconButton, Input } from '@mui/material'
 import useSiteHeaderSearch from '../hooks/useSiteHeaderSearch'
+import { rankingArgDto } from '../config/config'
 
 export default function SiteHeaderVerticalSearch() {
   const {
@@ -35,7 +36,7 @@ export default function SiteHeaderVerticalSearch() {
           <form
             className="search-form"
             method="GET"
-            action="https://openchat-review.me/search"
+            action={`${rankingArgDto.baseUrl}/search`}
             style={{
               background: '#fff',
               padding: '0.5rem',
