@@ -3,9 +3,9 @@ import { Chip, Stack } from '@mui/material'
 import { useSetListParams } from '../hooks/ListParamsHooks'
 
 const toggleButtons: [ListParams['list'], string][] = [
-  ['hourly', '1時間前'],
-  ['daily', '前日比'],
-  ['weekly', '前週比'],
+  ['hourly', '1時間'],
+  ['daily', '1日'],
+  ['weekly', '1週間'],
   ['all', '全体'],
 ]
 

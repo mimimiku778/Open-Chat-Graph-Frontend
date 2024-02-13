@@ -12,12 +12,12 @@ function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: 
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上で公式ランキングに掲載されたルームです。
+              表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上のルームです。
+              表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。
             </Typography>
           )}
           <Typography {...p}>１週間以上メンバー数に変動がないルームは除外されます。</Typography>
@@ -92,22 +92,17 @@ export default function OCListTitleDesc({
   const inner: React.CSSProperties = { ...divCss, gap: '4px' }
   const p = { fontWeight: 700, fontSize: matches ? '17px' : '15px' }
 
-  const updatedAt = new Date(rankingArgDto.modifiedUpdatedAtDate)
-  const past = new Date(rankingArgDto.modifiedUpdatedAtDate)
+  const updatedAt = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll("-","/"))
+  const past = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll("-","/"))
+  const hourly = new Date(rankingArgDto.hourlyUpdatedAt.replaceAll('-', '/'))
 
   switch (list) {
     case 'hourly':
-      past.setDate(past.getDate() - 1)
       return (
         <div style={outer}>
-          <Typography children="メンバー増加ランキング" sx={{ ...p, mr: 1 }} />
+          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
-            <Typography
-              children={`${past.getMonth() + 1}月${past.getDate()}日〜${
-                updatedAt.getMonth() + 1
-              }月${updatedAt.getDate()}日`}
-              sx={p}
-            />
+            <Typography children={`${hourly.getHours()}:${hourly.getMinutes()}`} sx={p} />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
@@ -116,9 +111,12 @@ export default function OCListTitleDesc({
       past.setDate(past.getDate() - 1)
       return (
         <div style={outer}>
-          <Typography children="メンバー増加ランキング" sx={{ ...p, mr: 1 }} />
+          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
-            <Typography children={`${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`} sx={p} />
+            <Typography
+              children={`${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`}
+              sx={p}
+            />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
@@ -127,7 +125,7 @@ export default function OCListTitleDesc({
       past.setDate(past.getDate() - 7)
       return (
         <div style={outer}>
-          <Typography children="メンバー増加ランキング" sx={{ ...p, mr: 1 }} />
+          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
               children={`${past.getMonth() + 1}月${past.getDate()}日(${weekdays[past.getDay()]})〜${
