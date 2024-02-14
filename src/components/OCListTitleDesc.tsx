@@ -92,17 +92,22 @@ export default function OCListTitleDesc({
   const inner: React.CSSProperties = { ...divCss, gap: '4px' }
   const p = { fontWeight: 700, fontSize: matches ? '17px' : '15px' }
 
-  const updatedAt = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll("-","/"))
-  const past = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll("-","/"))
+  const updatedAt = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll('-', '/'))
+  const past = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll('-', '/'))
   const hourly = new Date(rankingArgDto.hourlyUpdatedAt.replaceAll('-', '/'))
+  const hourlyPast = new Date(rankingArgDto.hourlyUpdatedAt.replaceAll('-', '/'))
 
   switch (list) {
     case 'hourly':
+      hourlyPast.setHours(hourly.getHours() - 1)
       return (
         <div style={outer}>
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
-            <Typography children={`${hourly.getHours()}:${hourly.getMinutes()}`} sx={p} />
+            <Typography
+              children={`${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()}`}
+              sx={p}
+            />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>

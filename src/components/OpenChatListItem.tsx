@@ -39,6 +39,19 @@ const imgOnLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
 
 const formatMember = (n: number) => (n < 1000 ? n : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString())
 
+const getOcUrlParam = (listParam: ListParams['list']): string => {
+  switch (listParam) {
+    case 'hourly':
+      return '?limit=hour'
+    case 'daily':
+      return ''
+    case 'weekly':
+      return ''
+    case 'all':
+      return ''
+  }
+}
+
 export default function OpenChatListItem({
   id,
   name,
@@ -51,7 +64,6 @@ export default function OpenChatListItem({
   increasedMember,
   percentageIncrease,
   createdAt,
-  isAlive,
   cateIndex,
   listParam,
   showNorth,
@@ -60,8 +72,7 @@ export default function OpenChatListItem({
   listParam: ListParams['list']
   showNorth: boolean
 }) {
-  const ocUrl = `${rankingArgDto.baseUrl}/oc/${id}`
-  console.log('Item')
+  const ocUrl = `${rankingArgDto.baseUrl}/oc/${id}${getOcUrlParam(listParam)}`
 
   return (
     <div className="openchat-item">
@@ -82,7 +93,7 @@ export default function OpenChatListItem({
         ></img>
       </div>
       <h3>
-        <a className="item-title-link" href={ocUrl} style={isAlive !== false ? undefined : { color: '#cf1c1c' }}>
+        <a className="item-title-link" href={ocUrl}>
           {emblem !== 0 && <EmblemIcon emblem={emblem} />}
           {name}
         </a>

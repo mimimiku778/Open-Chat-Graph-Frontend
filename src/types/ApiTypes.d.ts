@@ -50,7 +50,6 @@ interface OpenChat {
   img: string
   emblem: 0 | 1 | 2
   category: number
-  isAlive?: boolean
   symbolIncrease?: 'positive' | 'negative'
   increasedMember?: string
   percentageIncrease?: string
