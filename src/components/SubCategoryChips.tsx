@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import { Box, Button, Chip, Stack, Toolbar } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useDraggable } from 'react-use-draggable-scroll'
@@ -9,6 +9,7 @@ import { useSetListParams } from '../hooks/ListParamsHooks'
 import { rankingArgDto } from '../config/config'
 
 const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
+  const selectedRef = useRef<null | HTMLDivElement>(null)
   const { category } = useParams()
   const setParams = useSetListParams()
   const existsProp = category && Object.hasOwn(rankingArgDto.subCategories, category)
@@ -16,6 +17,15 @@ const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
   const handleChange = (newValue: ListParams['sub_category']) => {
     setParams((params) => ({ ...params, sub_category: newValue }))
   }
+
+  useEffect(() => {
+    selectedRef.current &&
+      selectedRef.current.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'end',
+      })
+  }, [])
 
   return (
     <Stack direction="row" spacing={1}>
@@ -27,6 +37,7 @@ const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
               label={el}
               className="openchat-item-header-chip category selected"
               onClick={() => handleChange('')}
+              ref={selectedRef}
             />
           ) : (
             <Chip key={i} label={el} className="openchat-item-header-chip category" onClick={() => handleChange(el)} />
