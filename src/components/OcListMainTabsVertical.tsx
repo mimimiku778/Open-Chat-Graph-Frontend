@@ -34,15 +34,16 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
-
+    
     const category = OPEN_CHAT_CATEGORY[newValue][1]
     const url = updateURLSearchParams({ ...params, sub_category: '' })
     const q = url.searchParams.toString()
-
+    
     setParams({ ...params, sub_category: '' })
     navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
+    document.title = OPEN_CHAT_CATEGORY[newValue][0] + '｜参加人数のランキング｜オプチャグラフ'
   }
 
   const query = new URLSearchParams({
