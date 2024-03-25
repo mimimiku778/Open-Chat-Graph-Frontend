@@ -26,17 +26,6 @@ function EmblemIcon({ emblem }: { emblem: OpenChat['emblem'] }) {
   return <span className={`super-icon ${emblem === 1 ? 'sp' : 'official'}`}></span>
 }
 
-const imgOnError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-  e.currentTarget.src = `${rankingArgDto.baseUrl}/assets/ogp.png`
-  e.currentTarget.removeAttribute('onerror')
-  e.currentTarget.removeAttribute('onload')
-}
-
-const imgOnLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-  e.currentTarget.removeAttribute('onerror')
-  e.currentTarget.removeAttribute('onload')
-}
-
 const formatMember = (n: number) => (n < 1000 ? n : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString())
 
 const getOcUrlParam = (listParam: ListParams['list']): string => {
@@ -85,11 +74,9 @@ export default function OpenChatListItem({
         </div>
         <img
           className="item-img"
-          src={`https://obs.line-scdn.net/${img}/preview`}
+          src={`${rankingArgDto.baseUrl}/oc-img/preview/${img}_p.webp`}
           alt={`オープンチャット「${name}」のアイコン`}
           loading="lazy"
-          onError={imgOnError}
-          onLoad={imgOnLoad}
         ></img>
       </div>
       <h3>
