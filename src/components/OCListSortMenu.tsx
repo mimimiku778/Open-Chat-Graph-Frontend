@@ -5,18 +5,18 @@ import { isSP } from '../utils/utils'
 import { useSetListParams } from '../hooks/ListParamsHooks'
 
 export const rankingOptions2: SortOptions = [
-  [['ランキング順', ''], 'asc', 'rank'],
-  [['増加数が多い順', ''], 'desc', 'increase'],
-  /* [['増加数が少ない順', ''], 'asc', 'increase'], */
-  [['増加率が高い順', ''], 'desc', 'rate'],
+  [['ランキング順', '並び順'], 'asc', 'rank'],
+  [['増加数が多い順', '並び順'], 'desc', 'increase'],
+  /* [['増加数が少ない順', '並び順'], 'asc', 'increase'], */
+  [['増加率が高い順', '並び順'], 'desc', 'rate'],
   /*  [['増加率が低い順', ''], 'asc', 'rate'], */
 ]
 
 export const allOptions2: SortOptions = [
-  [['メンバー数が多い順', ''], 'desc', 'member'],
+  [['メンバー数が多い順', '並び順'], 'desc', 'member'],
   /* [['メンバー数が少ない順', ''], 'asc', 'member'], */
-  [['作成日が新しい順', ''], 'desc', 'created_at'],
-  [['作成日が古い順', ''], 'asc', 'created_at'],
+  [['作成日が新しい順', '並び順'], 'desc', 'created_at'],
+  [['作成日が古い順', '並び順'], 'asc', 'created_at'],
 ]
 
 export const OCListSortMenu = memo(function OCListSortMenu({
@@ -62,7 +62,7 @@ export const OCListSortMenu = memo(function OCListSortMenu({
         sx={{ fontSize: under359 ? '12.5px' : '14px', color: '#000', minWidth: 36, minHeight: 36 }}
         color="success"
       >
-        <SortIcon sx={{ marginRight: under359 ? 0 : '4px', fontSize: '20px', color: '#000' }} />
+        {!under359 && <SortIcon sx={{ marginRight: '4px', fontSize: '20px', color: '#000' }} />}
         {isSP() || under359 ? `${options[selectedIndex][0][1]}` : options[selectedIndex][0][0]}
       </Button>
       <Menu

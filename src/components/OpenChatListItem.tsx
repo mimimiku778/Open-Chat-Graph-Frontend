@@ -74,7 +74,7 @@ export default function OpenChatListItem({
         </div>
         <img
           className="item-img"
-          src={`${rankingArgDto.baseUrl}/oc-img/preview/${img}_p.webp`}
+          src={`${rankingArgDto.baseUrl}/oc-img/preview/${img}`}
           alt={`オープンチャット「${name}」のアイコン`}
           loading="lazy"
         ></img>
