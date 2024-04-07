@@ -19,7 +19,7 @@ const getValidListParams = (params: URLSearchParams): ListParams => {
   const keyword = params.get('keyword') ?? ''
   const sub_category = params.get('sub_category') ?? ''
 
-  const list = getValidParam<'list'>(params.get('list'), 'daily', paramsList)
+  const list = getValidParam<'list'>(params.get('list'), 'all', paramsList)
   if (list === 'all') {
     return { sub_category, keyword, list, sort: sortParam('member', paramsSortAll), order: orderParam('desc') }
   }
