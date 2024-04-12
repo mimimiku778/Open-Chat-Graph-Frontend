@@ -33,7 +33,7 @@ const getOcUrlParam = (listParam: ListParams['list']): string => {
     case 'hourly':
       return '?limit=hour'
     case 'daily':
-      return ''
+      return '?limit=hour'
     case 'weekly':
       return ''
     case 'all':
@@ -75,7 +75,7 @@ export default function OpenChatListItem({
         <img
           className="item-img"
           src={`${rankingArgDto.baseUrl}/oc-img/preview/${img}`}
-          alt={`オープンチャット「${name}」のアイコン`}
+          alt={`${name}`}
           loading="lazy"
         ></img>
       </div>

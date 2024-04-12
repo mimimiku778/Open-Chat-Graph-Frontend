@@ -105,7 +105,7 @@ export default function OCListTitleDesc({
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()}`}
+              children={`1時間 (${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()})`}
               sx={p}
             />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
@@ -119,7 +119,7 @@ export default function OCListTitleDesc({
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`}
+              children={`過去24時間 (${hourly.getHours()}:${hourly.getMinutes()})`}
               sx={p}
             />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
@@ -133,9 +133,7 @@ export default function OCListTitleDesc({
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`${past.getMonth() + 1}月${past.getDate()}日(${weekdays[past.getDay()]})〜${
-                updatedAt.getMonth() + 1
-              }月${updatedAt.getDate()}日(${weekdays[updatedAt.getDay()]})`}
+              children={`1週間 (${past.getMonth() + 1}/${past.getDate()}〜${updatedAt.getMonth() + 1}/${updatedAt.getDate()})`}
               sx={p}
             />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}

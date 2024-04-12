@@ -4,7 +4,7 @@ import { useSetListParams } from '../hooks/ListParamsHooks'
 
 const toggleButtons: [ListParams['list'], string][] = [
   ['hourly', '1時間'],
-  ['daily', '1日'],
+  ['daily', '24時間'],
   ['weekly', '1週間'],
   ['all', '全体'],
 ]
