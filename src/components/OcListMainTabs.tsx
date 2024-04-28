@@ -6,7 +6,7 @@ import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import FetchOpenChatRankingList, { DummyOpenChatRankingList } from './FetchOpenChatRankingList'
-import { isSP, samePageLinkNavi, scrollToTop, updateURLSearchParams } from '../utils/utils'
+import { isSP, samePageLinkNavi, scrollToTop, setTitle, updateURLSearchParams } from '../utils/utils'
 import { CategoryListAppBar } from './CategoryListAppBar'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
@@ -64,6 +64,7 @@ function OcListSwiper({
     setParams((params) => {
       const category = OPEN_CHAT_CATEGORY[newValue][1]
       const url = updateURLSearchParams({ ...params, sub_category: '' })
+      setTitle({ ...params, sub_category: '' }, newValue)
       const q = url.searchParams.toString()
       navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       return { ...params, sub_category: '' }

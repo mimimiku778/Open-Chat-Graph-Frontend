@@ -1,3 +1,5 @@
+import { OPEN_CHAT_CATEGORY } from "../config/config"
+
 export function localStorageProvider() {
   const map = new Map(JSON.parse(sessionStorage.getItem('app-cache') || '[]'))
 
@@ -42,6 +44,62 @@ export function updateURLSearchParams(params: { [key: string]: string }): URL {
   url.searchParams.sort()
 
   return url
+}
+
+export function setTitle(params: ListParams, cateIndex?: number) {
+  const keyword = params.keyword;
+  const subCategory = params.sub_category;
+
+  if (cateIndex === undefined) {
+    const pathName = window.location.pathname
+    const pathSegments = pathName.split('/')
+    const category = parseInt((pathSegments.pop() || pathSegments.pop()) ?? '0')
+    cateIndex = !Number.isNaN(category) ? OPEN_CHAT_CATEGORY.findIndex((el) => el[1] === category) : 0
+  }
+
+  let title0 = '';
+  switch (!!keyword) {
+    case true:
+      title0 = `「${keyword}」の検索結果｜`;
+      break;
+    default:
+      title0 = '';
+  }
+
+  let title1 = '';
+  switch (!!cateIndex) {
+    case true:
+      title1 = OPEN_CHAT_CATEGORY[cateIndex][0] + '｜';
+      break;
+    default:
+      title1 = title0 ? '' : '【毎日更新】';
+  }
+
+  let title3 = '';
+  switch (!!subCategory) {
+    case true:
+      title3 = subCategory + '｜';
+      break;
+    default:
+      title3 = '';
+  }
+
+  let title2 = '';
+  switch (params.list) {
+    case 'weekly':
+      title2 = '人数増加・1週間';
+      break;
+    case 'daily':
+      title2 = '人数増加・24時間';
+      break;
+    case 'hourly':
+      title2 = '人数増加・1時間';
+      break;
+    default:
+      title2 = '参加人数のランキング';
+  }
+
+  document.title = title0 + title1 + title3 + title2 + '｜オプチャグラフ';
 }
 
 export function validateStringNotEmpty(str: string) {

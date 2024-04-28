@@ -73,7 +73,7 @@ function HelpButton({ list, cateIndex, isSearch }: { list: ListParams['list']; c
   )
 }
 
-const weekdays = ['日', '月', '火', '水', '木', '金', '土']
+/* const weekdays = ['日', '月', '火', '水', '木', '金', '土'] */
 
 export default function OCListTitleDesc({
   list,

@@ -7,16 +7,16 @@ import { useSetListParams } from '../hooks/ListParamsHooks'
 export const rankingOptions2: SortOptions = [
   [['ランキング順', '並び順'], 'asc', 'rank'],
   [['増加数が多い順', '並び順'], 'desc', 'increase'],
-  /* [['増加数が少ない順', '並び順'], 'asc', 'increase'], */
+  [['増加数が少ない順', '並び順'], 'asc', 'increase'],
   [['増加率が高い順', '並び順'], 'desc', 'rate'],
-  /*  [['増加率が低い順', ''], 'asc', 'rate'], */
+  [['増加率が低い順', '並び順'], 'asc', 'rate'],
 ]
 
 export const allOptions2: SortOptions = [
   [['メンバー数が多い順', '並び順'], 'desc', 'member'],
-  /* [['メンバー数が少ない順', ''], 'asc', 'member'], */
-  [['作成日が新しい順', '並び順'], 'desc', 'created_at'],
-  [['作成日が古い順', '並び順'], 'asc', 'created_at'],
+  [['メンバー数が少ない順', '並び順'], 'asc', 'member'],
+  /*  [['作成日が新しい順', '並び順'], 'desc', 'created_at'], */
+  /* [['作成日が古い順', '並び順'], 'asc', 'created_at'], */
 ]
 
 export const OCListSortMenu = memo(function OCListSortMenu({
