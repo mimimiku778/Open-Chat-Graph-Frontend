@@ -37,11 +37,11 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
 
     const category = OPEN_CHAT_CATEGORY[newValue][1]
     const url = updateURLSearchParams({ ...params, sub_category: '' })
-    setTitle({ ...params, sub_category: '' }, newValue)
     const q = url.searchParams.toString()
-
+    
     setParams({ ...params, sub_category: '' })
     navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+    setTitle({ ...params, sub_category: '' }, newValue)
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
   }

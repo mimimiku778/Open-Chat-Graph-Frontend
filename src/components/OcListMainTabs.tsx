@@ -64,9 +64,9 @@ function OcListSwiper({
     setParams((params) => {
       const category = OPEN_CHAT_CATEGORY[newValue][1]
       const url = updateURLSearchParams({ ...params, sub_category: '' })
-      setTitle({ ...params, sub_category: '' }, newValue)
       const q = url.searchParams.toString()
       navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+      setTitle({ ...params, sub_category: '' }, newValue)
       return { ...params, sub_category: '' }
     })
 

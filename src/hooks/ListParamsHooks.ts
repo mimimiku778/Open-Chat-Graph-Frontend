@@ -49,8 +49,8 @@ export function useSetListParams(): SetListParamsValue {
         const currentParams = await snapshot.getPromise(listParamsState);
         const newParams = getValidListParams(new URLSearchParams(getNewParams(currentParams)))
 
-        setTitle(newParams)
         window.history.replaceState(null, '', updateURLSearchParams(newParams))
+        setTitle(newParams)
         set(listParamsState, newParams)
         setKeyword(newParams.keyword)
         scrollToTop()
