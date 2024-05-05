@@ -26,6 +26,10 @@ function EmblemIcon({ emblem }: { emblem: OpenChat['emblem'] }) {
   return <span className={`super-icon ${emblem === 1 ? 'sp' : 'official'}`}></span>
 }
 
+function LockIcon() {
+  return <span className={'lock-icon'}></span>
+}
+
 const formatMember = (n: number) => (n < 1000 ? n : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString())
 
 const getOcUrlParam = (listParam: ListParams['list']): string => {
@@ -48,6 +52,7 @@ export default function OpenChatListItem({
   member,
   img,
   emblem,
+  joinMethodType,
   category,
   symbolIncrease,
   increasedMember,
@@ -82,6 +87,7 @@ export default function OpenChatListItem({
       <h3>
         <a className="item-title-link" href={ocUrl}>
           {emblem !== 0 && <EmblemIcon emblem={emblem} />}
+          {joinMethodType !== 0 && <LockIcon />}
           {name}
         </a>
         {showNorth && <NorthIcon className="show-north" sx={{ fontSize: '14px', color: '#07B53B' }} />}

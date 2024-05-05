@@ -49,6 +49,7 @@ interface OpenChat {
   member: number
   img: string
   emblem: 0 | 1 | 2
+  joinMethodType: 0 | 1 | 2
   category: number
   symbolIncrease?: 'positive' | 'negative'
   increasedMember?: string
