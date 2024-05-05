@@ -87,7 +87,7 @@ export default function OpenChatListItem({
       <h3>
         <a className="item-title-link" href={ocUrl}>
           {emblem !== 0 && <EmblemIcon emblem={emblem} />}
-          {joinMethodType !== 0 && <LockIcon />}
+          {joinMethodType === 2 && <LockIcon />}
           {name}
         </a>
         {showNorth && <NorthIcon className="show-north" sx={{ fontSize: '14px', color: '#07B53B' }} />}
