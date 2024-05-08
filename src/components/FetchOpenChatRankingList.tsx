@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import useInfiniteFetchApi from '../hooks/InfiniteFetchApi'
 import { useRecoilValue } from 'recoil'
 import { listParamsState } from '../store/atom'
