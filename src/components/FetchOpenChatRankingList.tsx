@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
+import DisplayAds from './DisplayAds'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -74,6 +75,7 @@ const ListContext = memo(function ListContext({
   for (let i = curLen; i < dataLen; i++) {
     items.current[1][i] = (
       <li key={`${cateIndex}/${i}`} className="OpenChatListItem-outer">
+        {(i + 1) % 10 === 0 && <DisplayAds />}
         {(i + 1) % 10 === 0 && (
           <div className="record-count middle">
             <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
@@ -172,6 +174,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           useInViewRef={useInViewRef}
         />
       </div>
+      <DisplayAds />
     </div>
   )
 }
