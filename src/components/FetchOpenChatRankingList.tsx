@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo, useRef } from 'react'
 import useInfiniteFetchApi from '../hooks/InfiniteFetchApi'
 import { useRecoilValue } from 'recoil'
 import { listParamsState } from '../store/atom'
@@ -8,7 +8,6 @@ import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 import DisplayAds from './DisplayAds'
 import DisplayAdsHorizontal from './DisplayAdsHorizontal'
-import { Skeleton } from '@mui/material'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -77,7 +76,6 @@ const ListContext = memo(function ListContext({
   for (let i = curLen; i < dataLen; i++) {
     items.current[1][i] = (
       <li key={`${cateIndex}/${i}`} className="OpenChatListItem-outer">
-        {(i + 1) % 10 === 0 && <DisplayAds />}
         {(i + 1) % 10 === 0 && (
           <div className="record-count middle">
             <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
@@ -92,6 +90,7 @@ const ListContext = memo(function ListContext({
           cateIndex={cateIndex}
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
+        {(i + 1) % 10 === 0 && <DisplayAds />}
       </li>
     )
   }
@@ -135,8 +134,7 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <div className="google_ads_responsive_1" style={{ marginBottom: '1rem' }}>
-        </div>
+        <div className="google_ads_responsive_1" style={{ marginBottom: '1rem' }}></div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
