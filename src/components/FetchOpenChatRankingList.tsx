@@ -7,6 +7,8 @@ import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 import DisplayAds from './DisplayAds'
+import DisplayAdsHorizontal from './DisplayAdsHorizontal'
+import { Skeleton } from '@mui/material'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -133,6 +135,8 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
+        <div className="google_ads_responsive_1" style={{ marginBottom: '1rem' }}>
+        </div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
@@ -148,6 +152,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
 
   return (
     <div className="ranking-list">
+      <DisplayAdsHorizontal />
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount
