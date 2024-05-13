@@ -32,7 +32,6 @@ export function SiteTitleBtn() {
       <div className="header_site_title">
         <img src={`${rankingArgDto.baseUrl}/assets/icon-192x192.png`} alt="" />
         <h1>オプチャグラフ</h1>
-        <BetaIcon />
       </div>
     </Button>
   )
@@ -54,16 +53,12 @@ export default function SiteHeader({
         headerInnerStyle={{
           padding: '0 1rem',
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
         }}
         searchFormStyle={{ margin: '0 1rem' }}
       >
         <Box sx={{ display: 'flex' }}>
           <SiteTitleBtn />
-          <div className="refresh-time">
-            <div className="refresh-icon"></div>
-            <time>{rankingArgDto.rankingUpdatedAt}</time>
-          </div>
         </Box>
       </SiteHeaderSearch>
       {children}

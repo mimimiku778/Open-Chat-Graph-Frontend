@@ -183,7 +183,6 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           useInViewRef={useInViewRef}
         />
       </div>
-      <DisplayAds />
     </div>
   )
 }
