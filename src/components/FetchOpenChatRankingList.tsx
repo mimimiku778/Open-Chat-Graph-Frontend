@@ -76,21 +76,25 @@ const ListContext = memo(function ListContext({
   for (let i = curLen; i < dataLen; i++) {
     items.current[1][i] = (
       <li key={`${cateIndex}/${i}`} className="OpenChatListItem-outer">
-        {(i + 1) % 10 === 0 && (
-          <div className="record-count middle">
-            <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
-            <span>
-              {totalCount}中 {(i + 1).toLocaleString()} 件目
-            </span>
-          </div>
-        )}
         <ListItem
           listParam={list}
           {...data[i]}
           cateIndex={cateIndex}
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
-        {(i + 1) % 10 === 0 && <DisplayAds />}
+        {(i + 1) % 10 === 0 && (
+          <div className="record-count middle">
+            <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
+            <span>
+              {totalCount}中 {(i + 2).toLocaleString()} 件目〜
+            </span>
+          </div>
+        )}
+        {(i + 1) % 10 === 0 && (
+          <div style={{ marginBottom: '2rem' }}>
+            <DisplayAds />
+          </div>
+        )}
       </li>
     )
   }
@@ -150,7 +154,9 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
 
   return (
     <div className="ranking-list">
-      <DisplayAdsHorizontal />
+      <div style={{ marginBottom: '1rem' }}>
+        <DisplayAds />
+      </div>
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount
