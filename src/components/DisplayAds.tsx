@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function DisplayAds() {
+export default function DisplayAds({ aspectRatio }: { aspectRatio?: string }) {
   const pushed = useRef(false)
 
   useEffect(() => {
@@ -13,10 +13,10 @@ export default function DisplayAds() {
   return (
     <ins
       className="adsbygoogle"
-      style={{ display: 'block' }}
+      style={{ display: 'block', aspectRatio }}
       data-ad-client="ca-pub-2330982526015125"
       data-ad-slot="8037531176"
-      data-ad-format="rectangle"
+      data-ad-format={`${aspectRatio ? 'rectangle' : 'rectangle'}`}
       data-full-width-responsive="false"
     ></ins>
   )

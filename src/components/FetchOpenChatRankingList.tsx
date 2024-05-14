@@ -7,7 +7,6 @@ import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 import DisplayAds from './DisplayAds'
-import DisplayAdsHorizontal from './DisplayAdsHorizontal'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -91,8 +90,8 @@ const ListContext = memo(function ListContext({
           </div>
         )}
         {(i + 1) % 10 === 0 && (
-          <div style={{ marginBottom: '2rem' }}>
-            <DisplayAds />
+          <div style={{ margin: '0 -1rem 2rem -1rem' }}>
+            <DisplayAds aspectRatio="1.6" />
           </div>
         )}
       </li>
@@ -154,8 +153,8 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
 
   return (
     <div className="ranking-list">
-      <div style={{ marginBottom: '1rem' }}>
-        <DisplayAds />
+      <div style={{ margin: '-1rem -1rem 1rem -1rem' }}>
+        <DisplayAds aspectRatio="1.6" />
       </div>
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
