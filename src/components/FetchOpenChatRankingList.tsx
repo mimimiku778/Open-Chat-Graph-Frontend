@@ -97,7 +97,7 @@ const ListContext = memo(function ListContext({
         )}
       </li>
     )
-  } 
+  }
 
   return <ol className="openchat-item-container">{items.current[1]}</ol>
 })
@@ -112,6 +112,7 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
   return (
     <div>
       <OCListTotalCount totalCount={totalCount} cateIndex={cateIndex} keyword={params.keyword} subCategory="" />
+      <div className="rectangle-ads" style={{ margin: '1rem -1rem 0 -1rem', aspectRatio: 2.4 }}></div>
       <div className="OpenChatListItem-outer">
         <ol className="openchat-item-container" style={data ? undefined : dummyContainerStyle}>
           {data ? (
@@ -138,7 +139,6 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <div className="rectangle-ads" style={{ margin: '-1rem -1rem 1rem -1rem', aspectRatio: 2.4 }}></div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
@@ -154,9 +154,6 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
 
   return (
     <div className="ranking-list">
-      <div style={{ margin: '-1rem -1rem 1rem -1rem' }}>
-        <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
-      </div>
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount
@@ -165,6 +162,9 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           subCategory={params.sub_category}
           keyword={params.keyword}
         />
+        <div style={{ margin: '1rem -1rem 0 -1rem' }}>
+          <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
+        </div>
         {data && (
           <ListContext
             cateIndex={cateIndex}

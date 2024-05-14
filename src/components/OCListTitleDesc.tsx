@@ -88,7 +88,7 @@ export default function OCListTitleDesc({
 }) {
   const matches = useMediaQuery('(min-width:600px)') // 599px以下で false
   const divCss: React.CSSProperties = { display: 'flex', flexWrap: 'wrap' }
-  const outer: React.CSSProperties = { ...divCss, marginBottom: '.5rem' }
+  const outer: React.CSSProperties = { ...divCss }
   const inner: React.CSSProperties = { ...divCss, gap: '4px' }
   const p = { fontWeight: 700, fontSize: matches ? '17px' : '15px' }
 
@@ -118,10 +118,7 @@ export default function OCListTitleDesc({
         <div style={outer}>
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
-            <Typography
-              children={`過去24時間 (${hourly.getHours()}:${hourly.getMinutes()})`}
-              sx={p}
-            />
+            <Typography children={`過去24時間 (${hourly.getHours()}:${hourly.getMinutes()})`} sx={p} />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
           </div>
         </div>
@@ -133,7 +130,9 @@ export default function OCListTitleDesc({
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`1週間 (${past.getMonth() + 1}/${past.getDate()}〜${updatedAt.getMonth() + 1}/${updatedAt.getDate()})`}
+              children={`1週間 (${past.getMonth() + 1}/${past.getDate()}〜${
+                updatedAt.getMonth() + 1
+              }/${updatedAt.getDate()})`}
               sx={p}
             />
             {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
