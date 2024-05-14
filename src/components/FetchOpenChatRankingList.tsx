@@ -91,7 +91,7 @@ const ListContext = memo(function ListContext({
         )}
         {(i + 1) % 10 === 0 && (
           <div style={{ margin: '0 -1rem 2rem -1rem' }}>
-            <DisplayAds aspectRatio="1.6" />
+            <DisplayAds aspectRatio="1.6" dataAdSlot={4900780682} />
           </div>
         )}
       </li>
@@ -154,7 +154,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   return (
     <div className="ranking-list">
       <div style={{ margin: '-1rem -1rem 1rem -1rem' }}>
-        <DisplayAds aspectRatio="1.6" />
+        <DisplayAds aspectRatio="1.6" dataAdSlot={4394434097} />
       </div>
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
