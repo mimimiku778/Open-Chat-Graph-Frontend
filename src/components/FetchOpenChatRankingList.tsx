@@ -7,6 +7,7 @@ import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 import DisplayAds from './DisplayAds'
+import DisplayAdsResponsive from './DisplayAdsResponsive'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -91,12 +92,12 @@ const ListContext = memo(function ListContext({
         )}
         {(i + 1) % 10 === 0 && (
           <div style={{ margin: '0 -1rem 2rem -1rem' }}>
-            <DisplayAds aspectRatio="1.6" dataAdSlot={4900780682} />
+            <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads" />
           </div>
         )}
       </li>
     )
-  }
+  } 
 
   return <ol className="openchat-item-container">{items.current[1]}</ol>
 })
@@ -137,7 +138,7 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <div className="google_ads_responsive_1" style={{ marginBottom: '1rem' }}></div>
+        <div className="rectangle-ads" style={{ margin: '-1rem -1rem 1rem -1rem', aspectRatio: 2.4 }}></div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
@@ -154,7 +155,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   return (
     <div className="ranking-list">
       <div style={{ margin: '-1rem -1rem 1rem -1rem' }}>
-        <DisplayAds aspectRatio="1.6" dataAdSlot={4394434097} />
+        <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
       </div>
       <div className="div-fetchOpenChatRankingList">
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />

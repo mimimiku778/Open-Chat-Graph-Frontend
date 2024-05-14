@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function DisplayAds({ dataAdSlot, adsClass }: { dataAdSlot: number; adsClass: string }) {
+export default function DisplayAdsResponsive({ dataAdSlot, adsClass }: { dataAdSlot: number; adsClass: string }) {
   const pushed = useRef(false)
 
   useEffect(() => {
@@ -16,6 +16,8 @@ export default function DisplayAds({ dataAdSlot, adsClass }: { dataAdSlot: numbe
       style={{ display: 'block' }}
       data-ad-client="ca-pub-2330982526015125"
       data-ad-slot={dataAdSlot}
+      data-ad-format="rectangle"
+      data-full-width-responsive="false"
     ></ins>
   )
 }
