@@ -101,7 +101,7 @@ function OcListSwiper({
         <SwiperSlide key={i}>
           <div
             style={{
-              padding: '0.5rem 1rem 1rem 1rem',
+              padding: '1rem 1rem 1rem 1rem',
               marginTop: '95px',
               minHeight: 'calc(100svh - 191px)',
               width: '100%',

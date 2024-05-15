@@ -7,7 +7,6 @@ import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
 import DisplayAds from './DisplayAds'
-import DisplayAdsResponsive from './DisplayAdsResponsive'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -112,7 +111,7 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
   return (
     <div>
       <OCListTotalCount totalCount={totalCount} cateIndex={cateIndex} keyword={params.keyword} subCategory="" />
-      <div className="rectangle-ads" style={{ margin: '1rem -1rem 0 -1rem', aspectRatio: 2.4 }}></div>
+      {/* <div className="rectangle-ads" style={{ margin: '1rem -1rem 0 -1rem', aspectRatio: 2.4 }}></div> */}
       <div className="OpenChatListItem-outer">
         <ol className="openchat-item-container" style={data ? undefined : dummyContainerStyle}>
           {data ? (
