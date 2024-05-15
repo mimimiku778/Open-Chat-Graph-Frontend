@@ -49,6 +49,7 @@ const ListContext = memo(function ListContext({
   sort,
   data,
   query,
+  totalCountNum,
 }: {
   cateIndex: number
   list: ListParams['list']
@@ -56,6 +57,7 @@ const ListContext = memo(function ListContext({
   sort: ListParams['sort']
   data: OpenChat[]
   query: string
+  totalCountNum: number
 }) {
   const items = useRef<[String, React.JSX.Element[]]>(['', []])
 
@@ -81,7 +83,7 @@ const ListContext = memo(function ListContext({
           cateIndex={cateIndex}
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
-        {(i + 1) % 10 === 0 && (
+        {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
           <div className="record-count middle">
             <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
             <span>
@@ -91,7 +93,7 @@ const ListContext = memo(function ListContext({
         )}
         {(i + 1) % 10 === 0 && (
           <div style={{ margin: '0 -1rem 2rem -1rem' }}>
-            <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads" />
+            {/*  <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads" /> */}
           </div>
         )}
       </li>
@@ -150,6 +152,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   const params = useRecoilValue(listParamsState)
 
   const totalCount = data?.length === 0 ? '0 件' : data ? data[0].totalCount!.toLocaleString() + ' 件' : ''
+  const totalCountNum = data?.length === 0 ? 0 : data ? data[0].totalCount! : 0
 
   return (
     <div className="ranking-list">
@@ -161,13 +164,14 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           subCategory={params.sub_category}
           keyword={params.keyword}
         />
-        <div style={{ margin: '1rem -1rem 0 -1rem' }}>
+        {/* <div style={{ margin: '1rem -1rem 0 -1rem' }}>
           <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
-        </div>
+        </div> */}
         {data && (
           <ListContext
             cateIndex={cateIndex}
             totalCount={totalCount}
+            totalCountNum={totalCountNum}
             data={data}
             list={params.list}
             sort={params.sort}
