@@ -108,10 +108,10 @@ export default function OCListTitleDesc({
   const past = new Date(rankingArgDto.modifiedUpdatedAtDate.replaceAll('-', '/'))
   const hourly = new Date(rankingArgDto.hourlyUpdatedAt.replaceAll('-', '/'))
   const hourlyPast = new Date(rankingArgDto.hourlyUpdatedAt.replaceAll('-', '/'))
+  hourlyPast.setHours(hourly.getHours() - 1)
 
   switch (list) {
     case 'hourly':
-      hourlyPast.setHours(hourly.getHours() - 1)
       return (
         <div style={outer}>
           <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
