@@ -1,6 +1,6 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import FetchOpenChatRankingList from './FetchOpenChatRankingList'
 import { samePageLinkNavi, scrollToTop, setTitle, updateURLSearchParams } from '../utils/utils'
@@ -31,6 +31,7 @@ function LinkTab(props: { label?: string; href?: string }) {
 export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: number }) {
   const navigate = useNavigate()
   const [params, setParams] = useRecoilState(listParamsState)
+  const location = useLocation()
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
@@ -38,9 +39,9 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
     const category = OPEN_CHAT_CATEGORY[newValue][1]
     const url = updateURLSearchParams({ ...params, sub_category: '' })
     const q = url.searchParams.toString()
-    
+
     setParams({ ...params, sub_category: '' })
-    navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+    navigate(`${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
     setTitle({ ...params, sub_category: '' }, newValue)
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
@@ -83,7 +84,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`/ranking${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab label={el[0]} href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`} key={i} />
           ))}
         </Tabs>
       </Box>

@@ -2,14 +2,27 @@ import React, { memo } from 'react'
 import { Chip, Stack } from '@mui/material'
 import { useSetListParams } from '../hooks/ListParamsHooks'
 
-const toggleButtons: [ListParams['list'], string][] = [
+type ToggleButtons = [ListParams['list'], string][]
+
+export const toggleButtons: ToggleButtons = [
   ['hourly', '1時間'],
   ['daily', '24時間'],
   ['weekly', '1週間'],
   ['all', '全体'],
 ]
 
-const ListToggleChips = memo(function ListToggleButton({ list }: { list: ListParams['list'] }) {
+export const officialButtons: ToggleButtons = [
+  ['rising', '急上昇'],
+  ['ranking', 'ランキング'],
+]
+
+const ListToggleChips = memo(function ListToggleButton({
+  list,
+  toggleButtons,
+}: {
+  list: ListParams['list']
+  toggleButtons: ToggleButtons
+}) {
   const setParams = useSetListParams()
   const handleChange = (newList: ListParams['list']) => {
     newList && setParams((params) => ({ ...params, list: newList, order: '', sort: '' }))
@@ -21,12 +34,7 @@ const ListToggleChips = memo(function ListToggleButton({ list }: { list: ListPar
         list === el[0] ? (
           <Chip key={i} label={el[1]} className="openchat-item-header-chip selected" sx={{ cursor: 'default' }} />
         ) : (
-          <Chip
-            key={i}
-            label={el[1]}
-            onClick={() => handleChange(el[0])}
-            className="openchat-item-header-chip"
-          />
+          <Chip key={i} label={el[1]} onClick={() => handleChange(el[0])} className="openchat-item-header-chip" />
         )
       )}
     </Stack>

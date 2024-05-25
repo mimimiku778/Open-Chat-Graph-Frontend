@@ -3,6 +3,9 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { Box, IconButton, Input } from '@mui/material'
 import useSiteHeaderSearch from '../hooks/useSiteHeaderSearch'
 import { rankingArgDto } from '../config/config'
+import { listParamsState } from '../store/atom'
+import { useRecoilValue } from 'recoil'
+import { toggleButtons } from './ListToggleChips'
 
 export default function SiteHeaderSearch({
   children,
@@ -30,6 +33,16 @@ export default function SiteHeaderSearch({
     handleCompositionStart,
     handleCompositionEnd,
   } = useSiteHeaderSearch(siperSlideTo)
+
+  const params = useRecoilValue(listParamsState)
+  if (!toggleButtons.find((el) => el[0] === params.list))
+    return (
+      <header className="site_header_outer" id="site_header">
+        <div className="site_header" style={{ ...headerInnerStyle, display: open ? 'none' : undefined }}>
+          {children}
+        </div>
+      </header>
+    )
 
   return (
     <header className="site_header_outer" id="site_header">

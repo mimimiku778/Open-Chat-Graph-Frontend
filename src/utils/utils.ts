@@ -72,7 +72,7 @@ export function setTitle(params: ListParams, cateIndex?: number) {
       title1 = OPEN_CHAT_CATEGORY[cateIndex][0] + '｜';
       break;
     default:
-      title1 = title0 ? '' : '【毎日更新】';
+      title1 = title0 ? '' : '【最新】';
   }
 
   let title3 = '';
@@ -95,8 +95,14 @@ export function setTitle(params: ListParams, cateIndex?: number) {
     case 'hourly':
       title2 = '人数増加・1時間';
       break;
-    default:
+    case 'all':
       title2 = '参加人数のランキング';
+      break;
+    case 'ranking':
+      title2 = '公式ランキング(1時間前)';
+      break
+    case 'rising':
+      title2 = '公式急上昇(1時間前)';
   }
 
   document.title = title0 + title1 + title3 + title2 + '｜オプチャグラフ';

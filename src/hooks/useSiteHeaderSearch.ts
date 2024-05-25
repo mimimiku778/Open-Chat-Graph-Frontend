@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { scrollToTop, validateStringNotEmpty } from '../utils/utils'
 import { useSetListParams } from './ListParamsHooks'
 import { useRecoilValue } from 'recoil'
@@ -15,6 +15,7 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
   const isCompositionStart = useRef<boolean>(false);
   const [inputEmpty, setInputEmpty] = useState(true)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleCompositionStart = useCallback(() => {
     setInputEmpty(true)
@@ -84,7 +85,7 @@ export default function useSiteHeaderSearch(siperSlideTo?: ((index: number) => v
     } else {
       setParams((params) => {
         const p: ListParams = { ...params, keyword, sub_category: '', list: 'all', sort: 'member', order: 'desc' }
-        navigate(`/ranking?${new URLSearchParams(p).toString()}`, { replace: true })
+        navigate(`${'/' + location.pathname.split('/')[1]}?${new URLSearchParams(p).toString()}`, { replace: true })
         return p
       })
       scrollToTop()

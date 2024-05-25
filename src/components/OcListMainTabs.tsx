@@ -1,6 +1,6 @@
 import { OPEN_CHAT_CATEGORY } from '../config/config'
 import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -51,8 +51,8 @@ function OcListSwiper({
   const [tIndex, setTIndex] = useState<[number, string] | null>(null)
   const { ref: prevRef, inView: prevInView } = useInView()
   const { ref: nextRef, inView: nextInView } = useInView()
+  const location = useLocation()
 
-  
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
   currentIndex.current = cateIndex
@@ -65,7 +65,7 @@ function OcListSwiper({
       const category = OPEN_CHAT_CATEGORY[newValue][1]
       const url = updateURLSearchParams({ ...params, sub_category: '' })
       const q = url.searchParams.toString()
-      navigate(`/ranking${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+      navigate(`${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
       setTitle({ ...params, sub_category: '' }, newValue)
       return { ...params, sub_category: '' }
     })
@@ -140,6 +140,7 @@ function OcListSwiper({
 
 export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
   const swiperRef = useRef<SwiperCore | null>(null)
+  const location = useLocation()
 
   const handleChange = useCallback((e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
@@ -164,7 +165,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`/ranking${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab label={el[0]} href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`} key={i} />
           ))}
         </Tabs>
       </SiteHeader>

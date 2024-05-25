@@ -63,7 +63,7 @@ type ListParams = {
   keyword: string
   order: 'asc' | 'desc' | '',
   sort: 'rank' | 'member' | 'increase' | 'rate' | 'created_at' | '',
-  list: 'hourly' | 'daily' | 'weekly' | 'all',
+  list: 'hourly' | 'daily' | 'weekly' | 'all' | 'ranking' | 'rising',
 }
 
 type ListParamsKey = keyof ListParams

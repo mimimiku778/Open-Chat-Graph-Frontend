@@ -3,6 +3,9 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { Box, IconButton, Input } from '@mui/material'
 import useSiteHeaderSearch from '../hooks/useSiteHeaderSearch'
 import { rankingArgDto } from '../config/config'
+import { toggleButtons } from './ListToggleChips'
+import { listParamsState } from '../store/atom'
+import { useRecoilValue } from 'recoil'
 
 export default function SiteHeaderVerticalSearch() {
   const {
@@ -20,6 +23,9 @@ export default function SiteHeaderVerticalSearch() {
     handleCompositionStart,
     handleCompositionEnd,
   } = useSiteHeaderSearch()
+
+  const params = useRecoilValue(listParamsState)
+  if (!toggleButtons.find((el) => el[0] === params.list)) return null
 
   return (
     <div style={{ position: 'absolute', top: 0, right: '1rem' }}>

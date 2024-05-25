@@ -38,9 +38,7 @@ const getOcUrlParam = (listParam: ListParams['list']): string => {
       return '?limit=hour'
     case 'daily':
       return '?limit=hour'
-    case 'weekly':
-      return ''
-    case 'all':
+    default:
       return ''
   }
 }
