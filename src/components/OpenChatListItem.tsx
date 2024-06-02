@@ -32,16 +32,16 @@ function LockIcon() {
 
 const formatMember = (n: number) => (n < 1000 ? n : n >= 10000 ? (n / 10000).toFixed(1) + '万' : n.toLocaleString())
 
-const getOcUrlParam = (listParam: ListParams['list']): string => {
+const getOcUrlParam = (listParam: ListParams['list'], cateIndex: number): string => {
   switch (listParam) {
     case 'hourly':
       return '?limit=hour'
     case 'daily':
       return '?limit=hour'
     case 'ranking':
-      return '?bar=ranking&limit=hour'
+      return `?bar=ranking&limit=hour${cateIndex === 0 ? '&category=all' : ''}`
     case 'rising':
-      return '?bar=rising&limit=hour'
+      return `?bar=rising&limit=hour${cateIndex === 0 ? '&category=all' : ''}`
     default:
       return ''
   }
@@ -68,7 +68,7 @@ export default function OpenChatListItem({
   listParam: ListParams['list']
   showNorth: boolean
 }) {
-  const ocUrl = `${rankingArgDto.baseUrl}/oc/${id}${getOcUrlParam(listParam)}`
+  const ocUrl = `${rankingArgDto.baseUrl}/oc/${id}${getOcUrlParam(listParam, cateIndex)}`
 
   return (
     <div className="openchat-item">
