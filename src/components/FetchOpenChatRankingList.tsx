@@ -93,7 +93,7 @@ const ListContext = memo(function ListContext({
         )}
         {(i + 1) % 10 === 0 && (
           <div style={{ margin: '0 -1rem 2rem -1rem' }}>
-            {/*  <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads" /> */}
+             <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads" />
           </div>
         )}
       </li>
@@ -113,7 +113,7 @@ function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number
   return (
     <div>
       <OCListTotalCount totalCount={totalCount} cateIndex={cateIndex} keyword={params.keyword} subCategory="" />
-      {/* <div className="rectangle-ads" style={{ margin: '1rem -1rem 0 -1rem', aspectRatio: 2.4 }}></div> */}
+      <div className="rectangle-ads" style={{ margin: '1rem -1rem 0 -1rem', aspectRatio: 2.4 }}></div>
       <div className="OpenChatListItem-outer">
         <ol className="openchat-item-container" style={data ? undefined : dummyContainerStyle}>
           {data ? (
@@ -164,9 +164,9 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
           subCategory={params.sub_category}
           keyword={params.keyword}
         />
-        {/* <div style={{ margin: '1rem -1rem 0 -1rem' }}>
+        <div style={{ margin: '1rem -1rem 0 -1rem' }}>
           <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
-        </div> */}
+        </div>
         {data && (
           <ListContext
             cateIndex={cateIndex}
