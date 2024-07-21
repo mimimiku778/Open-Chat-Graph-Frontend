@@ -11,13 +11,14 @@ export default function DisplayAdsResponsive({ dataAdSlot, adsClass }: { dataAdS
   }, [])
 
   return (
-    <ins
+    /*     <ins
       className={`adsbygoogle ${adsClass}`}
       style={{ display: 'block' }}
       data-ad-client="ca-pub-2330982526015125"
       data-ad-slot={dataAdSlot}
       data-ad-format="rectangle"
       data-full-width-responsive="false"
-    ></ins>
+    ></ins> */
+    <></>
   )
 }
