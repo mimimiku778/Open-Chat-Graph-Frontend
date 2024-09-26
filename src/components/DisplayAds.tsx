@@ -11,12 +11,11 @@ export default function DisplayAds({ dataAdSlot, adsClass }: { dataAdSlot: numbe
   }, [])
 
   return (
-    /*     <ins
+    <ins
       className={`adsbygoogle ${adsClass}`}
       style={{ display: 'block' }}
       data-ad-client="ca-pub-2330982526015125"
       data-ad-slot={dataAdSlot}
-    ></ins> */
-    <></>
+    ></ins>
   )
 }
