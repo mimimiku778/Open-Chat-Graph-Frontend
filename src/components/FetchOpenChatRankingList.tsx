@@ -84,18 +84,20 @@ const ListContext = memo(function ListContext({
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
         {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
-          <div className="record-count middle">
-            <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
-            <span>
-              {totalCount}中 {(i + 2).toLocaleString()} 件目〜
-            </span>
+          <div style={{ marginBottom: '2rem' }}>
+            <div className="record-count middle">
+              <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
+              <span>
+                {totalCount}中 {(i + 2).toLocaleString()} 件目〜
+              </span>
+            </div>
           </div>
         )}
-        {(i + 1) % 5 === 0 && (
-          <div style={{ margin: `-8px -1rem ${(i + 1) % 10 === 0 ? '2rem' : '-8px'} -1rem` }}>
+        {/* {(i + 1) % 5 === 0 && (
+          <div style={{ margin: `-8px 0rem ${(i + 1) % 10 === 0 ? '2rem' : '-8px'} 0rem` }}>
             <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads-2" />
           </div>
-        )}
+        )} */}
       </li>
     )
   }
@@ -139,7 +141,7 @@ export function DummyOpenChatRankingList({ query, cateIndex }: { query: string; 
         className="div-fetchOpenChatRankingList"
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <div className="rectangle-ads" style={{ margin: '-1rem -1rem 8px -1rem' }}></div>
+        <div className="rectangle-ads" style={{ margin: '-8px 0rem 8px 0rem' }}></div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} visibility={false} />
         <FetchDummyList cateIndex={cateIndex} query={query} />
       </div>
@@ -157,7 +159,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
   return (
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">
-        <div style={{ margin: '-1rem -1rem 8px -1rem' }}>
+        <div style={{ margin: '-8px 0rem 8px 0rem' }}>
           <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
         </div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
