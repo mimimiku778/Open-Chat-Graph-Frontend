@@ -160,7 +160,7 @@ export function FetchOpenChatRankingList({ query, cateIndex }: { query: string; 
     <div className="ranking-list">
       <div className="div-fetchOpenChatRankingList">
         <div style={{ margin: '-8px 0rem 8px 0rem' }}>
-          <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" />
+          <DisplayAds dataAdSlot={4394434097} adsClass="rectangle-ads" show={!!data?.length} />
         </div>
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react'
 
-export default function DisplayAds({ dataAdSlot, adsClass }: { dataAdSlot: number; adsClass: string }) {
+export default function DisplayAds({ dataAdSlot, adsClass, show }: { dataAdSlot: number; adsClass: string; show: boolean }) {
   const pushed = useRef(false)
 
   useEffect(() => {
-    if ((window as any).adsbygoogle && process.env.NODE_ENV !== 'development' && !pushed.current) {
+    if ((window as any).adsbygoogle && process.env.NODE_ENV !== 'development' && !pushed.current && show) {
       ;(window as any).adsbygoogle.push({})
       pushed.current = true
     }
-  }, [])
+  }, [show])
 
   return (
     <ins
