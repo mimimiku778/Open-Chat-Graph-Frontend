@@ -17,7 +17,7 @@ function TabPanel({ children, value, index }: TabPanelProps) {
 function LinkTab(props: { label?: string; href?: string }) {
   return (
     <Tab
-      component="a"
+      component='a'
       onClick={(e: LinkEvent) => {
         if (samePageLinkNavi(e)) {
           e.preventDefault()
@@ -41,7 +41,12 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
     const q = url.searchParams.toString()
 
     setParams({ ...params, sub_category: '' })
-    navigate(`${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+    navigate(
+      `${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${
+        q ? '?' + q : ''
+      }`,
+      { replace: true }
+    )
     setTitle({ ...params, sub_category: '' }, newValue)
     scrollToTop()
     scrollToTop('.hide-scrollbar-x')
@@ -57,25 +62,28 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
   const siteHeaderHeight = '72px'
 
   return (
-    <Box sx={{ maxWidth, display: 'flex', justifyContent: 'center', margin: '0 auto', overflowX: 'clip' }}>
+    <Box
+      sx={{
+        maxWidth,
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0 auto',
+        overflowX: 'clip',
+      }}
+    >
       <Box sx={{ minWidth: tabsWidth }}>
-        <Box
-          sx={{
-            position: 'sticky',
-            top: 0,
-          }}
-        >
+        <Box sx={{ position: 'sticky', top: 0 }}>
           <SiteHeaderVertical height={siteHeaderHeight} />
         </Box>
         <Tabs
-          className="category-tab-pc"
+          className='category-tab-pc'
           value={cateIndex}
           onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
+          variant='scrollable'
+          scrollButtons='auto'
           allowScrollButtonsMobile={true}
-          aria-label="オープンチャットのカテゴリータブ"
-          orientation="vertical"
+          aria-label='オープンチャットのカテゴリータブ'
+          orientation='vertical'
           sx={{
             minWidth: tabsWidth,
             height: `calc(100% - ${siteHeaderHeight} - 2rem)`,
@@ -84,7 +92,11 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab
+              label={el[0]}
+              href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`}
+              key={i}
+            />
           ))}
         </Tabs>
       </Box>

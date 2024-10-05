@@ -84,7 +84,7 @@ const ListContext = memo(function ListContext({
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
         {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
-          <div style={{ marginBottom: '2rem' }}>
+          <div /* style={{ marginBottom: '2rem' }} */>
             <div className="record-count middle">
               <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
               <span>
@@ -93,11 +93,11 @@ const ListContext = memo(function ListContext({
             </div>
           </div>
         )}
-        {/* {(i + 1) % 5 === 0 && (
+        {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
           <div style={{ margin: `-8px 0rem ${(i + 1) % 10 === 0 ? '2rem' : '-8px'} 0rem` }}>
-            <DisplayAds dataAdSlot={4900780682} adsClass="rectangle-ads-2" />
+            <DisplayAds dataAdSlot={7829593055} adsClass="rectangle2-ads" show />
           </div>
-        )} */}
+        )}
       </li>
     )
   }

@@ -6,7 +6,13 @@ import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import FetchOpenChatRankingList, { DummyOpenChatRankingList } from './FetchOpenChatRankingList'
-import { isSP, samePageLinkNavi, scrollToTop, setTitle, updateURLSearchParams } from '../utils/utils'
+import {
+  isSP,
+  samePageLinkNavi,
+  scrollToTop,
+  setTitle,
+  updateURLSearchParams,
+} from '../utils/utils'
 import { CategoryListAppBar } from './CategoryListAppBar'
 import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
@@ -16,7 +22,7 @@ import { useInView } from 'react-intersection-observer'
 function LinkTab(props: { label?: string; href?: string }) {
   return (
     <Tab
-      component="a"
+      component='a'
       onClick={(e: LinkEvent) => {
         if (samePageLinkNavi(e)) {
           e.preventDefault()
@@ -53,6 +59,7 @@ function OcListSwiper({
   const { ref: nextRef, inView: nextInView } = useInView()
   const location = useLocation()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
 
   currentIndex.current = cateIndex
@@ -65,12 +72,18 @@ function OcListSwiper({
       const category = OPEN_CHAT_CATEGORY[newValue][1]
       const url = updateURLSearchParams({ ...params, sub_category: '' })
       const q = url.searchParams.toString()
-      navigate(`${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${q ? '?' + q : ''}`, { replace: true })
+      navigate(
+        `${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${
+          q ? '?' + q : ''
+        }`,
+        { replace: true }
+      )
       setTitle({ ...params, sub_category: '' }, newValue)
       return { ...params, sub_category: '' }
     })
 
-    scrollToTop('.hide-scrollbar-x')
+    scrollToTop()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (tIndex && !scrollY.current) {
@@ -92,7 +105,9 @@ function OcListSwiper({
       initialSlide={initialIndex.current}
       simulateTouch={true}
       onSlideChange={onSlideChange}
-      onSlideChangeTransitionStart={() => setTIndex([cateIndex, getQuery(cateIndex, cateIndex, params)])}
+      onSlideChangeTransitionStart={() =>
+        setTIndex([cateIndex, getQuery(cateIndex, cateIndex, params)])
+      }
       onSlideChangeTransitionEnd={() => setTIndex(null)}
       onSwiper={onSwiper}
       speed={260}
@@ -117,17 +132,30 @@ function OcListSwiper({
               } else if (tIndex && i === tIndex[0]) {
                 return <OpenChatRankingList query={tIndex[1]} cateIndex={i} />
               } else if (!tIndex && prevInView && i === cateIndex - 1) {
-                return <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
+                return (
+                  <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
+                )
               } else if (!tIndex && nextInView && i === cateIndex + 1) {
-                return <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
+                return (
+                  <DummyOpenChatRankingList query={getQuery(i, cateIndex, params)} cateIndex={i} />
+                )
               }
             })()}
             {i === cateIndex && (
-              <div style={{ position: 'absolute', top: 0, left: '-2px', width: '1px', height: '100%' }} ref={prevRef} />
+              <div
+                style={{ position: 'absolute', top: 0, left: '-2px', width: '1px', height: '100%' }}
+                ref={prevRef}
+              />
             )}
             {i === cateIndex && (
               <div
-                style={{ position: 'absolute', top: 0, right: '-2px', width: '1px', height: '100%' }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: '-2px',
+                  width: '1px',
+                  height: '100%',
+                }}
                 ref={nextRef}
               />
             )}
@@ -153,19 +181,23 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
 
   return (
     <Box>
-      <SiteHeader siperSlideTo={siperSlideTo} height="96px">
+      <SiteHeader siperSlideTo={siperSlideTo} height='96px'>
         <Tabs
-          className="fix-min-width category-tab"
+          className='fix-min-width category-tab'
           value={cateIndex}
           onChange={handleChange}
-          variant="scrollable"
+          variant='scrollable'
           scrollButtons={true}
           allowScrollButtonsMobile={!isSP()}
-          aria-label="オープンチャットのカテゴリータブ"
+          aria-label='オープンチャットのカテゴリータブ'
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (
-            <LinkTab label={el[0]} href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`} key={i} />
+            <LinkTab
+              label={el[0]}
+              href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`}
+              key={i}
+            />
           ))}
         </Tabs>
       </SiteHeader>
