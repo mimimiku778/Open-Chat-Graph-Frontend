@@ -28,19 +28,24 @@ const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
   }, [])
 
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction='row' spacing={1}>
       {existsProp &&
         rankingArgDto.subCategories[category as SubCategoryKey].map((el, i) =>
           sub_category === el ? (
             <Chip
               key={i}
               label={el}
-              className="openchat-item-header-chip category selected"
+              className='openchat-item-header-chip category selected'
               onClick={() => handleChange('')}
               ref={selectedRef}
             />
           ) : (
-            <Chip key={i} label={el} className="openchat-item-header-chip category" onClick={() => handleChange(el)} />
+            <Chip
+              key={i}
+              label={el}
+              className='openchat-item-header-chip category'
+              onClick={() => handleChange(el)}
+            />
           )
         )}
     </Stack>
@@ -77,17 +82,32 @@ function SubCategoryChipsPC(props: SubCategoryChipsProps) {
     <div style={{ position: 'relative', width: '100%' }}>
       {isLeftScrollable && (
         <Box sx={{ ...chevronBradientBoxSx(90) }}>
-          <Button color="inherit" aria-label="left scroll" onClick={onClickArrow(250)} sx={buttonSx}>
+          <Button
+            color='inherit'
+            aria-label='left scroll'
+            onClick={onClickArrow(250)}
+            sx={buttonSx}
+          >
             <ChevronLeft sx={chevronSx} />
           </Button>
         </Box>
       )}
-      <Toolbar className="hide-scrollbar-x" {...events} ref={ref} style={{ minHeight: 48, cursor: 'grab' }}>
+      <Toolbar
+        className='hide-scrollbar-x'
+        {...events}
+        ref={ref}
+        style={{ minHeight: 48, cursor: 'grab' }}
+      >
         <Chips {...props} />
       </Toolbar>
       {isRightScrollable && (
         <Box sx={{ ...chevronBradientBoxSx(270), right: 0 }}>
-          <Button color="inherit" aria-label="right scroll" onClick={onClickArrow(-250)} sx={buttonSx}>
+          <Button
+            color='inherit'
+            aria-label='right scroll'
+            onClick={onClickArrow(-250)}
+            sx={buttonSx}
+          >
             <ChevronRight sx={chevronSx} />
           </Button>
         </Box>
@@ -101,7 +121,7 @@ const gradientBoxSx = {
   zIndex: 1155,
   top: 0,
   minWidth: 52,
-  minHeight: 50,
+  minHeight: 43,
   right: 0,
   background: 'linear-gradient(270deg, rgba(255,255,255,0.93) 50%, rgba(0,0,0,0) 100%)',
 }
@@ -112,7 +132,17 @@ function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <Toolbar className="hide-scrollbar-x" ref={ref} style={{ minHeight: 50 }}>
+      <Toolbar
+        className='hide-scrollbar-x'
+        ref={ref}
+        style={{
+          minHeight: 0,
+          height: 44,
+          paddingRight: 0,
+          paddingBottom: '8px',
+          marginTop: '8px',
+        }}
+      >
         <Chips {...props} />
       </Toolbar>
       {isRightVisible && <Box sx={{ ...gradientBoxSx }} />}

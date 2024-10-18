@@ -83,7 +83,7 @@ function OcListSwiper({
     })
 
     scrollToTop()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (tIndex && !scrollY.current) {
@@ -117,7 +117,7 @@ function OcListSwiper({
           <div
             style={{
               padding: '1rem 1rem 1rem 1rem',
-              marginTop: '95px',
+              marginTop: '94px',
               minHeight: 'calc(100svh - 191px)',
               width: '100%',
               position: 'relative',
@@ -181,7 +181,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
 
   return (
     <Box>
-      <SiteHeader siperSlideTo={siperSlideTo} height='96px'>
+      <SiteHeader siperSlideTo={siperSlideTo} height='78px'>
         <Tabs
           className='fix-min-width category-tab'
           value={cateIndex}

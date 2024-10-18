@@ -63,8 +63,8 @@ export default function SiteHeaderSearch({
           action={`${rankingArgDto.baseUrl}/search`}
           onSubmit={onSubmit}
         >
-          <Box className="search-form-inner" sx={{ pt: '7px' }}>
-            <label htmlFor="q" style={{ top: '16px' }}></label>
+          <Box className="search-form-inner" sx={{ pt: '0px' }}>
+            <label htmlFor="q" style={{ top: '10px' }}></label>
             <Input
               onKeyDown={onKeyDown}
               id="q"

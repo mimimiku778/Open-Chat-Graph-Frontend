@@ -14,14 +14,14 @@ function HideOnScroll({ children, matches }: { children: React.ReactElement; mat
   return matches ? (
     <>{children}</>
   ) : (
-    <Slide appear={false} direction="down" in={!trigger}>
+    <Slide appear={false} direction='down' in={!trigger}>
       {children}
     </Slide>
   )
 }
 
 export const CategoryListAppBar = memo(function HideListAppBar() {
-  const height = 52
+  const height = 44
   const { category } = useParams()
   const params = useRecoilValue(listParamsState)
   const matches = useMediaQuery('(min-width:600px)') // 599px以下で false
@@ -29,7 +29,15 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
   function ToggleToolbar() {
     return (
       <>
-        <Toolbar style={{ minHeight: height, paddingRight: 0 }}>
+        <Toolbar
+          style={{
+            minHeight: 0,
+            height: height,
+            paddingRight: 0,
+            paddingTop: '8px',
+            marginBottom: '8px',
+          }}
+        >
           <ListToggleChips list={params.list} toggleButtons={toggleButtons} />
           <OCListSortMenu
             options={params.list === 'all' ? allOptions2 : rankingOptions2}
@@ -45,7 +53,15 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
 
   function OfficialToolbar() {
     return (
-      <Toolbar style={{ minHeight: height, paddingRight: 0 }}>
+      <Toolbar
+        style={{
+          minHeight: 0,
+          height: height,
+          paddingRight: 0,
+          paddingTop: '8px',
+          marginBottom: '8px',
+        }}
+      >
         <ListToggleChips list={params.list} toggleButtons={officialButtons} />
       </Toolbar>
     )
@@ -54,16 +70,19 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
   return (
     <Box
       sx={{
-        height: toggleButtons.find((el) => el[0] === params.list) && (category || params.keyword) ? height * 2 : height,
+        height:
+          toggleButtons.find((el) => el[0] === params.list) && (category || params.keyword)
+            ? height + (matches ? 53 + 4 : 38)
+            : (matches ? 53 : 38),
       }}
     >
       <HideOnScroll matches={matches}>
         <Box
-          color="inherit"
+          color='inherit'
           sx={{
             boxShadow: 0,
             zIndex: 1000,
-            top: matches ? 'auto' : '95px',
+            top: matches ? 'auto' : '78px',
             borderBottom: 1,
             borderColor: '#efefef',
             position: matches ? 'static' : 'fixed',
@@ -71,7 +90,11 @@ export const CategoryListAppBar = memo(function HideListAppBar() {
             width: '100%',
           }}
         >
-          {params.list !== 'ranking' && params.list !== 'rising' ? <ToggleToolbar /> : <OfficialToolbar />}
+          {params.list !== 'ranking' && params.list !== 'rising' ? (
+            <ToggleToolbar />
+          ) : (
+            <OfficialToolbar />
+          )}
         </Box>
       </HideOnScroll>
     </Box>

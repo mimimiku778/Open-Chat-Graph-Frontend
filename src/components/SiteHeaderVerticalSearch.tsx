@@ -28,7 +28,7 @@ export default function SiteHeaderVerticalSearch() {
   if (!toggleButtons.find((el) => el[0] === params.list)) return null
 
   return (
-    <div style={{ position: 'absolute', top: 0, right: '1rem' }}>
+    <div style={{ position: 'absolute', top: '6px', right: '1rem' }}>
       <header className="site_header_outer" id="site_header">
         <div className="site_header">
           <nav className="header-nav">
