@@ -22,7 +22,7 @@ export default function DisplayAds({
   show: boolean
 }) {
   const pushed = useRef(false)
-
+  
   useEffect(() => {
     if (
       (window as any).adsbygoogle &&

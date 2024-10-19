@@ -90,7 +90,7 @@ const ListContext = memo(function ListContext({
               minHeight: '1px',
             }}
           >
-            <DisplayAds dataAdSlot={AdsSeparatorRectangle} adsClass='rectangle2-ads' show />
+            <DisplayAds dataAdSlot={AdsSeparatorRectangle} adsClass='rectangle2-ads' show={true} />
           </div>
         )}
         {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
