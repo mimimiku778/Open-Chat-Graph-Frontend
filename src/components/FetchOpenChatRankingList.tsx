@@ -6,7 +6,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
-import DisplayAds, { AdsSeparatorRectangle, AdsTopRectangle } from './DisplayAds'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -83,16 +82,6 @@ const ListContext = memo(function ListContext({
           cateIndex={cateIndex}
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
-        {(i + 1) % 10 === 0 && (
-          <div
-            style={{
-              margin: `-8px 0rem ${(i + 1) % 10 === 0 ? '2rem' : '-8px'} 0rem`,
-              minHeight: '1px',
-            }}
-          >
-            <DisplayAds dataAdSlot={AdsSeparatorRectangle} adsClass='rectangle2-ads' show={true} />
-          </div>
-        )}
         {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
           <div style={{ marginBottom: '2rem' }}>
             <div className='record-count middle'>
@@ -195,15 +184,6 @@ export function FetchOpenChatRankingList({
   return (
     <div className='ranking-list'>
       <div className='div-fetchOpenChatRankingList'>
-        {
-          <div style={{ margin: '-12px 0px 8px' }}>
-            <DisplayAds
-              dataAdSlot={AdsTopRectangle}
-              adsClass='rectangle-ads'
-              show={!!data?.length}
-            />
-          </div>
-        }
         <ListTitleDesc cateIndex={cateIndex} isSearch={!!params.keyword} list={params.list} />
         <TotalCount
           totalCount={totalCount}
