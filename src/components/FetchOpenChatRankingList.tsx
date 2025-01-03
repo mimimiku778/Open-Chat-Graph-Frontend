@@ -153,7 +153,6 @@ export function DummyOpenChatRankingList({
         className='div-fetchOpenChatRankingList'
         style={{ position: 'absolute', top: `${window.scrollY}px`, width: '100%' }}
       >
-        <div className='rectangle-ads' style={{ margin: '-12px 0px 8px' }}></div>
         <ListTitleDesc
           cateIndex={cateIndex}
           isSearch={!!params.keyword}
