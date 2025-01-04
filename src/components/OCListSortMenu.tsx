@@ -5,7 +5,7 @@ import { isSP } from '../utils/utils'
 import { useSetListParams } from '../hooks/ListParamsHooks'
 
 export const rankingOptions2: SortOptions = [
-  [['ランキング順', '並び順'], 'asc', 'rank'],
+  /* [['ランキング順', '並び順'], 'asc', 'rank'], */
   [['増加数が多い順', '並び順'], 'desc', 'increase'],
   [['増加数が少ない順', '並び順'], 'asc', 'increase'],
   [['増加率が高い順', '並び順'], 'desc', 'rate'],
