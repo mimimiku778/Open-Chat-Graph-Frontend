@@ -1,7 +1,7 @@
 import React from 'react'
 import { LIMIT_ITEMS } from '../hooks/InfiniteFetchApi'
 import { Chip, Skeleton } from '@mui/material'
-import { OPEN_CHAT_CATEGORY_OBJ, rankingArgDto } from '../config/config'
+import { imageBaseUrl, OPEN_CHAT_CATEGORY_OBJ, rankingArgDto } from '../config/config'
 import NorthIcon from '@mui/icons-material/North'
 
 export function DummyOpenChatListItem({ len = LIMIT_ITEMS }: { len?: number }) {
@@ -81,7 +81,7 @@ export default function OpenChatListItem({
         </div>
         <img
           className="item-img"
-          src={`${rankingArgDto.baseUrl}/oc-img/preview/${img}`}
+          src={`${imageBaseUrl}preview/${img}`}
           alt={`${name}`}
           loading="lazy"
         ></img>

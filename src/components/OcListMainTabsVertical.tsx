@@ -1,4 +1,4 @@
-import { OPEN_CHAT_CATEGORY } from '../config/config'
+import { basePath, OPEN_CHAT_CATEGORY } from '../config/config'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
@@ -31,7 +31,6 @@ function LinkTab(props: { label?: string; href?: string }) {
 export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: number }) {
   const navigate = useNavigate()
   const [params, setParams] = useRecoilState(listParamsState)
-  const location = useLocation()
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
@@ -42,7 +41,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
 
     setParams({ ...params, sub_category: '' })
     navigate(
-      `${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${
+      `${'/' + basePath}${category ? '/' + category : ''}${
         q ? '?' + q : ''
       }`,
       { replace: true }
@@ -94,7 +93,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           {OPEN_CHAT_CATEGORY.map((el, i) => (
             <LinkTab
               label={el[0]}
-              href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`}
+              href={`/${basePath}${el[1] ? '/' + el[1] : ''}`}
               key={i}
             />
           ))}

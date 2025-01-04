@@ -28,7 +28,7 @@ const paramsOrder: ListParams['order'][] = ['asc', 'desc']
 const getValidListParams = (params: URLSearchParams, location: any): ListParams => {
   const orderParam = (defaultValue: ListParams['order']) => getValidParam<'order'>(params.get('order'), defaultValue, paramsOrder)
   const sortParam = (defaultValue: ListParams['sort'], paramsSort: ListParams['sort'][]) => getValidParam<'sort'>(params.get('sort'), defaultValue, paramsSort)
-  const paramsList = location.pathname.split('/')[1] === 'ranking' ? listParamsRanking : listParamsOfficial
+  const paramsList = location.pathname.split('/')[1] === 'ranking' || location.pathname.split('/')[2] === 'ranking' ? listParamsRanking : listParamsOfficial
 
   const keyword = params.get('keyword') ?? ''
   const sub_category = params.get('sub_category') ?? ''
@@ -38,12 +38,12 @@ const getValidListParams = (params: URLSearchParams, location: any): ListParams 
     return { sub_category, keyword, list, sort: sortParam('member', paramsSortAll), order: orderParam('desc') }
   }
 
-  const sort = sortParam('rank', paramsSortRanking)
-  if (sort === 'rank') {
-    return { sub_category, keyword, list, sort: sort, order: orderParam('asc') }
+  const sort = sortParam('increase', paramsSortRanking)
+  if (sort === 'increase') {
+    return { sub_category, keyword, list, sort: sort, order: orderParam('desc') }
   }
 
-  return { sub_category, keyword, list, sort: sort, order: orderParam('asc') }
+  return { sub_category, keyword, list, sort: sort, order: orderParam('desc') }
 }
 
 export const useGetInitListParamsState = () => {

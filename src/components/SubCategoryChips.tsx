@@ -7,24 +7,30 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import { useIsLeftRightScrollable, useIsRightScrollable } from '../hooks/ScrollableHooks'
 import { useSetListParams } from '../hooks/ListParamsHooks'
 import { rankingArgDto } from '../config/config'
+import { useRecoilState } from 'recoil'
+import { subCategoryChipsStackScrollLeft } from '../store/atom'
 
-const Chips = memo(function Chips({ sub_category }: SubCategoryChipsProps) {
+const Chips = memo(function Chips({
+  sub_category,
+  stackParentRef,
+}: SubCategoryChipsProps & { stackParentRef: React.RefObject<HTMLDivElement> }) {
   const selectedRef = useRef<null | HTMLDivElement>(null)
+  const [stackScrollLeft, setStackScrollLeft] = useRecoilState(subCategoryChipsStackScrollLeft)
   const { category } = useParams()
   const setParams = useSetListParams()
   const existsProp = category && Object.hasOwn(rankingArgDto.subCategories, category)
 
   const handleChange = (newValue: ListParams['sub_category']) => {
+    setStackScrollLeft(stackParentRef.current?.scrollLeft || 0)
     setParams((params) => ({ ...params, sub_category: newValue }))
   }
 
   useEffect(() => {
-    selectedRef.current &&
-      selectedRef.current.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'end',
-      })
+    if (selectedRef.current && stackParentRef.current && stackScrollLeft > 0) {
+      stackParentRef.current.scrollLeft = stackScrollLeft
+    } else if (selectedRef.current && stackParentRef.current) {
+      selectedRef.current.scrollIntoView({ inline: 'center' })
+    }
   }, [])
 
   return (
@@ -98,7 +104,7 @@ function SubCategoryChipsPC(props: SubCategoryChipsProps) {
         ref={ref}
         style={{ minHeight: 48, cursor: 'grab' }}
       >
-        <Chips {...props} />
+        <Chips {...{ stackParentRef: ref, ...props }} />
       </Toolbar>
       {isRightScrollable && (
         <Box sx={{ ...chevronBradientBoxSx(270), right: 0 }}>
@@ -143,7 +149,7 @@ function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
           marginTop: '8px',
         }}
       >
-        <Chips {...props} />
+        <Chips {...{ stackParentRef: ref, ...props }} />
       </Toolbar>
       {isRightVisible && <Box sx={{ ...gradientBoxSx }} />}
     </div>
@@ -151,6 +157,10 @@ function SubCategoryChipsSP2(props: SubCategoryChipsProps) {
 }
 
 const SubCategoryChips = memo(function SubCategoryChips(props: SubCategoryChipsProps) {
+  const { category } = useParams()
+
+  if (!rankingArgDto.subCategories[category as SubCategoryKey]?.length) return <></>
+
   return isSP() ? <SubCategoryChipsSP2 {...props} /> : <SubCategoryChipsPC {...props} />
 })
 

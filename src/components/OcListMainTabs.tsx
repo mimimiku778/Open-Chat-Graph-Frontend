@@ -1,4 +1,4 @@
-import { OPEN_CHAT_CATEGORY } from '../config/config'
+import { basePath, OPEN_CHAT_CATEGORY } from '../config/config'
 import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
@@ -57,7 +57,6 @@ function OcListSwiper({
   const [tIndex, setTIndex] = useState<[number, string] | null>(null)
   const { ref: prevRef, inView: prevInView } = useInView()
   const { ref: nextRef, inView: nextInView } = useInView()
-  const location = useLocation()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSwiper = useCallback((swiper: SwiperCore) => (swiperRef.current = swiper), [])
@@ -73,7 +72,7 @@ function OcListSwiper({
       const url = updateURLSearchParams({ ...params, sub_category: '' })
       const q = url.searchParams.toString()
       navigate(
-        `${'/' + location.pathname.split('/')[1]}${category ? '/' + category : ''}${
+        `${'/' + basePath}${category ? '/' + category : ''}${
           q ? '?' + q : ''
         }`,
         { replace: true }
@@ -168,7 +167,6 @@ function OcListSwiper({
 
 export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
   const swiperRef = useRef<SwiperCore | null>(null)
-  const location = useLocation()
 
   const handleChange = useCallback((e: React.SyntheticEvent, newValue: number) => {
     if (e.type === 'click' && !samePageLinkNavi(e as LinkEvent)) return
@@ -195,7 +193,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
           {OPEN_CHAT_CATEGORY.map((el, i) => (
             <LinkTab
               label={el[0]}
-              href={`${'/' + location.pathname.split('/')[1]}${el[1] ? '/' + el[1] : ''}`}
+              href={`/${basePath}${el[1] ? '/' + el[1] : ''}`}
               key={i}
             />
           ))}
