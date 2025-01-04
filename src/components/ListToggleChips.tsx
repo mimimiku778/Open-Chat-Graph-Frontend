@@ -8,7 +8,7 @@ export const toggleButtons: ToggleButtons = [
   ['hourly', '1時間'],
   ['daily', '24時間'],
   ['weekly', '1週間'],
-  ['all', '全体'],
+  ['all', '人数'],
 ]
 
 export const officialButtons: ToggleButtons = [
