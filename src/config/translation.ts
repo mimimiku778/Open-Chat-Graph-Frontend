@@ -127,6 +127,10 @@ const translation = {
     tw: '人數',
     th: 'จำนวนคน',
   },
+  その他: {
+    tw: '其他',
+    th: 'อื่นๆ',
+  },
 }
 
 const sprintfTranslation = {
