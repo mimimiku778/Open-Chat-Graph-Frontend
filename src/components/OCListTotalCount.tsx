@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography } from '@mui/material'
 import { OPEN_CHAT_CATEGORY } from '../config/config'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { sprintfT } from '../config/translation'
 
 export default function OCListTotalCount({
   totalCount,
@@ -9,7 +10,7 @@ export default function OCListTotalCount({
   subCategory,
   keyword,
 }: {
-  totalCount: string
+  totalCount: number | undefined
   cateIndex: number
   subCategory: string
   keyword: string
@@ -21,20 +22,23 @@ export default function OCListTotalCount({
       {subCategory && (
         <>
           <ChevronRightIcon sx={{ fontSize: '17px' }} />
-          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>{subCategory}</Typography>
+          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>
+            {subCategory}
+          </Typography>
         </>
       )}
       {keyword && (
         <>
           <ChevronRightIcon sx={{ fontSize: '17px' }} />
-          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>「{keyword}」</Typography>
-          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>の検索結果</Typography>
+          <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>
+            {sprintfT('「%s」の検索結果', keyword)}
+          </Typography>
         </>
       )}
-      {totalCount && (
+      {totalCount !== undefined && (
         <Typography sx={{ fontSize: 13, display: 'flex', alignItems: 'center' }}>
           <ChevronRightIcon sx={{ fontSize: '17px' }} />
-          {totalCount}
+          {sprintfT('%s 件', totalCount.toLocaleString())}
         </Typography>
       )}
     </div>

@@ -3,20 +3,21 @@ import React, { memo } from 'react'
 import SortIcon from '@mui/icons-material/Sort'
 import { isSP } from '../utils/utils'
 import { useSetListParams } from '../hooks/ListParamsHooks'
+import { t } from '../config/translation'
 
 export const rankingOptions2: SortOptions = [
-  /* [['ランキング順', '並び順'], 'asc', 'rank'], */
-  [['増加数が多い順', '並び順'], 'desc', 'increase'],
-  [['増加数が少ない順', '並び順'], 'asc', 'increase'],
-  [['増加率が高い順', '並び順'], 'desc', 'rate'],
-  [['増加率が低い順', '並び順'], 'asc', 'rate'],
+  /* [['ランキング順', t('並び順')], 'asc', 'rank'], */
+  [[t('増加数が多い順'), t('並び順')], 'desc', 'increase'],
+  [[t('増加数が少ない順'), t('並び順')], 'asc', 'increase'],
+  [[t('増加率が高い順'), t('並び順')], 'desc', 'rate'],
+  [[t('増加率が低い順'), t('並び順')], 'asc', 'rate'],
 ]
 
 export const allOptions2: SortOptions = [
-  [['メンバー数が多い順', '並び順'], 'desc', 'member'],
-  [['メンバー数が少ない順', '並び順'], 'asc', 'member'],
-  /*  [['作成日が新しい順', '並び順'], 'desc', 'created_at'], */
-  /* [['作成日が古い順', '並び順'], 'asc', 'created_at'], */
+  [[t('メンバー数が多い順'), t('並び順')], 'desc', 'member'],
+  [[t('メンバー数が少ない順'), t('並び順')], 'asc', 'member'],
+  /*  [['作成日が新しい順', t('並び順')], 'desc', 'created_at'], */
+  /* [['作成日が古い順', t('並び順')], 'asc', 'created_at'], */
 ]
 
 export const OCListSortMenu = memo(function OCListSortMenu({
@@ -54,19 +55,19 @@ export const OCListSortMenu = memo(function OCListSortMenu({
   return (
     <Box sx={{ pl: under359 ? undefined : '8px', whiteSpace: 'nowrap' }}>
       <Button
-        id="sort-button"
+        id='sort-button'
         aria-controls={open ? 'sort-menu' : undefined}
-        aria-haspopup="true"
+        aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClickListItem}
         sx={{ fontSize: under359 ? '12.5px' : '14px', color: '#000', minWidth: 36, minHeight: 36 }}
-        color="success"
+        color='success'
       >
         {!under359 && <SortIcon sx={{ marginRight: '4px', fontSize: '20px', color: '#000' }} />}
         {isSP() || under359 ? `${options[selectedIndex][0][1]}` : options[selectedIndex][0][0]}
       </Button>
       <Menu
-        id="sort-menu"
+        id='sort-menu'
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -75,7 +76,11 @@ export const OCListSortMenu = memo(function OCListSortMenu({
         }}
       >
         {options.map((el, i) => (
-          <MenuItem key={i} selected={i === selectedIndex} onClick={(event) => handleMenuItemClick(event, i)}>
+          <MenuItem
+            key={i}
+            selected={i === selectedIndex}
+            onClick={(event) => handleMenuItemClick(event, i)}
+          >
             {el[0][0]}
           </MenuItem>
         ))}

@@ -2,8 +2,17 @@ import React from 'react'
 import { Typography, useMediaQuery } from '@mui/material'
 import OCListDescPopover, { HelpIcon } from './OCListDescPopover'
 import { rankingArgDto } from '../config/config'
+import { t } from '../config/translation'
 
-function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: boolean; isSearch: boolean }) {
+function ListDesc({
+  list,
+  isAll,
+  isSearch,
+}: {
+  list: ListParams['list']
+  isAll: boolean
+  isSearch: boolean
+}) {
   const p = { sx: { fontSize: 14 }, color: 'text.secondary' }
 
   switch (list) {
@@ -12,15 +21,17 @@ function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: 
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。
+              {t('表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。')}
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。
+              {t('表示対象はメンバー数が10人以上で公式ランキングに掲載中のルームです。')}
             </Typography>
           )}
-          <Typography {...p}>１週間以上メンバー数に変動がないルームは除外されます。</Typography>
+          <Typography {...p}>
+            {t('１週間以上メンバー数に変動がないルームは除外されます。')}
+          </Typography>
         </div>
       )
     case 'daily':
@@ -28,15 +39,19 @@ function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: 
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上で公式ランキングに掲載されたルームです。
+              {t(
+                '表示対象は公式ランキングに掲載されているルーム、または過去に掲載されたことがあるルームで、メンバーが10名以上いるルームです。'
+              )}
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上のルームです。
+              {t('表示対象はメンバー数が10人以上のルームです。')}
             </Typography>
           )}
-          <Typography {...p}>１週間以上メンバー数に変動がないルームは除外されます。</Typography>
+          <Typography {...p}>
+            {t('１週間以上メンバー数に変動がないルームは除外されます。')}
+          </Typography>
         </div>
       )
     case 'weekly':
@@ -44,48 +59,70 @@ function ListDesc({ list, isAll, isSearch }: { list: ListParams['list']; isAll: 
         <div>
           {!isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上で公式ランキングに掲載されたルームです。
+              {t(
+                '表示対象は公式ランキングに掲載されているルーム、または過去に掲載されたことがあるルームで、メンバーが10名以上いるルームです。'
+              )}
             </Typography>
           )}
           {isAll && (
             <Typography gutterBottom {...p}>
-              表示対象はメンバー数が10人以上のルームです。
+              {t('表示対象はメンバー数が10人以上のルームです。')}
             </Typography>
           )}
-          <Typography {...p}>直近１週間の統計がない・１週間以上メンバー数に変動がないルームは除外されます。</Typography>
+          <Typography {...p}>
+            {t(
+              '直近１週間分の統計データがまだ無いルームと、１週間以上メンバー数に変動がないルームは除外されます。'
+            )}
+          </Typography>
         </div>
       )
     case 'all':
       return (
         <div>
-          {!isAll && <Typography {...p}>表示対象は公式ランキングに掲載されたルームです。</Typography>}
-          {isAll && <Typography {...p}>表示対象は全てのルームです。</Typography>}
+          {!isAll && (
+            <Typography {...p}>
+              {t(
+                '表示対象は公式ランキングに掲載されているルーム、または過去に掲載されたことがあるルームです。'
+              )}
+            </Typography>
+          )}
+          {isAll && <Typography {...p}>{t('表示対象は全てのルームです。')}</Typography>}
         </div>
       )
     case 'ranking':
       return (
         <div>
-          <Typography {...p}>前回(1時間前)の公式ランキングとその掲載期間におけるメンバー増加を表示します。</Typography>
+          <Typography {...p}>
+            前回(1時間前)の公式ランキングと、その掲載期間におけるメンバー増加を表示します。
+          </Typography>
         </div>
       )
     case 'rising':
       return (
         <div>
-          <Typography {...p}>前回(1時間前)の公式急上昇とその掲載期間におけるメンバー増加を表示します。</Typography>
+          <Typography {...p}>
+            前回(1時間前)の公式急上昇とその掲載期間におけるメンバー増加を表示します。
+          </Typography>
         </div>
       )
   }
 }
 
-function HelpButton({ list, cateIndex, isSearch }: { list: ListParams['list']; cateIndex: number; isSearch: boolean }) {
+function HelpButton({
+  list,
+  cateIndex,
+  isSearch,
+}: {
+  list: ListParams['list']
+  cateIndex: number
+  isSearch: boolean
+}) {
   return (
     <OCListDescPopover>
       <ListDesc list={list} isAll={cateIndex === 0} isSearch={isSearch} />
     </OCListDescPopover>
   )
 }
-
-/* const weekdays = ['日', '月', '火', '水', '木', '金', '土'] */
 
 export default function OCListTitleDesc({
   list,
@@ -114,13 +151,17 @@ export default function OCListTitleDesc({
     case 'hourly':
       return (
         <div style={outer}>
-          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
+          <Typography children={t('メンバー増加')} sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`1時間 (${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()})`}
+              children={`${t('1時間')} (${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()})`}
               sx={p}
             />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
@@ -128,10 +169,17 @@ export default function OCListTitleDesc({
       past.setDate(past.getDate() - 1)
       return (
         <div style={outer}>
-          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
+          <Typography children={t('メンバー増加')} sx={{ ...p, mr: 1 }} />
           <div style={inner}>
-            <Typography children={`過去24時間 (${hourly.getHours()}:${hourly.getMinutes()})`} sx={p} />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            <Typography
+              children={`${t('過去24時間')} (${hourly.getHours()}:${hourly.getMinutes()})`}
+              sx={p}
+            />
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
@@ -139,15 +187,19 @@ export default function OCListTitleDesc({
       past.setDate(past.getDate() - 7)
       return (
         <div style={outer}>
-          <Typography children="メンバー増加" sx={{ ...p, mr: 1 }} />
+          <Typography children={t('メンバー増加')} sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
-              children={`1週間 (${past.getMonth() + 1}/${past.getDate()}〜${
+              children={`${t('1週間')} (${past.getMonth() + 1}/${past.getDate()}〜${
                 updatedAt.getMonth() + 1
               }/${updatedAt.getDate()})`}
               sx={p}
             />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
@@ -156,37 +208,49 @@ export default function OCListTitleDesc({
         <div style={outer}>
           <div style={inner}>
             {!isSearch ? (
-              <Typography children="すべてのオープンチャット" sx={p} />
+              <Typography children={t('参加人数のランキング')} sx={p} />
             ) : (
-              <Typography children="すべてのオープンチャット" sx={p} />
+              <Typography children={t('参加人数のランキング')} sx={p} />
             )}
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
     case 'ranking':
       return (
         <div style={outer}>
-          <Typography children="公式ランキング" sx={{ ...p, mr: 1 }} />
+          <Typography children='公式ランキング' sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
               children={`1時間前(${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()})`}
               sx={p}
             />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
     case 'rising':
       return (
         <div style={outer}>
-          <Typography children="公式急上昇" sx={{ ...p, mr: 1 }} />
+          <Typography children='公式急上昇' sx={{ ...p, mr: 1 }} />
           <div style={inner}>
             <Typography
               children={`1時間前(${hourlyPast.getHours()}:${hourlyPast.getMinutes()}〜${hourly.getHours()}:${hourly.getMinutes()})`}
               sx={p}
             />
-            {visibility ? <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} /> : <HelpIcon />}
+            {visibility ? (
+              <HelpButton list={list} cateIndex={cateIndex} isSearch={isSearch} />
+            ) : (
+              <HelpIcon />
+            )}
           </div>
         </div>
       )
