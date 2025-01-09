@@ -3,7 +3,7 @@ import { LIMIT_ITEMS } from '../hooks/InfiniteFetchApi'
 import { Chip, Skeleton } from '@mui/material'
 import { imageBaseUrl, OPEN_CHAT_CATEGORY_OBJ, rankingArgDto } from '../config/config'
 import NorthIcon from '@mui/icons-material/North'
-import { formatMember, sprintfT } from '../config/translation'
+import { formatMember, sprintfT, t } from '../config/translation'
 
 export function DummyOpenChatListItem({ len = LIMIT_ITEMS }: { len?: number }) {
   return (
@@ -114,7 +114,7 @@ export default function OpenChatListItem({
                 width: 'fit-content',
                 mt: '2px',
               }}
-              label={category > 0 ? OPEN_CHAT_CATEGORY_OBJ[category] : 'その他'}
+              label={category > 0 ? OPEN_CHAT_CATEGORY_OBJ[category] : t('その他')}
               size='small'
             />
           )}
