@@ -1,4 +1,5 @@
-import { OPEN_CHAT_CATEGORY } from "../config/config"
+import { OPEN_CHAT_CATEGORY } from '../config/config'
+import { sprintfT, t } from '../config/translation'
 
 export function localStorageProvider() {
   const map = new Map(JSON.parse(sessionStorage.getItem('app-cache') || '[]'))
@@ -34,7 +35,7 @@ export function isSP(): boolean {
 }
 
 export function updateURLSearchParams(params: { [key: string]: string }): URL {
-  const url = new URL(window.location.href);
+  const url = new URL(window.location.href)
   url.search = ''
 
   for (let k in params) {
@@ -47,65 +48,67 @@ export function updateURLSearchParams(params: { [key: string]: string }): URL {
 }
 
 export function setTitle(params: ListParams, cateIndex?: number) {
-  const keyword = params.keyword;
-  const subCategory = params.sub_category;
+  const keyword = params.keyword
+  const subCategory = params.sub_category
 
   if (cateIndex === undefined) {
     const pathName = window.location.pathname
     const pathSegments = pathName.split('/')
     const category = parseInt((pathSegments.pop() || pathSegments.pop()) ?? '0')
-    cateIndex = !Number.isNaN(category) ? OPEN_CHAT_CATEGORY.findIndex((el) => el[1] === category) : 0
+    cateIndex = !Number.isNaN(category)
+      ? OPEN_CHAT_CATEGORY.findIndex((el) => el[1] === category)
+      : 0
   }
 
-  let title0 = '';
+  let title0 = ''
   switch (!!keyword) {
     case true:
-      title0 = `「${keyword}」の検索結果｜`;
-      break;
+      title0 = sprintfT('「%s」の検索結果', keyword) + '｜'
+      break
     default:
-      title0 = '';
+      title0 = ''
   }
 
-  let title1 = '';
+  let title1 = ''
   switch (!!cateIndex) {
     case true:
-      title1 = OPEN_CHAT_CATEGORY[cateIndex][0] + '｜';
-      break;
+      title1 = OPEN_CHAT_CATEGORY[cateIndex][0] + '｜'
+      break
     default:
-      title1 = title0 ? '' : '【最新】';
+      title1 = title0 ? '' : t('【最新】')
   }
 
-  let title3 = '';
+  let title3 = ''
   switch (!!subCategory) {
     case true:
-      title3 = subCategory + '｜';
-      break;
+      title3 = subCategory + '｜'
+      break
     default:
-      title3 = '';
+      title3 = ''
   }
 
-  let title2 = '';
+  let title2 = ''
   switch (params.list) {
     case 'weekly':
-      title2 = '人数増加・1週間';
-      break;
+      title2 = t('人数増加・1週間')
+      break
     case 'daily':
-      title2 = '人数増加・24時間';
-      break;
+      title2 = t('人数増加・24時間')
+      break
     case 'hourly':
-      title2 = '人数増加・1時間';
-      break;
+      title2 = t('人数増加・1時間')
+      break
     case 'all':
-      title2 = '参加人数のランキング';
-      break;
+      title2 = t('参加人数のランキング')
+      break
     case 'ranking':
-      title2 = '公式ランキング(1時間前)';
+      title2 = '公式ランキング(1時間前)'
       break
     case 'rising':
-      title2 = '公式急上昇(1時間前)';
+      title2 = '公式急上昇(1時間前)'
   }
 
-  document.title = title0 + title1 + title3 + title2 + '｜オプチャグラフ';
+  document.title = title0 + title1 + title3 + title2 + '｜' + t('オプチャグラフ')
 }
 
 export function validateStringNotEmpty(str: string) {
