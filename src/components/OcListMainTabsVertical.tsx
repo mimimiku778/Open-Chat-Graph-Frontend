@@ -1,6 +1,6 @@
 import { basePath, OPEN_CHAT_CATEGORY } from '../config/config'
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import FetchOpenChatRankingList from './FetchOpenChatRankingList'
 import { samePageLinkNavi, scrollToTop, setTitle, updateURLSearchParams } from '../utils/utils'
@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil'
 import { CategoryListAppBar } from './CategoryListAppBar'
 import SiteHeaderVertical from './SiteHeaderVertical'
 import SiteHeaderVerticalSearch from './SiteHeaderVerticalSearch'
+import { t } from '../config/translation'
 
 function TabPanel({ children, value, index }: TabPanelProps) {
   return <div hidden={value !== index}>{value === index && children}</div>
@@ -81,7 +82,7 @@ export default function OcListMainTabsVertical({ cateIndex }: { cateIndex: numbe
           variant='scrollable'
           scrollButtons='auto'
           allowScrollButtonsMobile={true}
-          aria-label='オープンチャットのカテゴリータブ'
+          aria-label={t('オープンチャットのカテゴリータブ')}
           orientation='vertical'
           sx={{
             minWidth: tabsWidth,

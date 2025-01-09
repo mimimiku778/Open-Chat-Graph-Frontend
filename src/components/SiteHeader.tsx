@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, SvgIcon } from '@mui/material'
 import SiteHeaderSearch from './SiteHeaderSearch'
 import { rankingArgDto, siteUrl } from '../config/config'
+import { t } from '../config/translation'
 
 export function BetaIcon() {
   return (
@@ -33,7 +34,7 @@ export function SiteTitleBtn() {
     <Button href={rankingArgDto.baseUrl} sx={{ p: 0, display: 'flex' }}>
       <div className='header_site_title'>
         <img src={`${siteUrl}/assets/icon-192x192.png`} alt='' />
-        <h1>オプチャグラフ</h1>
+        <h1>{t('オプチャグラフ')}</h1>
       </div>
     </Button>
   )

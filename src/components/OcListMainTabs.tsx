@@ -1,6 +1,6 @@
 import { basePath, OPEN_CHAT_CATEGORY } from '../config/config'
 import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Box, Tabs, Tab } from '@mui/material'
 import { type Swiper as SwiperCore } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -18,6 +18,7 @@ import { listParamsState } from '../store/atom'
 import { useRecoilState } from 'recoil'
 import SiteHeader from './SiteHeader'
 import { useInView } from 'react-intersection-observer'
+import { t } from '../config/translation'
 
 function LinkTab(props: { label?: string; href?: string }) {
   return (
@@ -187,7 +188,7 @@ export default function OcListMainTabs({ cateIndex }: { cateIndex: number }) {
           variant='scrollable'
           scrollButtons={true}
           allowScrollButtonsMobile={!isSP()}
-          aria-label='オープンチャットのカテゴリータブ'
+          aria-label={t('オープンチャットのカテゴリータブ')}
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           {OPEN_CHAT_CATEGORY.map((el, i) => (

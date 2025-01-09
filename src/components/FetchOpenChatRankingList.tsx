@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import OpenChatListItem, { DummyOpenChatListItem } from './OpenChatListItem'
 import OCListTitleDesc from './OCListTitleDesc'
 import OCListTotalCount from './OCListTotalCount'
+import { sprintfT, t } from '../config/translation'
 
 const dummyContainerStyle: React.CSSProperties = { opacity: 0.55 }
 
@@ -34,7 +35,7 @@ const DummyList = memo(function DummyList({
           <DummyOpenChatListItem />
         </ol>
       )}
-      {error && <div style={{ textAlign: 'center' }}>通信エラー😥</div>}
+      {error && <div style={{ textAlign: 'center' }}>{t('通信エラー')}😥</div>}
     </>
   )
 })
@@ -48,15 +49,13 @@ const ListContext = memo(function ListContext({
   sort,
   data,
   query,
-  totalCountNum,
 }: {
   cateIndex: number
   list: ListParams['list']
-  totalCount: string
+  totalCount: number | undefined
   sort: ListParams['sort']
   data: OpenChat[]
   query: string
-  totalCountNum: number
 }) {
   const items = useRef<[String, React.JSX.Element[]]>(['', []])
 
@@ -82,12 +81,16 @@ const ListContext = memo(function ListContext({
           cateIndex={cateIndex}
           showNorth={list === 'daily' && sort === 'rank' && i + 1 <= 3}
         />
-        {(i + 1) % 10 === 0 && i + 1 < totalCountNum && (
+        {(i + 1) % 10 === 0 && i + 1 < (totalCount ?? 0) && (
           <div style={{ marginBottom: '2rem' }}>
             <div className='record-count middle'>
               <KeyboardArrowDownIcon sx={{ fontSize: '14px', display: 'block' }} />
               <span>
-                {totalCount}中 {(i + 2).toLocaleString()} 件目〜
+                {sprintfT(
+                  '%s 件中 %s 件目～',
+                  totalCount?.toLocaleString() ?? 0,
+                  (i + 2).toLocaleString()
+                )}
               </span>
             </div>
           </div>
@@ -104,8 +107,7 @@ const TotalCount = memo(OCListTotalCount)
 function FetchDummyList({ query, cateIndex }: { query: string; cateIndex: number }) {
   const { data } = useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
-  const totalCount =
-    data?.length === 0 ? '0 件' : data ? data[0].totalCount!.toLocaleString() + ' 件' : ''
+  const totalCount = data?.length === 0 ? 0 : data ? data[0].totalCount : undefined
 
   return (
     <div>
@@ -175,10 +177,7 @@ export function FetchOpenChatRankingList({
   const { data, useInViewRef, isValidating, isLastPage, error } =
     useInfiniteFetchApi<OpenChat>(query)
   const params = useRecoilValue(listParamsState)
-
-  const totalCount =
-    data?.length === 0 ? '0 件' : data ? data[0].totalCount!.toLocaleString() + ' 件' : ''
-  const totalCountNum = data?.length === 0 ? 0 : data ? data[0].totalCount! : 0
+  const totalCount = data?.length === 0 ? 0 : data ? data[0].totalCount : undefined
 
   return (
     <div className='ranking-list'>
@@ -194,7 +193,6 @@ export function FetchOpenChatRankingList({
           <ListContext
             cateIndex={cateIndex}
             totalCount={totalCount}
-            totalCountNum={totalCountNum}
             data={data}
             list={params.list}
             sort={params.sort}
