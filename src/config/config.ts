@@ -18,5 +18,5 @@ export const siteUrl = `${parsedUrl.protocol}//${parsedUrl.hostname}${
   parsedUrl.port ? ':' + parsedUrl.port : ''
 }`
 
-const langCode = rankingArgDto.urlRoot.replace(/^\/+/, '')
+export const langCode = rankingArgDto.urlRoot.replace(/^\/+/, '')
 export const imageBaseUrl = `${siteUrl}/oc-img${langCode ? '-' + langCode : ''}/`

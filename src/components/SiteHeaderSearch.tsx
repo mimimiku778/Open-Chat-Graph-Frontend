@@ -6,6 +6,7 @@ import { rankingArgDto } from '../config/config'
 import { listParamsState } from '../store/atom'
 import { useRecoilValue } from 'recoil'
 import { toggleButtons } from './ListToggleChips'
+import { t } from '../config/translation'
 
 export default function SiteHeaderSearch({
   children,
@@ -37,40 +38,58 @@ export default function SiteHeaderSearch({
   const params = useRecoilValue(listParamsState)
   if (!toggleButtons.find((el) => el[0] === params.list))
     return (
-      <header className="site_header_outer" id="site_header">
-        <div className="site_header" style={{ ...headerInnerStyle, display: open ? 'none' : undefined }}>
+      <header className='site_header_outer' id='site_header'>
+        <div
+          className='site_header'
+          style={{ ...headerInnerStyle, display: open ? 'none' : undefined }}
+        >
           {children}
         </div>
       </header>
     )
 
   return (
-    <header className="site_header_outer" id="site_header">
-      <div className="site_header" style={{ ...headerInnerStyle, display: open ? 'none' : undefined }}>
+    <header className='site_header_outer' id='site_header'>
+      <div
+        className='site_header'
+        style={{ ...headerInnerStyle, display: open ? 'none' : undefined }}
+      >
         {children}
-        <nav className="header-nav">
-          <button className="header-button" id="search_button" aria-label="検索" onClick={openSearch} ref={buttonRef}>
-            <span className="search-button-icon"></span>
+        <nav className='header-nav'>
+          <button
+            className='header-button'
+            id='search_button'
+            aria-label={t('検索')}
+            onClick={openSearch}
+            ref={buttonRef}
+          >
+            <span className='search-button-icon'></span>
           </button>
         </nav>
       </div>
       <div hidden={!open}>
-        <div className="backdrop" id="backdrop" role="button" aria-label="閉じる" onClick={closeSearch}></div>
+        <div
+          className='backdrop'
+          id='backdrop'
+          role='button'
+          aria-label={t('閉じる')}
+          onClick={closeSearch}
+        ></div>
         <form
-          className="search-form site_header"
+          className='search-form site_header'
           style={searchFormStyle}
-          method="GET"
+          method='GET'
           action={`${rankingArgDto.baseUrl}/search`}
           onSubmit={onSubmit}
         >
-          <Box className="search-form-inner" sx={{ pt: '0px' }}>
-            <label htmlFor="q" style={{ top: '10px' }}></label>
+          <Box className='search-form-inner' sx={{ pt: '0px' }}>
+            <label htmlFor='q' style={{ top: '10px' }}></label>
             <Input
               onKeyDown={onKeyDown}
-              id="q"
+              id='q'
               required
-              autoComplete="off"
-              placeholder="オープンチャットを検索"
+              autoComplete='off'
+              placeholder={t('オープンチャットを検索')}
               inputProps={{
                 'aria-label': 'weight',
                 sx: { pl: '2.1rem', pr: '3rem', m: '0.25rem 0' },
@@ -80,11 +99,14 @@ export default function SiteHeaderSearch({
               sx={{ width: '100%' }}
               onCompositionStart={handleCompositionStart}
               onCompositionEnd={handleCompositionEnd}
-              className="search-input"
+              className='search-input'
             />
-            <input type="hidden" name="q" ref={hiddenRef} />
+            <input type='hidden' name='q' ref={hiddenRef} />
             {!inputEmpty && (
-              <IconButton sx={{ position: 'absolute', right: '5px', top: '7px', zIndex: 2004 }} onClick={deleteInput}>
+              <IconButton
+                sx={{ position: 'absolute', right: '5px', top: '7px', zIndex: 2004 }}
+                onClick={deleteInput}
+              >
                 <HighlightOffIcon sx={{ fontSize: '22px', color: '#777' }} />
               </IconButton>
             )}
