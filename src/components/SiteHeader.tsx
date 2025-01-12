@@ -32,9 +32,9 @@ export function BetaIcon() {
 export function SiteTitleBtn() {
   return (
     <Button href={rankingArgDto.baseUrl} sx={{ p: 0, display: 'flex' }}>
-      <div className='header_site_title'>
+      <div className={t('header_site_title')}>
         <img src={`${siteUrl}/assets/icon-192x192.png`} alt='' />
-        <h1>{t('オプチャグラフ')}</h1>
+        <h1>{t('サイトタイトル')}</h1>
       </div>
     </Button>
   )

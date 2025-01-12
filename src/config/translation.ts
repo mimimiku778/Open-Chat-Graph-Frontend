@@ -5,6 +5,14 @@ const translation = {
     tw: 'LINE社群流量統計',
     th: 'โอเพนแชท กราฟ',
   },
+  サイトタイトル: {
+    '': 'オプチャグラフ',
+    tw: 'LINE社群流量統計',
+    th: 'LINE OPENCHAT\nสถิติการเข้าชม',
+  },
+  header_site_title: {
+    th: 'header_site_title thi',
+  },
   検索: {
     tw: '搜尋',
     th: 'ค้นหา',
