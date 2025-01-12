@@ -2,7 +2,7 @@ import { langCode } from './config'
 
 const translation = {
   オプチャグラフ: {
-    tw: 'LINE社群圖表',
+    tw: 'LINE社群流量統計',
     th: 'โอเพนแชท กราฟ',
   },
   検索: {
